@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+/**
+ * created by liangzhen at 2018/8/10
+ */
 public class QBHSCrashHandler implements Thread.UncaughtExceptionHandler{
 
     private static final String TAG = "QBHSCrashHandler";

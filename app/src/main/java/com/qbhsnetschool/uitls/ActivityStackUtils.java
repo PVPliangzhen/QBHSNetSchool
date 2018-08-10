@@ -5,6 +5,9 @@ import android.app.Activity;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * created by liangzhen at 2018/8/10
+ */
 public class ActivityStackUtils {
     /**
      * 转载Activity的容器

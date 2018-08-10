@@ -5,6 +5,9 @@ import android.os.Bundle;
 import com.qbhsnetschool.uitls.ActivityStackUtils;
 import com.qbhsnetschool.widget.swipebacklayout.SwipeBackActivity;
 
+/**
+ * created by liangzhen at 2018/8/10
+ */
 public class BaseActivity extends SwipeBackActivity{
 
     @Override
