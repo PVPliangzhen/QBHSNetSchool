@@ -1,1 +1,1 @@
-include ':app', ':DimenLibrary'
+include ':app', ':DimenLibrary', ':httputils'
