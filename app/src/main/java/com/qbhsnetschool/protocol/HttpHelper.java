@@ -32,6 +32,9 @@ import okhttp3.internal.http.RealResponseBody;
 public class HttpHelper {
 
     private static String appUserAgent;
+    private static final int CONNECT_TIMEOUT = 5;
+    private static final int READ_TIMEOUT = 10;
+    private static final int WRITE_TIMEOUT = 10;
 
     public static String getUserAgent(QBHSApplication context) {
         if (TextUtils.isEmpty(appUserAgent)) {
@@ -47,9 +50,9 @@ public class HttpHelper {
     public static void httpRequest(String url, Map<String, String> params, String httpMethod, Callback callback){
         OkHttpBuilder requestBuilder = new OkHttpBuilder(url);
         final HttpContent request = requestBuilder
-                .setConnectTimeout(TimeUnit.SECONDS, 5)
-                .setReadTimeOut(TimeUnit.SECONDS, 10)
-                .setWriteTimeout(TimeUnit.SECONDS, 10)
+                .setConnectTimeout(TimeUnit.SECONDS, CONNECT_TIMEOUT)
+                .setReadTimeOut(TimeUnit.SECONDS, READ_TIMEOUT)
+                .setWriteTimeout(TimeUnit.SECONDS, WRITE_TIMEOUT)
                 .build();
         requestBuilder.setParams(request, params);
         HttpUtils.impl().request(request, httpMethod, callback);
@@ -58,9 +61,9 @@ public class HttpHelper {
     public static void httpGetRequest(String url, String httpMethod, Callback callback){
         OkHttpBuilder requestBuilder = new OkHttpBuilder(url);
         final HttpContent request = requestBuilder
-                .setConnectTimeout(TimeUnit.SECONDS, 5)
-                .setReadTimeOut(TimeUnit.SECONDS, 10)
-                .setWriteTimeout(TimeUnit.SECONDS, 10)
+                .setConnectTimeout(TimeUnit.SECONDS, CONNECT_TIMEOUT)
+                .setReadTimeOut(TimeUnit.SECONDS, READ_TIMEOUT)
+                .setWriteTimeout(TimeUnit.SECONDS, WRITE_TIMEOUT)
                 .build();
         HttpUtils.impl().request(request, httpMethod, callback);
     }
