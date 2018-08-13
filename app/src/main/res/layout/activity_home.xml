@@ -1,12 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff">
 
     <LinearLayout
         android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/divide_line"
         android:orientation="vertical" />
+    
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/color_f6f6f6"
+        android:layout_above="@+id/lne_tab">
+    </View>
+
+    <LinearLayout
+        android:id="@+id/lne_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp12">
+
+        <LinearLayout
+            android:id="@+id/lne_tab_choose_course"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/img_tab_choose_course"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/ico_tab_course_pre" />
+
+            <TextView
+                android:id="@+id/txt_tab_choose_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp4"
+                android:gravity="center"
+                android:text="选课"
+                android:textColor="@color/color_E20000"
+                android:textSize="@dimen/dp22" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lne_tab_learn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/img_tab_learn"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/ico_tab_study_nor" />
+
+            <TextView
+                android:id="@+id/txt_tab_learn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp4"
+                android:gravity="center"
+                android:text="学习"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp22" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lne_tab_mine"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="vertical"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/img_tab_mine"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/ico_tab_me_nor" />
+
+            <TextView
+                android:id="@+id/txt_tab_mime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp4"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp22" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

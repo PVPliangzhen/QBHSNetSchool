@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout
+        android:id="@+id/home_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/home_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/home_root_lne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                //-------------------------------课程头开始-------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp90">
+
+                    <TextView
+                        android:layout_width="@dimen/dp120"
+                        android:layout_height="@dimen/dp60"
+                        android:text="课程"
+                        android:textSize="@dimen/dp32"
+                        android:textColor="@color/color_333333"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginLeft="@dimen/dp30"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp160"
+                        android:layout_height="@dimen/dp45"
+                        android:background="@mipmap/button_bg"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp23"
+                        android:paddingLeft="@dimen/dp15"
+                        android:paddingRight="@dimen/dp15"
+                        android:layout_marginEnd="@dimen/dp30"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="@dimen/dp100"
+                            android:layout_height="wrap_content"
+                            android:text="三年级"
+                            android:textColor="@color/color_ffffff"
+                            android:textSize="@dimen/dp24"
+                            android:gravity="center"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/rectangle"
+                            android:layout_marginLeft="@dimen/dp10"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+                //--------------------------------------------------课程头结束-----------------------------------
+                //---------------------------------------banner开始-------------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp380">
+                    </android.support.v4.view.ViewPager>
+
+                    <LinearLayout
+                        android:id="@+id/banner_dot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true">
+                    </LinearLayout>
+
+                </RelativeLayout>
+                //---------------------------------------banner结束-------------------------------------------
+            </LinearLayout>
+
+        </ScrollView>
+    </com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout>
+
+</LinearLayout>
