@@ -1,4 +1,4 @@
-package com.qbhsnetschool.mvp.activity;
+package com.qbhsnetschool.activity;
 
 import android.os.Bundle;
 

@@ -1,5 +1,6 @@
-package com.qbhsnetschool.mvp.activity;
+package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.qbhsnetschool.R;
@@ -9,9 +10,13 @@ import com.qbhsnetschool.R;
  */
 public class SplashActivity extends BaseActivity{
 
+    private SplashActivity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
+        startActivity(new Intent(this, HomeActivity.class));
     }
 }
