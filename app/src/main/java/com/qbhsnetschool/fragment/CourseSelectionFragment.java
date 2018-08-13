@@ -1,6 +1,5 @@
 package com.qbhsnetschool.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +27,6 @@ public class CourseSelectionFragment extends Fragment{
     private View rootView;
     private ViewPagerSwipeRefreshLayout swipeRefreshLayout;
 
-    private int banners [] = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3, R.drawable.banner4};
     private CourseSelectionHandler courseSelectionHandler;
     private ViewPager banner;
 
@@ -74,7 +72,6 @@ public class CourseSelectionFragment extends Fragment{
 
     private void initBanner(View rootView) {
         banner = rootView.findViewById(R.id.banner);
-        LinearLayout banner_dot = rootView.findViewById(R.id.banner_dot);
         BannerPagerAdapter bannerPagerAdapter = new BannerPagerAdapter(activity);
         banner.setAdapter(bannerPagerAdapter);
         banner.setCurrentItem(1000);

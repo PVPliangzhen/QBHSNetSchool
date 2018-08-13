@@ -83,6 +83,92 @@
 
                 </RelativeLayout>
                 //---------------------------------------banner结束-------------------------------------------
+                //---------------------------------------特惠专区开始---------------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:background="@color/color_f6f6f6"
+                    android:layout_marginTop="@dimen/dp8">
+                    <ImageView
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/dp30"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_left"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerInParent="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="特惠专区"
+                            android:textColor="@color/color_E20000"
+                            android:textSize="@dimen/dp40"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-------- 实时为您推荐性价比最优的课 --------"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp28"
+                            android:layout_marginTop="@dimen/dp16"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="@dimen/dp30"
+                        android:layout_marginBottom="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_right"/>
+                </RelativeLayout>
+                //----------------------------------------特惠专区结束--------------------------------------------
+                //----------------------------------------直播培优班开始------------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:background="@color/color_f6f6f6"
+                    android:layout_marginTop="@dimen/dp8">
+                    <ImageView
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/dp30"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_left"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_centerInParent="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="特惠专区"
+                            android:textColor="@color/color_E20000"
+                            android:textSize="@dimen/dp40"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-------- 实时为您推荐性价比最优的课 --------"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/dp28"
+                            android:layout_marginTop="@dimen/dp16"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="@dimen/dp30"
+                        android:layout_marginBottom="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_right"/>
+                </RelativeLayout>
+                //----------------------------------------直播培优班结束------------------------------------------
             </LinearLayout>
 
         </ScrollView>
