@@ -17,4 +17,8 @@ public class UrlHelper {
     public static String messageVerify(String tel){
         return BaseUrl.BASE_HTTP_URL + "app/tel_codes/" + tel + "/";
     }
+
+    public static String homePage(int grade){
+        return BaseUrl.BASE_HTTP_URL + "app/courses/" + grade + "/";
+    }
 }

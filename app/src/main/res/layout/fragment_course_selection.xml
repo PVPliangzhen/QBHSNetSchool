@@ -125,6 +125,33 @@
                         android:layout_height="wrap_content"
                         android:src="@mipmap/group_right"/>
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/discount_list_above_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp230"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:visibility="gone">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/discount_list_above"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/discount_list_bottom_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp250"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:visibility="gone">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/discount_list_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
                 //----------------------------------------特惠专区结束--------------------------------------------
                 //----------------------------------------直播培优班开始------------------------------------------
                 <RelativeLayout
@@ -133,33 +160,15 @@
                     android:background="@color/color_f6f6f6"
                     android:layout_marginTop="@dimen/dp8">
                     <ImageView
+                        android:id="@+id/top_corner"
                         android:layout_alignParentStart="true"
                         android:layout_marginLeft="@dimen/dp30"
                         android:layout_marginTop="@dimen/dp20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/group_left"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_centerInParent="true">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="特惠专区"
-                            android:textColor="@color/color_E20000"
-                            android:textSize="@dimen/dp40"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-------- 实时为您推荐性价比最优的课 --------"
-                            android:textColor="@color/color_666666"
-                            android:textSize="@dimen/dp28"
-                            android:layout_marginTop="@dimen/dp16"/>
-                    </LinearLayout>
                     <ImageView
+                        android:id="@+id/bottom_corner"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="@dimen/dp30"
@@ -167,8 +176,341 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/group_right"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/top_corner">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/peiuclass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/dp36"
+                                android:text="直播培优班"
+                                android:textColor="@color/color_333333"
+                                android:layout_marginTop="@dimen/dp40"
+                                android:layout_centerHorizontal="true"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_alignLeft="@+id/peiuclass"
+                                android:layout_below="@id/peiuclass"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:id="@+id/difficulty_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="难度"
+                                    android:textSize="@dimen/dp24"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="完全和课内同步"
+                                android:textColor="@color/color_666666"
+                                android:textSize="@dimen/dp28"
+                                android:layout_marginTop="@dimen/dp20"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="基础知识反复复习"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="适合基础薄弱的孩子"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </RelativeLayout>
                 //----------------------------------------直播培优班结束------------------------------------------
+
+                //----------------------------------------直播尖子班开始------------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:background="@color/color_f6f6f6"
+                    android:layout_marginTop="@dimen/dp8">
+                    <ImageView
+                        android:id="@+id/top_corner1"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/dp30"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_left"/>
+                    <ImageView
+                        android:id="@+id/bottom_corner1"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="@dimen/dp30"
+                        android:layout_marginBottom="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_right"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/top_corner1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/jianziclass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/dp36"
+                                android:text="直播尖子班"
+                                android:textColor="@color/color_333333"
+                                android:layout_marginTop="@dimen/dp40"
+                                android:layout_centerHorizontal="true"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_alignLeft="@+id/jianziclass"
+                                android:layout_below="@id/jianziclass"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:id="@+id/difficulty_txt1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="难度"
+                                    android:textSize="@dimen/dp24"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="以课内为基础"
+                                android:textColor="@color/color_666666"
+                                android:textSize="@dimen/dp28"
+                                android:layout_marginTop="@dimen/dp20"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="适当拓展，强化思维"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="难度介于课内跟竞赛之间"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+                //----------------------------------------直播尖子班结束------------------------------------------
+                //----------------------------------------直播华罗庚领航班开始------------------------------------------
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:background="@color/color_f6f6f6"
+                    android:layout_marginTop="@dimen/dp8">
+                    <ImageView
+                        android:id="@+id/top_corner2"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/dp30"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_left"/>
+                    <ImageView
+                        android:id="@+id/bottom_corner2"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="@dimen/dp30"
+                        android:layout_marginBottom="@dimen/dp20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/group_right"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/top_corner2">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/linghangclass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/dp36"
+                                android:text="华罗庚领航班"
+                                android:textColor="@color/color_333333"
+                                android:layout_marginTop="@dimen/dp40"
+                                android:layout_centerHorizontal="true"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_alignLeft="@+id/linghangclass"
+                                android:layout_below="@id/linghangclass"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:id="@+id/difficulty_txt2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="难度"
+                                    android:textSize="@dimen/dp24"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/reekstar"
+                                    android:layout_marginLeft="@dimen/dp8"/>
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="独立课程体系"
+                                android:textColor="@color/color_666666"
+                                android:textSize="@dimen/dp28"
+                                android:layout_marginTop="@dimen/dp20"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="完全拓展提升"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:text="需要参加专门选拔考试"
+                                android:textColor="@color/color_666666"
+                                android:layout_marginTop="@dimen/dp4"
+                                android:textSize="@dimen/dp28"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+                //----------------------------------------直播华罗庚领航班结束------------------------------------------
             </LinearLayout>
 
         </ScrollView>
