@@ -25,4 +25,12 @@ public class UrlHelper {
     public static String homeBanner(){
         return BaseUrl.BASE_HTTP_URL + "app/carousels/";
     }
+
+    public static String registerUser(){
+        return BaseUrl.BASE_HTTP_URL + "app/users";
+    }
+
+    public static String getVerifyCode(String phoneNumber){
+        return BaseUrl.BASE_HTTP_URL + "app/tel_codes/" + phoneNumber + "/";
+    }
 }
