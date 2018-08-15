@@ -6,9 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.CheapieBean;
+import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
 
@@ -30,18 +34,37 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-
+        CheapieBean cheapieBean = cheapieBeans.get(position);
+        String gradeItem = ConstantUtil.getGradeItems().get(cheapieBean.getItems());
+        String title1 = cheapieBean.getTitle1();
+        viewHolder.discount_title.setText("【"+ gradeItem + "】 " + title1);
+        String course_date = cheapieBean.getCourse_date();
+        String chapter_times = cheapieBean.getChapter_times();
+        viewHolder.discount_content.setText(course_date + "|" +chapter_times);
+        viewHolder.buy_discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return cheapieBeans == null ? 0 : cheapieBeans.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
+        TextView discount_title;
+        TextView discount_content;
+        Button buy_discount;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            discount_title = itemView.findViewById(R.id.discount_title);
+            discount_content = itemView.findViewById(R.id.discount_content);
+            buy_discount = itemView.findViewById(R.id.buy_discount);
         }
     }
 }

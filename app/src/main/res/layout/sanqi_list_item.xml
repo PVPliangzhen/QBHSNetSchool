@@ -1,79 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
-        android:layout_width="@dimen/dp550"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="@dimen/dp10"
         app:cardElevation="@dimen/dp8"
         android:layout_marginTop="@dimen/dp8"
-        android:layout_marginRight="@dimen/dp8"
+        android:layout_marginRight="@dimen/dp30"
         android:layout_marginBottom="@dimen/dp8"
         android:layout_marginLeft="@dimen/dp30">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/discount_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:src="@mipmap/discount"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="@dimen/dp80">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/title_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp60"
-                    android:gravity="center_vertical">
+                    android:layout_marginLeft="@dimen/dp60">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/summer"/>
-
-                    <TextView
-                        android:id="@+id/discount_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="99元直播尖子班"
-                        android:layout_marginLeft="@dimen/dp16"
-                        android:textColor="@color/color_333333"/>
+                        android:src="@mipmap/fall"/>
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/discount_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="99元直播尖子班"
+                    android:layout_marginLeft="@dimen/dp60"
+                    android:textColor="@color/color_333333"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginTop="@dimen/dp12"/>
+
+                <TextView
+                    android:id="@+id/discount_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="16课时"
-                    android:layout_marginLeft="@dimen/dp68"
-                    android:layout_marginTop="@dimen/dp16"
-                    android:textSize="@dimen/dp24"/>
+                    android:layout_marginLeft="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:textSize="@dimen/dp24"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
+                <TextView
+                    android:id="@+id/discount_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16课时"
+                    android:layout_marginLeft="@dimen/dp60"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:textSize="@dimen/dp24"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp260"
+                android:layout_height="match_parent"
+                android:gravity="center">
                 <Button
+                    android:id="@+id/discount_btn"
                     android:layout_width="@dimen/dp200"
                     android:layout_height="@dimen/dp50"
-                    android:layout_marginTop="@dimen/dp24"
                     android:text="立即抢购"
                     android:background="@mipmap/button_bg"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dp28"
-                    android:layout_gravity="center_horizontal" />
+                    android:textSize="@dimen/dp28"/>
             </LinearLayout>
-        </RelativeLayout>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

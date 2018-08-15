@@ -52,18 +52,24 @@
                         android:layout_height="wrap_content"
                         android:text="99元直播尖子班"
                         android:layout_marginLeft="@dimen/dp16"
-                        android:textColor="@color/color_333333"/>
+                        android:textColor="@color/color_333333"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/discount_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="16课时"
                     android:layout_marginLeft="@dimen/dp68"
                     android:layout_marginTop="@dimen/dp16"
-                    android:textSize="@dimen/dp24"/>
+                    android:textSize="@dimen/dp24"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
                 <Button
+                    android:id="@+id/buy_discount"
                     android:layout_width="@dimen/dp200"
                     android:layout_height="@dimen/dp50"
                     android:layout_marginTop="@dimen/dp24"

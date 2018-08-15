@@ -9,15 +9,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.entity.BannerBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BannerPagerAdapter extends PagerAdapter{
 
     private Context context;
+    private BannerBean bannerBean;
     private int banners [] = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3, R.drawable.banner4};
+    private List<String> bannerUrls;
 
-    public BannerPagerAdapter(Context context) {
+    public BannerPagerAdapter(Context context, BannerBean bannerBean) {
         this.context = context;
+        this.bannerBean = bannerBean;
+        bannerUrls = new ArrayList<>();
+        bannerUrls.add(bannerBean.getPic1());
+        bannerUrls.add(bannerBean.getPic2());
+        bannerUrls.add(bannerBean.getPic3());
+        bannerUrls.add(bannerBean.getPic4());
     }
 
     @Override
@@ -40,7 +53,8 @@ public class BannerPagerAdapter extends PagerAdapter{
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
         ImageView imageView = view.findViewById(R.id.banner_img);
-        Glide.with(context).load(banners[position % 4]).into(imageView);
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder);
+        Glide.with(context).load(bannerUrls.get(position % 4)).apply(requestOptions).into(imageView);
         container.addView(view);
         return view;
     }

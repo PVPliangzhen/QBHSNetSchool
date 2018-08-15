@@ -9,7 +9,7 @@ public class UrlHelper {
 
         static {
             if (BuildConfig.DEBUG) {
-                BASE_HTTP_URL = "http://192.168.1.17:8888/";
+                BASE_HTTP_URL = "http://192.168.1.70:8888/";
             }
         }
     }
@@ -20,5 +20,9 @@ public class UrlHelper {
 
     public static String homePage(int grade){
         return BaseUrl.BASE_HTTP_URL + "app/courses/" + grade + "/";
+    }
+
+    public static String homeBanner(){
+        return BaseUrl.BASE_HTTP_URL + "app/carousels/";
     }
 }

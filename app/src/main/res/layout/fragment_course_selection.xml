@@ -70,7 +70,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp380">
+                        android:layout_height="@dimen/dp420">
                     </android.support.v4.view.ViewPager>
 
                     <LinearLayout
@@ -131,7 +131,6 @@
                     android:layout_height="@dimen/dp230"
                     android:layout_marginTop="@dimen/dp20"
                     android:visibility="gone">
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/discount_list_above"
                         android:layout_width="match_parent"
@@ -142,8 +141,8 @@
                 <LinearLayout
                     android:id="@+id/discount_list_bottom_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp250"
-                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_height="@dimen/dp230"
+                    android:layout_marginTop="@dimen/dp12"
                     android:visibility="gone">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/discount_list_bottom"
@@ -158,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp180"
                     android:background="@color/color_f6f6f6"
-                    android:layout_marginTop="@dimen/dp8">
+                    android:layout_marginTop="@dimen/dp20">
                     <ImageView
                         android:id="@+id/top_corner"
                         android:layout_alignParentStart="true"
@@ -266,6 +265,17 @@
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/peiu_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
                 //----------------------------------------直播培优班结束------------------------------------------
 
                 //----------------------------------------直播尖子班开始------------------------------------------
@@ -386,6 +396,16 @@
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/jianzi_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
                 //----------------------------------------直播尖子班结束------------------------------------------
                 //----------------------------------------直播华罗庚领航班开始------------------------------------------
                 <RelativeLayout
@@ -510,6 +530,16 @@
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/hlg_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
                 //----------------------------------------直播华罗庚领航班结束------------------------------------------
             </LinearLayout>
 
