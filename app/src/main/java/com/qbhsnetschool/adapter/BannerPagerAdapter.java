@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.BannerBean;
 
@@ -53,8 +52,7 @@ public class BannerPagerAdapter extends PagerAdapter{
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
         ImageView imageView = view.findViewById(R.id.banner_img);
-        RequestOptions requestOptions = new RequestOptions().placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder);
-        Glide.with(context).load(bannerUrls.get(position % 4)).apply(requestOptions).into(imageView);
+        Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder).into(imageView);
         container.addView(view);
         return view;
     }

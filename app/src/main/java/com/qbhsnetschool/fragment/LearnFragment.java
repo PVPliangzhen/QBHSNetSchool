@@ -1,6 +1,9 @@
 package com.qbhsnetschool.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,11 +23,20 @@ import com.bokecc.sdk.mobile.live.pojo.TemplateInfo;
 import com.bokecc.sdk.mobile.live.pojo.Viewer;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.widget.ccvideo.PcLivePlayActivity;
 
 public class LearnFragment extends Fragment{
 
     private HomeActivity activity;
     private View rootView;
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Intent intent = new Intent(activity, PcLivePlayActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Nullable
     @Override
@@ -61,6 +73,8 @@ public class LearnFragment extends Fragment{
                                 if (liveInfo != null) {
                                     Toast.makeText(activity, "直播开始时间：" + liveInfo.getLiveStartTime() + "\n"
                                             + "直播持续时间：" +  liveInfo.getLiveDuration(), Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(activity, PcLivePlayActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                         });

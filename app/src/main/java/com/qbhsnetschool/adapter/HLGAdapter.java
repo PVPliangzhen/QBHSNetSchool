@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.HLGBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
@@ -59,8 +58,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
             }
         });
         String teacherImg = teacher1Bean.getApp_head_pic();
-        RequestOptions options = new RequestOptions().placeholder(R.mipmap.teacher_placeholder).error(R.mipmap.teacher_placeholder);
-        Glide.with(context).load(teacherImg).apply(options).into(viewHolder.teacher_show);
+        Glide.with(context).load(teacherImg).placeholder(R.mipmap.teacher_placeholder).error(R.mipmap.teacher_placeholder).into(viewHolder.teacher_show);
         int original_price = hlgBean.getOriginal_price();
         viewHolder.ori_price.setText("原价￥" + original_price + "");
         viewHolder.ori_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
