@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.bokecc.dwlivedemo_new.view.HeadView
+    <com.qbhsnetschool.widget.ccvideo.view.HeadView
         android:id="@id/id_private_head"
         style="@style/HeadIconStyle"
         android:layout_marginRight="9dp"

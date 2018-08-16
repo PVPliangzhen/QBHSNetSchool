@@ -5,7 +5,7 @@
     android:layout_marginTop="9dp"
     android:orientation="vertical">
 
-    <com.bokecc.dwlivedemo_new.view.HeadView
+    <com.qbhsnetschool.widget.ccvideo.view.HeadView
         android:id="@id/id_private_head"
         style="@style/HeadIconStyle"
         android:layout_marginRight="15dp"

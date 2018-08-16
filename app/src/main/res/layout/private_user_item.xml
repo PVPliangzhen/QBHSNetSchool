@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content"
                 android:background="#FAFAFA">
 
-    <com.bokecc.dwlivedemo_new.view.HeadView
+    <com.qbhsnetschool.widget.ccvideo.view.HeadView
         android:id="@+id/id_private_user_head"
         style="@style/HeadIconStyle"
         android:layout_alignParentStart="true"
