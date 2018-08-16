@@ -15,7 +15,6 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.ProtocolCode;
 import com.qbhsnetschool.protocol.UrlHelper;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
