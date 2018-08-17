@@ -48,7 +48,7 @@
         android:background="@color/color_e7e7e7"
         android:layout_marginLeft="@dimen/dp95"
         android:layout_marginRight="@dimen/dp95"
-        android:layout_marginTop="@dimen/dp2"/>
+        android:layout_marginTop="@dimen/dp8"/>
 
     <Button
         android:id="@+id/verify_code_btn"

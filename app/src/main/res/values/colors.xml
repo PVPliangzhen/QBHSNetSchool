@@ -51,4 +51,5 @@
 
     <color name="vertical_scroll_bar">#80ffffff</color>
     <color name="color_999999">#999999</color>
+    <color name="transparent">#00000000</color>
 </resources>

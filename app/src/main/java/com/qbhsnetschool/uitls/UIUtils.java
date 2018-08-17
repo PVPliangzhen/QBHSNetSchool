@@ -12,6 +12,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,7 +22,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.qbhsnetschool.R;
 import com.qbhsnetschool.app.QBHSApplication;
 
 import java.lang.reflect.Field;
@@ -518,5 +522,16 @@ public class UIUtils {
             return false;
         }
         return true;
+    }
+
+    public static void showPasswordExpress(EditText editText, ImageView imageView) {
+        if (editText.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+            imageView.setImageResource(R.mipmap.ico_appear);
+            editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            imageView.setImageResource(R.mipmap.ico_hide);
+            editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        editText.setSelection(editText.getText().length());
     }
 }
