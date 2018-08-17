@@ -8,6 +8,8 @@
         android:id="@+id/login_transit_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp30"
         android:src="@mipmap/close_white"/>
 
     <LinearLayout
@@ -19,22 +21,38 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp280"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dp40"
             android:text="华罗庚网校"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100%清华北大老师授课"/>
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dp30"
+            android:text="100%清华北大老师授课"
+            android:layout_marginTop="@dimen/dp16"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="注册"/>
+            android:id="@+id/to_register"
+            android:layout_width="@dimen/dp238"
+            android:layout_height="@dimen/dp62"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp100"
+            android:text="注册"
+            android:background="@drawable/register_btn_bg"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录"/>
+            android:id="@+id/to_login"
+            android:layout_width="@dimen/dp238"
+            android:layout_height="@dimen/dp62"
+            android:textColor="@color/color_E20000"
+            android:textSize="@dimen/dp30"
+            android:text="登录"
+            android:layout_marginTop="@dimen/dp50"
+            android:background="@drawable/login_btn_bg"/>
     </LinearLayout>
 
 </RelativeLayout>

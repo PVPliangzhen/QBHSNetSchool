@@ -2,23 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_ffffff">
+
+    <include layout="@layout/head_layout"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dp38"
+        android:layout_marginTop="@dimen/dp80"
+        android:layout_marginLeft="@dimen/dp95"
         android:text="手机号"/>
 
-    <EditText
-        android:id="@+id/phone_number_imput"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入手机号"/>
+        android:layout_marginTop="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp95">
+        <EditText
+            android:id="@+id/phone_number_imput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入手机号"
+            android:background="@color/color_ffffff"
+            android:maxLength="20"
+            android:layout_marginTop="@dimen/dp16"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dp32"
+            android:inputType="number"/>
+        <ImageView
+            android:id="@+id/num_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/editext_delete"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp95"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/color_e7e7e7"
+        android:layout_marginLeft="@dimen/dp95"
+        android:layout_marginRight="@dimen/dp95"
+        android:layout_marginTop="@dimen/dp2"/>
 
     <Button
         android:id="@+id/verify_code_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp560"
+        android:layout_height="@dimen/dp75"
+        android:background="@mipmap/button_bg"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dp30"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp50"
+        android:layout_gravity="center_horizontal"
         android:text="获取验证码登录"/>
 
 </LinearLayout>

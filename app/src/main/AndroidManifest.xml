@@ -87,6 +87,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".activity.VerifyCodeAtivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".widget.ccvideo.PcLivePlayActivity"
             android:label="@string/app_name"
