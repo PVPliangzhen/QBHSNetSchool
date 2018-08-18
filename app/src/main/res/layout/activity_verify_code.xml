@@ -235,6 +235,7 @@
         android:layout_marginTop="@dimen/dp60"/>
 
     <TextView
+        android:id="@+id/register_issue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="注册遇到问题？"
@@ -242,16 +243,31 @@
         android:textSize="@dimen/dp22"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/login_btn"
-        android:layout_marginTop="@dimen/dp16"/>
+        android:layout_marginTop="@dimen/dp24"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dp22"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp65"
-        android:textColor="@color/color_666666"
         android:layout_centerHorizontal="true"
-        android:text="注册即表示您同意《华罗庚网校用户协议与隐私条款》"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp22"
+            android:textColor="@color/color_666666"
+            android:text="注册即表示您同意"/>
+
+        <TextView
+            android:id="@+id/register_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《华罗庚网校用户协议与隐私条款》"
+            android:textColor="@color/color_E20000"
+            android:textSize="@dimen/dp22"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

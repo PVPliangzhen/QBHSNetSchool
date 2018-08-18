@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -33,6 +35,7 @@ import com.qbhsnetschool.entity.JianziBean;
 import com.qbhsnetschool.entity.PeiuBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.ViewPagerScroller;
@@ -132,6 +135,7 @@ public class CourseSelectionFragment extends Fragment {
     }
 
     private void initData() {
+        LoadingDialog.loading(activity);
         if (UIUtils.isNetworkAvailable(activity)) {
             HttpHelper.httpGetRequest(UrlHelper.homePage(3), "GET", new Callback() {
                 @Override
@@ -157,7 +161,7 @@ public class CourseSelectionFragment extends Fragment {
     private void initView(View rootView) {
         courseSelectionHandler = new CourseSelectionHandler(this);
         swipeRefreshLayout = rootView.findViewById(R.id.home_swipe_layout);
-        swipeRefreshLayout.setEnabled(false);
+        swipeRefreshLayout.setEnabled(true);
         discount_list_above_layout = rootView.findViewById(R.id.discount_list_above_layout);
         discount_list_bottom_layout = rootView.findViewById(R.id.discount_list_bottom_layout);
         initBanner(rootView);
@@ -196,6 +200,10 @@ public class CourseSelectionFragment extends Fragment {
         };
         jianzi_list_lm.setOrientation(LinearLayoutManager.VERTICAL);
         jianzi_list.setLayoutManager(jianzi_list_lm);
+        TextView page_title = (TextView) rootView.findViewById(R.id.page_title);
+        page_title.setText("选课");
+        ImageView page_back = (ImageView) rootView.findViewById(R.id.page_back);
+        page_back.setVisibility(View.INVISIBLE);
     }
 
     private void initBanner(View rootView) {

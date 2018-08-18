@@ -259,7 +259,7 @@ public class OkHttp3Executor implements HttpExecutor {
                 int mod = 0;
                 mod = setHeadersToRequest(request, extras, mod, extraCount);
                 final int postSize = httpContent.postSize();
-                if ((extraCount - mod - postSize) > 0) {
+                if ((extraCount - mod - postSize) >= 0) {
                     final int featureStart = mod;
                     mod = countOfExtraType(extras, featureStart, extraCount, PostBody.FEATURE);
                     final int paramsStart = featureStart + mod;

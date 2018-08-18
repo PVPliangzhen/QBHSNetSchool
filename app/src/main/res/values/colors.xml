@@ -52,4 +52,8 @@
     <color name="vertical_scroll_bar">#80ffffff</color>
     <color name="color_999999">#999999</color>
     <color name="transparent">#00000000</color>
+    <color name="android_l_status_bac">#E2E2E2</color>
+    <color name="android_l_status_tran">#22222222</color>
+    <color name="status_bar_bg_color">#E20000</color>
+    <color name="loading_dialog">#7f000000</color>
 </resources>

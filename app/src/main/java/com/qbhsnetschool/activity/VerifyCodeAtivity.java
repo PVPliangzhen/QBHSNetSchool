@@ -1,7 +1,10 @@
 package com.qbhsnetschool.activity;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -9,9 +12,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.httputils.Callback;
+import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.app.QBHSApplication;
+import com.qbhsnetschool.entity.User;
+import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.UIUtils;
+
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.internal.http.RealResponseBody;
 
 public class VerifyCodeAtivity extends BaseActivity{
 
@@ -30,12 +48,57 @@ public class VerifyCodeAtivity extends BaseActivity{
     private TextView [] textViews = new TextView [6];
     private ImageView pwd_show_img;
     private EditText pwd_content;
+    private TextView register_issue;
+    private TextView register_protocol;
+    private VerifyCodeAtivity activity;
+    private VerifyCodeHandler verifyCodeHandler;
+
+    private static class VerifyCodeHandler extends Handler{
+
+        WeakReference<VerifyCodeAtivity> weakReference;
+
+        public VerifyCodeHandler(VerifyCodeAtivity ativity){
+            weakReference = new WeakReference<>(ativity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            VerifyCodeAtivity verifyCodeAtivity = weakReference.get();
+            if (verifyCodeAtivity != null) {
+                switch (msg.what) {
+                    case 0x01:
+                        String result = (String) msg.obj;
+                        handleUser(verifyCodeAtivity, result);
+                        break;
+                }
+            }
+        }
+    }
+
+    private static void handleUser(VerifyCodeAtivity verifyCodeAtivity, String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            User user = new User();
+            user.setUserId(jsonObject.optInt("id"));
+            user.setNickname(jsonObject.optString("nickname"));
+            user.setResponseCode(jsonObject.optString("code"));
+            user.setResponseMsg(jsonObject.optString("msg"));
+            user.setUserTel(jsonObject.optString("tel"));
+            user.setUserToken(jsonObject.optString("token"));
+            QBHSApplication application = (QBHSApplication) verifyCodeAtivity.getApplicationContext();
+            application.setUser(user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_code);
+        setBaseContentView(R.layout.activity_verify_code, true, R.color.status_bar_bg_color, false);
+        activity = this;
         initView();
+        verifyCodeHandler = new VerifyCodeHandler(activity);
     }
 
     private void initView() {
@@ -53,6 +116,10 @@ public class VerifyCodeAtivity extends BaseActivity{
         pwd_show_img = (ImageView) findViewById(R.id.pwd_show_img);
         pwd_show_img.setOnClickListener(clickListener);
         pwd_content = (EditText) findViewById(R.id.pwd_content);
+        register_issue = (TextView) findViewById(R.id.register_issue);
+        register_issue.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        register_protocol = (TextView) findViewById(R.id.register_protocol);
+        register_protocol.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         txt1 = (TextView) findViewById(R.id.txt1);
         txt2 = (TextView) findViewById(R.id.txt2);
@@ -114,6 +181,7 @@ public class VerifyCodeAtivity extends BaseActivity{
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.login_btn:
+                    registerUser();
                     break;
                 case R.id.page_back:
                     finish();
@@ -124,4 +192,38 @@ public class VerifyCodeAtivity extends BaseActivity{
             }
         }
     };
+
+    private void registerUser() {
+        if (UIUtils.isNetworkAvailable(activity)){
+            Map<String, String> params = new HashMap<>();
+            params.put("password", pwd_content.getText().toString().trim());
+            params.put("tel", phonenumber);
+            params.put("tel_code", verify_code_edit.getText().toString().trim());
+            HttpHelper.httpRequest(UrlHelper.registerUser(), params, "POST", new Callback() {
+                @Override
+                public void onResponse(HttpResponse response) {
+                    try {
+                        if (response.code() == 200){
+                            String result = (((RealResponseBody) response.body()).string());
+                            Message message = Message.obtain();
+                            message.what = 0x01;
+                            message.obj = result;
+                            verifyCodeHandler.sendMessage(message);
+                        }else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }else{
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

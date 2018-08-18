@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.app.QBHSApplication;
 import com.qbhsnetschool.fragment.CourseSelectionFragment;
 import com.qbhsnetschool.fragment.LearnFragment;
 import com.qbhsnetschool.fragment.MineFragment;
+import com.qbhsnetschool.uitls.UIUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class HomeActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setBaseContentView(R.layout.activity_home, false, R.color.status_bar_bg_color, false);
         initView();
         initTab();
     }
@@ -135,9 +137,13 @@ public class HomeActivity extends BaseActivity{
                     clickLearnTab();
                     break;
                 case R.id.lne_tab_mine:
-                    clickMineTab();
-                    Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
-                    startActivity(intent);
+                    QBHSApplication application = (QBHSApplication) getApplication();
+                    if (application.user == null){
+                        Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        startActivity(intent);
+                    }else{
+                        clickMineTab();
+                    }
                     break;
             }
         }

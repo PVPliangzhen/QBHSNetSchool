@@ -70,6 +70,21 @@ public class RegisterActivity extends BaseActivity{
                             e.printStackTrace();
                         }
                         break;
+                    case 0x02:
+                        try {
+                            String result = (String) msg.obj;
+                            JSONObject jsonObject = new JSONObject(result);
+                            String code = jsonObject.optString("code");
+                            String responseMsg = jsonObject.optString("msg");
+                            if (code.equalsIgnoreCase(ProtocolCode.CODE_1202.getValue())){
+                                Toast.makeText(registerActivity, responseMsg, Toast.LENGTH_SHORT).show();
+                            }else{
+                                registerActivity.requestVerifyCode(registerActivity.phonenumber);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
                 }
             }
         }
@@ -78,7 +93,7 @@ public class RegisterActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setBaseContentView(R.layout.activity_register, true, R.color.status_bar_bg_color, false);
         activity = this;
         registerHandler = new RegisterHandler(activity);
         verify_code_btn = (Button) findViewById(R.id.verify_code_btn);
@@ -118,7 +133,7 @@ public class RegisterActivity extends BaseActivity{
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.verify_code_btn:
-                    requestVerifyCode();
+                    judgePhoneRegister(phonenumber);
                     break;
                 case R.id.num_delete:
                     phone_number_imput.setText("");
@@ -154,7 +169,34 @@ public class RegisterActivity extends BaseActivity{
         }
     };
 
-    private void requestVerifyCode() {
+    private void judgePhoneRegister(String phonenumber){
+        if (UIUtils.isNetworkAvailable(activity)){
+            if (judgePhoneNumberFormat()){
+                HttpHelper.httpGetRequest(UrlHelper.isPhoneRegister(phonenumber), "GET", new Callback() {
+                    @Override
+                    public void onResponse(HttpResponse response) {
+                        try {
+                            if (response.code() == 200){
+                                String result = (((RealResponseBody) response.body()).string());
+                                Message message = Message.obtain();
+                                message.what = 0x02;
+                                message.obj = result;
+                                registerHandler.sendMessage(message);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }else{
+                Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void requestVerifyCode(String phonenumber) {
         if (UIUtils.isNetworkAvailable(activity)){
             if (judgePhoneNumberFormat()){
                 HttpHelper.httpGetRequest(UrlHelper.getVerifyCode(phonenumber), "GET", new Callback() {

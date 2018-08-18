@@ -57,8 +57,8 @@ public class OkHttpBuilder {
 
     public HttpContent build() {
         HttpContent request = innerBuilder.build();
-        request.addFeature(HttpContent.F_PACKET, "only-params/json");
-        request.addFeature(HttpContent.F_BODY, "{*}");
+        //request.addFeature(HttpContent.F_PACKET, "only-params/json");
+        //request.addFeature(HttpContent.F_BODY, "{*}");
         return request;
     }
 }

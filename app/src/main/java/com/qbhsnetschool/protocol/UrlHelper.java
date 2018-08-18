@@ -33,4 +33,12 @@ public class UrlHelper {
     public static String getVerifyCode(String phoneNumber){
         return BaseUrl.BASE_HTTP_URL + "app/tel_codes/" + phoneNumber + "/";
     }
+
+    public static String isPhoneRegister(String phoneNumber){
+        return BaseUrl.BASE_HTTP_URL + "app/tels/" +phoneNumber + "/";
+    }
+
+    public static String login(){
+        return BaseUrl.BASE_HTTP_URL +"app/authorizations/";
+    }
 }

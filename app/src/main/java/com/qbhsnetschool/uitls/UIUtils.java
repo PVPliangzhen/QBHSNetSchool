@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -533,5 +535,24 @@ public class UIUtils {
             editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         editText.setSelection(editText.getText().length());
+    }
+
+    @SuppressLint("NewApi")
+    public static int getColor(Context context, int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return context.getColor(id);
+        } else {
+            return context.getResources().getColor(id);
+        }
+    }
+
+    @SuppressLint("NewApi")
+    public static void setBackground(View v, Bitmap bitmap) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            v.setBackgroundDrawable(new BitmapDrawable(v.getContext().getResources(), bitmap));
+        } else {
+            v.setBackground(new BitmapDrawable(v.getContext().getResources(), bitmap));
+        }
     }
 }

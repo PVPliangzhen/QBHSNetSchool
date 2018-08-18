@@ -23,6 +23,7 @@ import com.bokecc.sdk.mobile.live.pojo.TemplateInfo;
 import com.bokecc.sdk.mobile.live.pojo.Viewer;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.activity.WebActivity;
 import com.qbhsnetschool.widget.ccvideo.PcLivePlayActivity;
 
 public class LearnFragment extends Fragment{
@@ -52,48 +53,50 @@ public class LearnFragment extends Fragment{
         rootView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "123", Toast.LENGTH_SHORT).show();
-                isSuccessed = false;
-
-                LoginInfo loginInfo = new LoginInfo();
-                loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
-                loginInfo.setUserId("AA31D2BB588429C7");
-                loginInfo.setViewerName("pvplz");
-                loginInfo.setViewerToken("123");
-
-                DWLive.getInstance().setDWLiveLoginParams(new DWLiveLoginListener() {
-                    @Override
-                    public void onLogin(TemplateInfo templateInfo, Viewer viewer, RoomInfo roomInfo, PublishInfo publishInfo) {
-                        isSuccessed = true;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 获取直播信息必须在登录成功之后再获取，否则为空
-                                LiveInfo liveInfo = DWLive.getInstance().getLiveInfo();
-                                if (liveInfo != null) {
-                                    Toast.makeText(activity, "直播开始时间：" + liveInfo.getLiveStartTime() + "\n"
-                                            + "直播持续时间：" +  liveInfo.getLiveDuration(), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(activity, PcLivePlayActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onException(DWLiveException e) {
-                        isSuccessed = false;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(activity, "exception", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }, loginInfo);
-
-                DWLive.getInstance().setSecure(true);
-                DWLive.getInstance().startLogin();
+                Intent intent = new Intent(activity, WebActivity.class);
+                startActivity(intent);
+//                Toast.makeText(activity, "123", Toast.LENGTH_SHORT).show();
+//                isSuccessed = false;
+//
+//                LoginInfo loginInfo = new LoginInfo();
+//                loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
+//                loginInfo.setUserId("AA31D2BB588429C7");
+//                loginInfo.setViewerName("pvplz");
+//                loginInfo.setViewerToken("123");
+//
+//                DWLive.getInstance().setDWLiveLoginParams(new DWLiveLoginListener() {
+//                    @Override
+//                    public void onLogin(TemplateInfo templateInfo, Viewer viewer, RoomInfo roomInfo, PublishInfo publishInfo) {
+//                        isSuccessed = true;
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                // 获取直播信息必须在登录成功之后再获取，否则为空
+//                                LiveInfo liveInfo = DWLive.getInstance().getLiveInfo();
+//                                if (liveInfo != null) {
+//                                    Toast.makeText(activity, "直播开始时间：" + liveInfo.getLiveStartTime() + "\n"
+//                                            + "直播持续时间：" +  liveInfo.getLiveDuration(), Toast.LENGTH_LONG).show();
+//                                    Intent intent = new Intent(activity, PcLivePlayActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onException(DWLiveException e) {
+//                        isSuccessed = false;
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(activity, "exception", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                }, loginInfo);
+//
+//                DWLive.getInstance().setSecure(true);
+//                DWLive.getInstance().startLogin();
             }
         });
     }
