@@ -2,7 +2,6 @@ package com.qbhsnetschool.protocol;
 
 import android.text.TextUtils;
 
-import com.httputils.Callback;
 import com.httputils.HttpContent;
 import com.httputils.HttpUtils;
 import com.qbhsnetschool.app.QBHSApplication;
@@ -38,7 +37,7 @@ public class HttpHelper {
         return appUserAgent;
     }
 
-    public static void httpRequest(String url, Map<String, String> params, String httpMethod, Callback callback){
+    public static void httpRequest(String url, Map<String, String> params, String httpMethod, StandardCallBack callback){
         OkHttpBuilder requestBuilder = new OkHttpBuilder(url);
         final HttpContent request = requestBuilder
                 .setConnectTimeout(TimeUnit.SECONDS, CONNECT_TIMEOUT)
@@ -49,7 +48,7 @@ public class HttpHelper {
         HttpUtils.impl().request(request, httpMethod, callback);
     }
 
-    public static void httpGetRequest(String url, String httpMethod, Callback callback){
+    public static void httpGetRequest(String url, String httpMethod, StandardCallBack callback){
         OkHttpBuilder requestBuilder = new OkHttpBuilder(url);
         final HttpContent request = requestBuilder
                 .setConnectTimeout(TimeUnit.SECONDS, CONNECT_TIMEOUT)

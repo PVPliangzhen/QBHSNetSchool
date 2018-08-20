@@ -137,13 +137,14 @@ public class HomeActivity extends BaseActivity{
                     clickLearnTab();
                     break;
                 case R.id.lne_tab_mine:
-                    QBHSApplication application = (QBHSApplication) getApplication();
-                    if (application.user == null){
-                        Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
-                        startActivity(intent);
-                    }else{
-                        clickMineTab();
-                    }
+//                    QBHSApplication application = (QBHSApplication) getApplication();
+//                    if (application.user == null){
+//                        Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+//                        startActivity(intent);
+//                    }else{
+//                        clickMineTab();
+//                    }
+                    clickMineTab();
                     break;
             }
         }

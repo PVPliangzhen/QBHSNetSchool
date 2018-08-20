@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.httputils.Callback;
 import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
@@ -34,8 +33,8 @@ import com.qbhsnetschool.entity.HLGBean;
 import com.qbhsnetschool.entity.JianziBean;
 import com.qbhsnetschool.entity.PeiuBean;
 import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
-import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.ViewPagerScroller;
@@ -116,38 +115,32 @@ public class CourseSelectionFragment extends Fragment {
     }
 
     private void initBannerPic() {
-        if (UIUtils.isNetworkAvailable(activity)){
-            HttpHelper.httpGetRequest(UrlHelper.homeBanner(), "GET", new Callback() {
+        if (UIUtils.isNetworkAvailable(activity)) {
+            HttpHelper.httpGetRequest(UrlHelper.homeBanner(), "GET", new StandardCallBack(activity) {
                 @Override
-                public void onResponse(HttpResponse response) {
+                public void onSuccess(String response) {
                     try {
-                        if (response.code() == 200){
-                            String result = (((RealResponseBody) response.body()).string());
-                            Message message = Message.obtain();
-                            message.what = 0x03;
-                            message.obj = result;
-                            courseSelectionHandler.sendMessage(message);
-                        }
-                    }catch (Exception e){}
+                        Message message = Message.obtain();
+                        message.what = 0x03;
+                        message.obj = response;
+                        courseSelectionHandler.sendMessage(message);
+                    } catch (Exception e) {
+                    }
                 }
             });
         }
     }
 
     private void initData() {
-        LoadingDialog.loading(activity);
         if (UIUtils.isNetworkAvailable(activity)) {
-            HttpHelper.httpGetRequest(UrlHelper.homePage(3), "GET", new Callback() {
+            HttpHelper.httpGetRequest(UrlHelper.homePage(3), "GET", new StandardCallBack(activity) {
                 @Override
-                public void onResponse(HttpResponse response) {
+                public void onSuccess(String response) {
                     try {
-                        if (response.code() == 200) {
-                            String result = (((RealResponseBody) response.body()).string());
-                            Message message = Message.obtain();
-                            message.what = 0x02;
-                            message.obj = result;
-                            courseSelectionHandler.sendMessage(message);
-                        }
+                        Message message = Message.obtain();
+                        message.what = 0x02;
+                        message.obj = response;
+                        courseSelectionHandler.sendMessage(message);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -214,7 +207,7 @@ public class CourseSelectionFragment extends Fragment {
         viewPagerScroller.initViewPagerScroll(banner);
     }
 
-    private void handleParseJson(String result){
+    private void handleParseJson(String result) {
         try {
             if (!StringUtils.isEmpty(result)) {
                 JSONObject jsonObject = new JSONObject(result);
@@ -269,9 +262,9 @@ public class CourseSelectionFragment extends Fragment {
         }
     }
 
-    private void handleHomeBanner(String result){
+    private void handleHomeBanner(String result) {
         try {
-            if (!StringUtils.isEmpty(result)){
+            if (!StringUtils.isEmpty(result)) {
                 JSONObject jsonObject = new JSONObject(result);
                 String responseCode = jsonObject.optString("code");
                 if (responseCode.equalsIgnoreCase("200")) {
@@ -284,7 +277,7 @@ public class CourseSelectionFragment extends Fragment {
                     courseSelectionHandler.sendEmptyMessageDelayed(0x01, 3000);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

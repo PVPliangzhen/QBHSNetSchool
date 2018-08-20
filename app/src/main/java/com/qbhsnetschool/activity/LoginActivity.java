@@ -19,8 +19,11 @@ import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.app.QBHSApplication;
 import com.qbhsnetschool.entity.User;
+import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
@@ -41,7 +44,7 @@ import okhttp3.Response;
 import okhttp3.internal.http.RealResponseBody;
 import okhttp3.FormBody;
 
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends BaseActivity {
 
     private EditText account_number_input;
     private ImageView account_num_delete;
@@ -55,39 +58,48 @@ public class LoginActivity extends BaseActivity{
     private ImageView page_back;
     private LoginHandler loginHandler;
 
-    private static class LoginHandler extends Handler{
+    private static class LoginHandler extends Handler {
 
         WeakReference<LoginActivity> weakReference;
 
-        public LoginHandler(LoginActivity activity){
+        public LoginHandler(LoginActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             LoginActivity loginActivity = weakReference.get();
-            if (loginActivity != null){
-                switch (msg.what){
+            if (loginActivity != null) {
+                switch (msg.what) {
                     case 0x01:
                         String result = (String) msg.obj;
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            User user = new User();
-                            user.setUserId(jsonObject.optInt("id"));
-                            user.setNickname(jsonObject.optString("nickname"));
-                            user.setResponseCode(jsonObject.optString("code"));
-                            user.setResponseMsg(jsonObject.optString("msg"));
-                            user.setUserTel(jsonObject.optString("tel"));
-                            user.setUserToken(jsonObject.optString("token"));
-                            QBHSApplication application = (QBHSApplication) loginActivity.getApplicationContext();
-                            application.setUser(user);
-                            loginActivity.finish();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
+                        saveUser(loginActivity, result);
                         break;
                 }
             }
+        }
+    }
+
+    private static void saveUser(LoginActivity loginActivity, String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            User user = new User();
+            int userId = jsonObject.optInt("id");
+            String nickName = jsonObject.optString("nickname");
+            String code = jsonObject.optString("code");
+            String responseMsg = jsonObject.optString("msg");
+            String tel = jsonObject.optString("tel");
+            String token = jsonObject.optString("token");
+            user.setUserId(userId);
+            user.setNickname(nickName);
+            user.setResponseCode(code);
+            user.setResponseMsg(responseMsg);
+            user.setUserTel(tel);
+            user.setUserToken(token);
+            UserManager.getInstance().setUser(loginActivity, user);
+            loginActivity.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -131,9 +143,9 @@ public class LoginActivity extends BaseActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (account_number_input.getText().toString().trim().length() > 0){
+                if (account_number_input.getText().toString().trim().length() > 0) {
                     account_num_delete.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     account_num_delete.setVisibility(View.GONE);
                 }
             }
@@ -143,7 +155,7 @@ public class LoginActivity extends BaseActivity{
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.account_num_delete:
                     phonenNumber = "";
                     account_number_input.setText("");
@@ -170,57 +182,57 @@ public class LoginActivity extends BaseActivity{
     };
 
     private void login() {
-        if (UIUtils.isNetworkAvailable(activity)){
-            if (judgePhoneNumberFormat()){
+        if (UIUtils.isNetworkAvailable(activity)) {
+            if (judgePhoneNumberFormat()) {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", phonenNumber);
                 params.put("password", login_password.getText().toString().trim());
-                HttpHelper.httpRequest(UrlHelper.login(), params, "POST", new Callback() {
+                HttpHelper.httpRequest(UrlHelper.login(), params, "POST", new StandardCallBack(activity) {
                     @Override
-                    public void onResponse(HttpResponse response) {
+                    public void onSuccess(String response) {
                         try {
-                            if (response.code() == 200){
-                                String result = (((RealResponseBody) response.body()).string());
-                                Message message = Message.obtain();
-                                message.what = 0x01;
-                                message.obj = result;
-                                loginHandler.sendMessage(message);
-                            }else{
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }catch (Exception e){
+                            Message message = Message.obtain();
+                            message.what = 0x01;
+                            message.obj = response;
+                            loginHandler.sendMessage(message);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+
+                    @Override
+                    public void onFailure(int code) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 });
-            }else{
+            } else {
                 Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener(){
+    private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
-            if (hasFocus){
-                switch (view.getId()){
+            if (hasFocus) {
+                switch (view.getId()) {
                     case R.id.account_number_input:
-                        if (StringUtils.isEmpty(account_number_input.getText().toString().trim())){
+                        if (StringUtils.isEmpty(account_number_input.getText().toString().trim())) {
                             account_num_delete.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             account_num_delete.setVisibility(View.VISIBLE);
                         }
                         break;
                 }
-            }else{
-                switch (view.getId()){
+            } else {
+                switch (view.getId()) {
                     case R.id.phone_number_imput:
                         account_num_delete.setVisibility(View.GONE);
                         break;

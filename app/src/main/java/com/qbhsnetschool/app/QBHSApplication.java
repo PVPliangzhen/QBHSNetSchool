@@ -17,16 +17,6 @@ public class QBHSApplication extends MultiDexApplication{
 
     public static final boolean REPLAY_QA_FOLLOW_TIME = true; // 是否让回放的问答内容随时间轴推进展示
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User user = null;
-
     @Override
     public void onCreate() {
         super.onCreate();

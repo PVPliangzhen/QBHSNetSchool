@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.httputils.Callback;
 import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.ProtocolCode;
+import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 import okhttp3.internal.http.RealResponseBody;
 
-public class RegisterActivity extends BaseActivity{
+public class RegisterActivity extends BaseActivity {
 
     private RegisterActivity activity;
     private Button verify_code_btn;
@@ -40,30 +40,30 @@ public class RegisterActivity extends BaseActivity{
     private ImageView num_delete;
     private ImageView page_back;
 
-    private static class RegisterHandler extends Handler{
+    private static class RegisterHandler extends Handler {
 
         WeakReference<RegisterActivity> weakReference;
 
-        public RegisterHandler(RegisterActivity activity){
+        public RegisterHandler(RegisterActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             RegisterActivity registerActivity = weakReference.get();
-            if (registerActivity != null){
-                switch (msg.what){
+            if (registerActivity != null) {
+                switch (msg.what) {
                     case 0x01:
                         try {
                             String result = (String) msg.obj;
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");
                             String responseMsg = jsonObject.optString("msg");
-                            if (code.equalsIgnoreCase(ProtocolCode.CODE_1100.getValue())){
+                            if (code.equalsIgnoreCase(ProtocolCode.CODE_1100.getValue())) {
                                 Intent intent = new Intent(registerActivity, VerifyCodeAtivity.class);
                                 intent.putExtra("phonenumber", registerActivity.phonenumber);
                                 registerActivity.startActivity(intent);
-                            }else{
+                            } else {
                                 Toast.makeText(registerActivity, responseMsg, Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
@@ -76,12 +76,12 @@ public class RegisterActivity extends BaseActivity{
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");
                             String responseMsg = jsonObject.optString("msg");
-                            if (code.equalsIgnoreCase(ProtocolCode.CODE_1202.getValue())){
+                            if (code.equalsIgnoreCase(ProtocolCode.CODE_1202.getValue())) {
                                 Toast.makeText(registerActivity, responseMsg, Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 registerActivity.requestVerifyCode(registerActivity.phonenumber);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;
@@ -119,9 +119,9 @@ public class RegisterActivity extends BaseActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (phone_number_imput.getText().toString().trim().length() > 0){
+                if (phone_number_imput.getText().toString().trim().length() > 0) {
                     num_delete.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     num_delete.setVisibility(View.GONE);
                 }
             }
@@ -131,7 +131,7 @@ public class RegisterActivity extends BaseActivity{
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.verify_code_btn:
                     judgePhoneRegister(phonenumber);
                     break;
@@ -146,21 +146,21 @@ public class RegisterActivity extends BaseActivity{
         }
     };
 
-    private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener(){
+    private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
-            if (hasFocus){
-                switch (view.getId()){
+            if (hasFocus) {
+                switch (view.getId()) {
                     case R.id.phone_number_imput:
-                        if (StringUtils.isEmpty(phone_number_imput.getText().toString().trim())){
+                        if (StringUtils.isEmpty(phone_number_imput.getText().toString().trim())) {
                             num_delete.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             num_delete.setVisibility(View.VISIBLE);
                         }
                         break;
                 }
-            }else{
-                switch (view.getId()){
+            } else {
+                switch (view.getId()) {
                     case R.id.phone_number_imput:
                         num_delete.setVisibility(View.GONE);
                         break;
@@ -169,56 +169,70 @@ public class RegisterActivity extends BaseActivity{
         }
     };
 
-    private void judgePhoneRegister(String phonenumber){
-        if (UIUtils.isNetworkAvailable(activity)){
-            if (judgePhoneNumberFormat()){
-                HttpHelper.httpGetRequest(UrlHelper.isPhoneRegister(phonenumber), "GET", new Callback() {
+    private void judgePhoneRegister(String phonenumber) {
+        if (UIUtils.isNetworkAvailable(activity)) {
+            if (judgePhoneNumberFormat()) {
+                HttpHelper.httpGetRequest(UrlHelper.isPhoneRegister(phonenumber), "GET", new StandardCallBack(activity) {
                     @Override
-                    public void onResponse(HttpResponse response) {
+                    public void onSuccess(String response) {
                         try {
-                            if (response.code() == 200){
-                                String result = (((RealResponseBody) response.body()).string());
-                                Message message = Message.obtain();
-                                message.what = 0x02;
-                                message.obj = result;
-                                registerHandler.sendMessage(message);
-                            }
-                        }catch (Exception e){
+                            Message message = Message.obtain();
+                            message.what = 0x02;
+                            message.obj = response;
+                            registerHandler.sendMessage(message);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+
+                    @Override
+                    public void onFailure(int code) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 });
-            }else{
+            } else {
                 Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void requestVerifyCode(String phonenumber) {
-        if (UIUtils.isNetworkAvailable(activity)){
-            if (judgePhoneNumberFormat()){
-                HttpHelper.httpGetRequest(UrlHelper.getVerifyCode(phonenumber), "GET", new Callback() {
+        if (UIUtils.isNetworkAvailable(activity)) {
+            if (judgePhoneNumberFormat()) {
+                HttpHelper.httpGetRequest(UrlHelper.getVerifyCode(phonenumber), "GET", new StandardCallBack(activity) {
                     @Override
-                    public void onResponse(HttpResponse response) {
+                    public void onSuccess(String response) {
                         try {
-                            if (response.code() == 200){
-                                String result = (((RealResponseBody) response.body()).string());
-                                Message message = Message.obtain();
-                                message.what = 0x01;
-                                message.obj = result;
-                                registerHandler.sendMessage(message);
-                            }
-                        }catch (Exception e){
+                            Message message = Message.obtain();
+                            message.what = 0x01;
+                            message.obj = response;
+                            registerHandler.sendMessage(message);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+
+                    @Override
+                    public void onFailure(int code) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 });
-            }else{
+            } else {
                 Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }

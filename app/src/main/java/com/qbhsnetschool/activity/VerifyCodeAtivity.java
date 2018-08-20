@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.httputils.Callback;
 import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
-import com.qbhsnetschool.app.QBHSApplication;
 import com.qbhsnetschool.entity.User;
+import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.UIUtils;
 
@@ -31,7 +31,7 @@ import java.util.Map;
 
 import okhttp3.internal.http.RealResponseBody;
 
-public class VerifyCodeAtivity extends BaseActivity{
+public class VerifyCodeAtivity extends BaseActivity {
 
     private String phonenumber;
     private TextView phone_number;
@@ -45,7 +45,7 @@ public class VerifyCodeAtivity extends BaseActivity{
     private TextView txt4;
     private TextView txt5;
     private TextView txt6;
-    private TextView [] textViews = new TextView [6];
+    private TextView[] textViews = new TextView[6];
     private ImageView pwd_show_img;
     private EditText pwd_content;
     private TextView register_issue;
@@ -53,11 +53,11 @@ public class VerifyCodeAtivity extends BaseActivity{
     private VerifyCodeAtivity activity;
     private VerifyCodeHandler verifyCodeHandler;
 
-    private static class VerifyCodeHandler extends Handler{
+    private static class VerifyCodeHandler extends Handler {
 
         WeakReference<VerifyCodeAtivity> weakReference;
 
-        public VerifyCodeHandler(VerifyCodeAtivity ativity){
+        public VerifyCodeHandler(VerifyCodeAtivity ativity) {
             weakReference = new WeakReference<>(ativity);
         }
 
@@ -79,15 +79,21 @@ public class VerifyCodeAtivity extends BaseActivity{
         try {
             JSONObject jsonObject = new JSONObject(result);
             User user = new User();
-            user.setUserId(jsonObject.optInt("id"));
-            user.setNickname(jsonObject.optString("nickname"));
-            user.setResponseCode(jsonObject.optString("code"));
-            user.setResponseMsg(jsonObject.optString("msg"));
-            user.setUserTel(jsonObject.optString("tel"));
-            user.setUserToken(jsonObject.optString("token"));
-            QBHSApplication application = (QBHSApplication) verifyCodeAtivity.getApplicationContext();
-            application.setUser(user);
-        }catch (Exception e){
+            int userId = jsonObject.optInt("id");
+            String nickName = jsonObject.optString("nickname");
+            String code = jsonObject.optString("code");
+            String responseMsg = jsonObject.optString("msg");
+            String tel = jsonObject.optString("tel");
+            String token = jsonObject.optString("token");
+            user.setUserId(userId);
+            user.setNickname(nickName);
+            user.setResponseCode(code);
+            user.setResponseMsg(responseMsg);
+            user.setUserTel(tel);
+            user.setUserToken(token);
+            UserManager.getInstance().setUser(verifyCodeAtivity, user);
+            verifyCodeAtivity.finish();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -150,13 +156,13 @@ public class VerifyCodeAtivity extends BaseActivity{
 
                 String editNumber = "";
 
-                if (editable.length() > 6){
+                if (editable.length() > 6) {
                     return;
-                }else{
+                } else {
                     editNumber = editable.toString() + " " + " " + " " + " " + " " + " ";
                 }
 
-                for(int i = 0; i < 6; i++){
+                for (int i = 0; i < 6; i++) {
                     textViews[i].setText(String.valueOf(editNumber.charAt(i)));
                 }
             }
@@ -164,7 +170,7 @@ public class VerifyCodeAtivity extends BaseActivity{
         countDownTimer.start();
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(60 *1000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(60 * 1000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             count_timer_txt.setText(millisUntilFinished / 1000 + "s后重新发送");
@@ -179,7 +185,7 @@ public class VerifyCodeAtivity extends BaseActivity{
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.login_btn:
                     registerUser();
                     break;
@@ -194,35 +200,35 @@ public class VerifyCodeAtivity extends BaseActivity{
     };
 
     private void registerUser() {
-        if (UIUtils.isNetworkAvailable(activity)){
+        if (UIUtils.isNetworkAvailable(activity)) {
             Map<String, String> params = new HashMap<>();
             params.put("password", pwd_content.getText().toString().trim());
             params.put("tel", phonenumber);
             params.put("tel_code", verify_code_edit.getText().toString().trim());
-            HttpHelper.httpRequest(UrlHelper.registerUser(), params, "POST", new Callback() {
+            HttpHelper.httpRequest(UrlHelper.registerUser(), params, "POST", new StandardCallBack(activity) {
                 @Override
-                public void onResponse(HttpResponse response) {
+                public void onSuccess(String response) {
                     try {
-                        if (response.code() == 200){
-                            String result = (((RealResponseBody) response.body()).string());
-                            Message message = Message.obtain();
-                            message.what = 0x01;
-                            message.obj = result;
-                            verifyCodeHandler.sendMessage(message);
-                        }else{
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }catch (Exception e){
+                        Message message = Message.obtain();
+                        message.what = 0x01;
+                        message.obj = response;
+                        verifyCodeHandler.sendMessage(message);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+
+                @Override
+                public void onFailure(int code) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             });
-        }else{
+        } else {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
         }
     }

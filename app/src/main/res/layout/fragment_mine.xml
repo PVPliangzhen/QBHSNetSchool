@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_layout"/>
+
+    <com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout
+        android:id="@+id/mine_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/mine_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/mine_root_lne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/user_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp200"
+                    app:cardCornerRadius="@dimen/dp18"
+                    app:cardElevation="@dimen/dp10"
+                    android:background="@color/color_ffffff"
+                    android:layout_marginLeft="@dimen/dp32"
+                    android:layout_marginRight="@dimen/dp32"
+                    android:layout_marginTop="@dimen/dp60">
+                    
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        
+                        <ImageView
+                            android:id="@+id/user_avatar"
+                            android:layout_marginLeft="@dimen/dp32"
+                            android:layout_width="@dimen/dp134"
+                            android:layout_height="@dimen/dp134"
+                            android:src="@mipmap/avatarb"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:id="@+id/user_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="18701073115"
+                            android:layout_toRightOf="@+id/user_avatar"
+                            android:layout_marginLeft="@dimen/dp32"
+                            android:layout_centerVertical="true"/>
+
+                        <ImageView
+                            android:id="@+id/rect_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/rectangle13"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="@dimen/dp32"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/order_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp125"
+                    android:background="@color/color_ffffff"
+                    android:layout_marginTop="@dimen/dp40">
+                    <ImageView
+                        android:id="@+id/ico_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_book"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp30"
+                        android:text="我的订单"
+                        android:textColor="@color/color_666666"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ico_book"/>
+
+                    <ImageView
+                        android:id="@+id/to_order_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/rectangle13"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:background="@color/color_e7e7e7"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1" />
+
+                <RelativeLayout
+                    android:id="@+id/coupon_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp125"
+                    android:background="@color/color_ffffff">
+                    <ImageView
+                        android:id="@+id/ico_coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_coupon"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp30"
+                        android:text="优惠券"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:textColor="@color/color_666666"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ico_coupon"/>
+
+                    <ImageView
+                        android:id="@+id/to_coupon_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/rectangle13"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:background="@color/color_e7e7e7"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1" />
+
+                <RelativeLayout
+                    android:id="@+id/service_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp125"
+                    android:background="@color/color_ffffff">
+                    <ImageView
+                        android:id="@+id/ico_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_service"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp30"
+                        android:layout_marginLeft="@dimen/dp32"
+                        android:text="我的客服"
+                        android:textColor="@color/color_666666"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/ico_service"/>
+
+                    <ImageView
+                        android:id="@+id/to_service_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/rectangle13"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/dp32"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:background="@color/color_e7e7e7"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1" />
+
+                <Button
+                    android:layout_width="@dimen/dp235"
+                    android:layout_height="@dimen/dp63"
+                    android:layout_marginTop="@dimen/dp60"
+                    android:background="@mipmap/button_bg"
+                    android:text="退出登录"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dp30"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+        </ScrollView>
+    </com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout>
 
 </LinearLayout>
