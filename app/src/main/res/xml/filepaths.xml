@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="file1"
+        path="/"/>
+
+    <external-files-path
+        name="file2"
+        path="/"/>
+
+    <files-path
+        name="file3"
+        path="/"/>
+</paths>

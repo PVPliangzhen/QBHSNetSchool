@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_ffffff">
 
     <include layout="@layout/head_layout"/>
 
     <RelativeLayout
+        android:id="@+id/avatar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp125">
         
@@ -48,7 +50,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/rectangle13"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/dp30"/>
+            android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,7 +84,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/rectangle13"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/dp30"/>
+            android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -163,7 +165,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/rectangle13"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/dp30"/>
+            android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -197,7 +199,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/rectangle13"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/dp30"/>
+            android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
             android:layout_width="wrap_content"
