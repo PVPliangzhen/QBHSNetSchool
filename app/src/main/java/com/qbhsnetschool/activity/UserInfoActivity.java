@@ -24,9 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.uitls.CameraUtils;
 import com.qbhsnetschool.uitls.FileUtil;
+import com.qbhsnetschool.uitls.GlideCircleTransform;
 
 import org.json.JSONObject;
 
@@ -46,8 +49,8 @@ public class UserInfoActivity extends BaseActivity{
     public static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
     private File userPhotoPath;
     private File temp;
-    private Bitmap photo;
     private FileUtil fileUtils;
+    private ImageView avatar_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class UserInfoActivity extends BaseActivity{
         page_back.setOnClickListener(clickListener);
         avatar_layout = (RelativeLayout) findViewById(R.id.avatar_layout);
         avatar_layout.setOnClickListener(clickListener);
+        avatar_img = (ImageView) findViewById(R.id.avatar_img);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -74,61 +78,68 @@ public class UserInfoActivity extends BaseActivity{
                     finish();
                     break;
                 case R.id.avatar_layout:
-                    if (Environment.getExternalStorageState().equals(
-                            Environment.MEDIA_MOUNTED)) {
-                        userPhotoPath = new File(getExternalFilesDir("avatar").getAbsolutePath()
-                                + "/portrait.jpg");
-                    }
-                    new AlertDialog.Builder(activity).setItems(
-                            new String[]{"从相册选择", "拍照上传"},
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                protected Object clone() throws CloneNotSupportedException {
-                                    return super.clone();
-                                }
-
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which) {
-                                        case 0:// 从相册中取
-                                            Intent intent = null;
-                                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                                                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media
-                                                        .EXTERNAL_CONTENT_URI);
-                                                startActivityForResult(intent, PHOTOZOOM);
-                                            } else {
-                                                intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                                        IMAGE_UNSPECIFIED);
-                                                startActivityForResult(intent, PHOTOZOOM);
-                                            }
-                                            break;
-                                        case 1:// 拍照
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                if (ContextCompat.checkSelfPermission(activity, Manifest.permission
-                                                        .CAMERA) !=
-                                                        PackageManager.PERMISSION_GRANTED) {
-                                                    //申请CAMERA的权限
-                                                    requestPermissions(new String[]{Manifest.permission
-                                                            .CAMERA}, REQUEST_PERMISSION_CAMERA_CODE);
-                                                } else {
-                                                    camera();
-                                                }
-                                            } else {
-                                                if (CameraUtils.isCameraCanUse()) {
-                                                    camera();
-                                                } else {
-                                                    Toast.makeText(activity, "请打开相机权限", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }).show();
+                    createAvatar();
                     break;
+            }
+        }
+
+        private void createAvatar() {
+            try {
+                if (Environment.getExternalStorageState().equals(
+                        Environment.MEDIA_MOUNTED)) {
+                    userPhotoPath = new File(getExternalFilesDir("avatar").getAbsolutePath()
+                            + "/portrait.jpg");
+                }
+                new AlertDialog.Builder(activity).setItems(
+                        new String[]{"从相册选择", "拍照上传"},
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            protected Object clone() throws CloneNotSupportedException {
+                                return super.clone();
+                            }
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:// 从相册中取
+                                        Intent intent = null;
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media
+                                                    .EXTERNAL_CONTENT_URI);
+                                            startActivityForResult(intent, PHOTOZOOM);
+                                        } else {
+                                            intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                                    IMAGE_UNSPECIFIED);
+                                            startActivityForResult(intent, PHOTOZOOM);
+                                        }
+                                        break;
+                                    case 1:// 拍照
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            if (ContextCompat.checkSelfPermission(activity, Manifest.permission
+                                                    .CAMERA) !=
+                                                    PackageManager.PERMISSION_GRANTED) {
+                                                //申请CAMERA的权限
+                                                requestPermissions(new String[]{Manifest.permission
+                                                        .CAMERA}, REQUEST_PERMISSION_CAMERA_CODE);
+                                            } else {
+                                                camera();
+                                            }
+                                        } else {
+                                            if (CameraUtils.isCameraCanUse()) {
+                                                camera();
+                                            } else {
+                                                Toast.makeText(activity, "请打开相机权限", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }).show();
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     };
@@ -138,9 +149,12 @@ public class UserInfoActivity extends BaseActivity{
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             Intent getImageByCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             // 相机照片后的临时图片存储位置
-            temp = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+            File imagePath = new File(activity.getExternalCacheDir(), "images");
+            if (!imagePath.exists())
+                imagePath.mkdirs();
+            temp = new File(imagePath, "temp.jpg");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                getImageByCamera.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                getImageByCamera.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 Uri contentUri = FileProvider.getUriForFile(activity, "com.qbhsnetschool", temp);
                 getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
             }else {
@@ -174,10 +188,18 @@ public class UserInfoActivity extends BaseActivity{
         if (requestCode == PHOTOHRAPH) {
             // 从存储位置拿到图片直接进行裁剪
             if (temp == null) {
-                temp = new File(Environment.getExternalStorageDirectory(),
-                        "temp.jpg");
+                File imagePath = new File(activity.getExternalCacheDir(), "images");
+                if (!imagePath.exists())
+                    imagePath.mkdirs();
+                temp = new File(imagePath, "temp.jpg");
             }
-            cropImageUri(Uri.fromFile(temp), PHOTORESOULT);
+            Uri contentUri = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                contentUri = FileProvider.getUriForFile(activity, "com.qbhsnetschool", temp);
+            }else {
+                contentUri = Uri.fromFile(temp);
+            }
+            cropImageUri(contentUri, PHOTORESOULT);
             return;
         }
         // 读取相册缩放图片
@@ -193,7 +215,7 @@ public class UserInfoActivity extends BaseActivity{
                     userPhotoPath = new File(getExternalFilesDir("avatar").getAbsolutePath()
                             + "/portrait.jpg");
                 }
-                photo = BitmapFactory.decodeFile(userPhotoPath.getAbsolutePath());
+                Bitmap photo = BitmapFactory.decodeFile(userPhotoPath.getAbsolutePath());
                 // 设置图片裁剪大图640*640
                 photo = setImageSize(photo, 650);
                 // 保存图片到sd卡
@@ -207,6 +229,8 @@ public class UserInfoActivity extends BaseActivity{
                 if (temp != null && temp.exists()) {
                     fileUtils.deleteFile(temp.getAbsolutePath());
                 }
+                Glide.with(activity).load(userPhotoPath).asBitmap().placeholder(R.mipmap.avatars).error(R.mipmap.avatars).skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE).transform(new GlideCircleTransform(activity, userPhotoPath.toString())).into(avatar_img);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,22 +256,19 @@ public class UserInfoActivity extends BaseActivity{
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         //intent.putExtra("output", Uri.fromFile(userPhotoPath));
-        Uri contentUri = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            contentUri = FileProvider.getUriForFile(activity, "com.qbhsnetschool", userPhotoPath);
-        } else {
-            contentUri = Uri.fromFile(userPhotoPath);
-        }
-        intent.putExtra("output", contentUri);
+//        Uri contentUri = null;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            contentUri = FileProvider.getUriForFile(activity, "com.qbhsnetschool", temp);
+//        } else {
+//            contentUri = Uri.fromFile(temp);
+//        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(userPhotoPath));
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
-        // intent.putExtra("outputX", outputX);
-        // intent.putExtra("outputY", outputY);
-        // intent.putExtra("scale", true);
-        // intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        // intent.putExtra("return-data", false);
+         intent.putExtra("scale", true);
+         intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         // intent.putExtra("noFaceDetection", true); // 人脸识别
         startActivityForResult(intent, requestCode);
