@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -26,15 +27,36 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.entity.PersonalInfo;
+import com.qbhsnetschool.entity.UserManager;
+import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
+import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.CameraUtils;
+import com.qbhsnetschool.uitls.ConstantUtil;
 import com.qbhsnetschool.uitls.FileUtil;
 import com.qbhsnetschool.uitls.GlideCircleTransform;
+import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.StringUtils;
+import com.qbhsnetschool.uitls.UIUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class UserInfoActivity extends BaseActivity{
 
@@ -51,13 +73,106 @@ public class UserInfoActivity extends BaseActivity{
     private File temp;
     private FileUtil fileUtils;
     private ImageView avatar_img;
+    private UserInfoHandler userInfoHandler;
+    private PersonalInfo personalInfo = null;
+    private RelativeLayout nickname_layout, realname_layout;
+    private ImageView nickname_img, realname_img;
+    private TextView nickname_txt, realname_txt;
+    private RelativeLayout birthday_layout;
+    private ImageView birthday_img;
+    private TextView birthday_txt;
+    private RelativeLayout grade_layout;
+    private ImageView grade_img;
+    private TextView grade_txt;
+    private TextView contactNumber;
+    private ImageView male_img;
+    private TextView male_txt;
+    private ImageView female_img;
+    private TextView female_txt;
+
+    private static class UserInfoHandler extends Handler{
+
+        private WeakReference<UserInfoActivity> weakReference;
+
+        public UserInfoHandler(UserInfoActivity activity){
+            weakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            UserInfoActivity userInfoActivity = weakReference.get();
+            if (userInfoActivity != null){
+                switch (msg.what){
+                    case 0x01:
+                        String result = (String) msg.obj;
+                        userInfoActivity.handlePersonalInfo(result);
+                        break;
+                }
+            }
+        }
+    }
+
+    private void handlePersonalInfo(String result) {
+        try {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
+            JSONObject jsonObject = new JSONObject(result);
+            Gson gson = new Gson();
+            PersonalInfo personalInfo = gson.fromJson(jsonObject.toString(), PersonalInfo.class);
+            this.personalInfo = personalInfo;
+            nickname_txt.setText(personalInfo.getNickname());
+            realname_txt.setText(personalInfo.getRealname());
+            birthday_txt.setText(personalInfo.getBirthday());
+            grade_txt.setText(ConstantUtil.getGradeItems().get(personalInfo.getGrade()));
+            contactNumber.setText(personalInfo.getTel());
+            genderEvent(personalInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void genderEvent(PersonalInfo personalInfo) {
+        String sex = personalInfo.getSex();
+        if (StringUtils.isEmpty(sex)){
+            male_img.setImageResource(R.mipmap.oval_nor);
+            female_img.setImageResource(R.mipmap.oval_nor);
+        }
+        if (sex.equalsIgnoreCase("m")){
+            male_img.setImageResource(R.mipmap.oval_pre);
+            female_img.setImageResource(R.mipmap.oval_nor);
+        }
+        if (sex.equalsIgnoreCase("f")){
+            male_img.setImageResource(R.mipmap.oval_nor);
+            female_img.setImageResource(R.mipmap.oval_pre);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_user_info, true, R.color.status_bar_bg_color, false);
         activity = this;
+        userInfoHandler = new UserInfoHandler(activity);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        LoadingDialog.loading(activity);
+        if (UIUtils.isNetworkAvailable(activity)){
+            HttpHelper.httpGetRequest(UrlHelper.getPersonalInfo(), "GET", new StandardCallBack(activity) {
+                @Override
+                public void onSuccess(String result) {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = result;
+                    userInfoHandler.sendMessage(message);
+                }
+            });
+        }else{
+            Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initView() {
@@ -68,6 +183,41 @@ public class UserInfoActivity extends BaseActivity{
         avatar_layout = (RelativeLayout) findViewById(R.id.avatar_layout);
         avatar_layout.setOnClickListener(clickListener);
         avatar_img = (ImageView) findViewById(R.id.avatar_img);
+
+        nickname_layout = (RelativeLayout) findViewById(R.id.nickname_layout);
+        nickname_layout.setOnClickListener(clickListener);
+        nickname_img = (ImageView) findViewById(R.id.nickname_img);
+        nickname_img.setOnClickListener(clickListener);
+        nickname_txt = (TextView) findViewById(R.id.nickname_txt);
+
+        realname_layout = (RelativeLayout) findViewById(R.id.realname_layout);
+        realname_layout.setOnClickListener(clickListener);
+        realname_img = (ImageView) findViewById(R.id.realname_img);
+        realname_img.setOnClickListener(clickListener);
+        realname_txt = (TextView) findViewById(R.id.realname_txt);
+
+        birthday_layout = (RelativeLayout) findViewById(R.id.birthday_layout);
+        birthday_layout.setOnClickListener(clickListener);
+        birthday_img = (ImageView) findViewById(R.id.birthday_img);
+        birthday_img.setOnClickListener(clickListener);
+        birthday_txt = (TextView) findViewById(R.id.birthday_txt);
+
+        grade_layout = (RelativeLayout) findViewById(R.id.grade_layout);
+        grade_layout.setOnClickListener(clickListener);
+        grade_img = (ImageView) findViewById(R.id.grade_img);
+        grade_img.setOnClickListener(clickListener);
+        grade_txt = (TextView) findViewById(R.id.grade_txt);
+
+        contactNumber = (TextView) findViewById(R.id.contact_number);
+
+        male_img = (ImageView) findViewById(R.id.male_img);
+        male_img.setOnClickListener(clickListener);
+        male_txt = (TextView) findViewById(R.id.male_txt);
+        male_txt.setOnClickListener(clickListener);
+        female_img = (ImageView) findViewById(R.id.female_img);
+        female_img.setOnClickListener(clickListener);
+        female_txt = (TextView) findViewById(R.id.female_txt);
+        female_txt.setOnClickListener(clickListener);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -79,6 +229,23 @@ public class UserInfoActivity extends BaseActivity{
                     break;
                 case R.id.avatar_layout:
                     createAvatar();
+                    break;
+                case R.id.nickname_img:
+                case R.id.nickname_layout:
+                    Intent intent = new Intent(activity, ChangeNickNameActivity.class);
+                    startActivityForResult(intent, 0x11);
+                    break;
+                case R.id.realname_img:
+                case R.id.realname_layout:
+                    Toast.makeText(activity, "修改真实姓名请联系客服", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.male_img:
+                case R.id.male_txt:
+                    changeGender("m");
+                    break;
+                case R.id.female_img:
+                case R.id.female_txt:
+                    changeGender("f");
                     break;
             }
         }
@@ -144,6 +311,52 @@ public class UserInfoActivity extends BaseActivity{
         }
     };
 
+    private void changeGender(final String gender) {
+        if (personalInfo.getSex().equalsIgnoreCase(gender)){
+            return;
+        }
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        Map<String, String> params = new HashMap<>();
+        params.put("sex", gender);
+        HttpHelper.httpRequest(UrlHelper.getPersonalInfo(), params, "PATCH", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(final String result) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            String responseCode = jsonObject.optString("code");
+                            if (responseCode.equalsIgnoreCase("200")) {
+                                if (!LoadingDialog.isDissMissLoading()) {
+                                    LoadingDialog.dismissLoading();
+                                }
+                                if (gender.equalsIgnoreCase("m")) {
+                                    male_img.setImageResource(R.mipmap.oval_pre);
+                                    female_img.setImageResource(R.mipmap.oval_nor);
+                                    personalInfo.setSex(gender);
+                                }else if (gender.equalsIgnoreCase("f")) {
+                                    male_img.setImageResource(R.mipmap.oval_nor);
+                                    female_img.setImageResource(R.mipmap.oval_pre);
+                                    personalInfo.setSex(gender);
+                                }
+                                Toast.makeText(activity, "修改成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, "修改失败", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     private void camera() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
@@ -183,6 +396,9 @@ public class UserInfoActivity extends BaseActivity{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == NONE) {
             return;
+        }
+        if (resultCode == 0x12 && requestCode == 0x11){
+            initData();
         }
         // 拍照
         if (requestCode == PHOTOHRAPH) {

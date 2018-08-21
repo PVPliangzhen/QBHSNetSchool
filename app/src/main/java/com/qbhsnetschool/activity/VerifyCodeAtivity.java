@@ -91,7 +91,7 @@ public class VerifyCodeAtivity extends BaseActivity {
             user.setResponseMsg(responseMsg);
             user.setUserTel(tel);
             user.setUserToken(token);
-            UserManager.getInstance().setUser(verifyCodeAtivity, user);
+            UserManager.getInstance().setUser(user);
             verifyCodeAtivity.finish();
         } catch (Exception e) {
             e.printStackTrace();

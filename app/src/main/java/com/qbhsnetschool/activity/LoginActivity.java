@@ -96,8 +96,10 @@ public class LoginActivity extends BaseActivity {
             user.setResponseMsg(responseMsg);
             user.setUserTel(tel);
             user.setUserToken(token);
-            UserManager.getInstance().setUser(loginActivity, user);
-            loginActivity.finish();
+            UserManager.getInstance().setUser(user);
+            Intent intent = new Intent(loginActivity, HomeActivity.class);
+            intent.putExtra("home_tab", "2");
+            loginActivity.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }

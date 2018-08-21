@@ -183,6 +183,7 @@
                     android:layout_height="@dimen/dp1" />
 
                 <Button
+                    android:id="@+id/login_out"
                     android:layout_width="@dimen/dp235"
                     android:layout_height="@dimen/dp63"
                     android:layout_marginTop="@dimen/dp60"

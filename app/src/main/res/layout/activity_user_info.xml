@@ -36,6 +36,7 @@
         android:layout_marginRight="@dimen/dp30"/>
 
     <RelativeLayout
+        android:id="@+id/nickname_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp125">
 
@@ -46,6 +47,7 @@
             style="@style/user_info_item"/>
 
         <ImageView
+            android:id="@+id/nickname_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -54,12 +56,12 @@
             android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
+            android:id="@+id/nickname_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="@dimen/dp100"
-            android:layout_centerVertical="true"
-            android:text="昵称"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <View
@@ -70,6 +72,7 @@
         android:layout_marginRight="@dimen/dp30"/>
 
     <RelativeLayout
+        android:id="@+id/realname_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp125">
 
@@ -80,6 +83,7 @@
             style="@style/user_info_item"/>
 
         <ImageView
+            android:id="@+id/realname_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -88,12 +92,12 @@
             android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
+            android:id="@+id/realname_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="@dimen/dp100"
-            android:layout_centerVertical="true"
-            android:text="真实姓名"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <View
@@ -121,21 +125,27 @@
             android:layout_centerVertical="true">
 
             <ImageView
+                android:id="@+id/male_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/oval_pre"/>
+                android:src="@mipmap/oval_nor"/>
+
             <TextView
+                android:id="@+id/male_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="男"
                 android:layout_marginLeft="@dimen/dp8"/>
+
             <ImageView
+                android:id="@+id/female_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/oval_nor"
                 android:layout_marginLeft="@dimen/dp8"/>
 
             <TextView
+                android:id="@+id/female_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="女"
@@ -151,6 +161,7 @@
         android:layout_marginRight="@dimen/dp30"/>
 
     <RelativeLayout
+        android:id="@+id/birthday_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp125">
 
@@ -161,6 +172,7 @@
             style="@style/user_info_item"/>
 
         <ImageView
+            android:id="@+id/birthday_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -169,11 +181,11 @@
             android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
+            android:id="@+id/birthday_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="@dimen/dp100"
-            android:text="生日"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
@@ -185,6 +197,7 @@
         android:layout_marginRight="@dimen/dp30"/>
 
     <RelativeLayout
+        android:id="@+id/grade_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp125">
 
@@ -195,6 +208,7 @@
             style="@style/user_info_item"/>
 
         <ImageView
+            android:id="@+id/grade_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -203,12 +217,12 @@
             android:layout_marginRight="@dimen/dp50"/>
 
         <TextView
+            android:id="@+id/grade_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp100"
-            android:text="年级"/>
+            android:layout_marginRight="@dimen/dp100"/>
     </RelativeLayout>
 
     <View
@@ -223,6 +237,7 @@
         android:layout_height="@dimen/dp125">
 
         <TextView
+            android:id="@+id/contact_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="联系电话"

@@ -20,7 +20,7 @@ import com.qbhsnetschool.uitls.UIUtils;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity{
+public class HomeActivity extends BaseActivity {
 
     private int[] img_tab_checked = new int[]{R.mipmap.ico_tab_course_pre,
             R.mipmap.ico_tab_study_pre, R.mipmap.ico_tab_me_pre};
@@ -61,6 +61,28 @@ public class HomeActivity extends BaseActivity{
         txt_tab.add((TextView) findViewById(R.id.txt_tab_choose_course));
         txt_tab.add((TextView) findViewById(R.id.txt_tab_learn));
         txt_tab.add((TextView) findViewById(R.id.txt_tab_mime));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String home_tab = intent.getStringExtra("home_tab");
+        if (home_tab != null) {
+            switch (home_tab) {
+                case "0":
+                    break;
+                case "1":
+                    break;
+                case "2":
+                    if (!UserManager.getInstance().isLogin()) {
+                        Intent intent1 = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        startActivity(intent1);
+                    } else {
+                        clickMineTab();
+                    }
+                    break;
+            }
+        }
     }
 
     private void initTab() {
@@ -130,7 +152,7 @@ public class HomeActivity extends BaseActivity{
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.lne_tab_choose_course:
                     clickCourseTab();
                     break;
@@ -140,10 +162,10 @@ public class HomeActivity extends BaseActivity{
                     clickLearnTab();
                     break;
                 case R.id.lne_tab_mine:
-                    if (!UserManager.getInstance().isLogin(activity)){
+                    if (!UserManager.getInstance().isLogin()) {
                         Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
                         startActivity(intent);
-                    }else{
+                    } else {
                         clickMineTab();
                     }
                     break;

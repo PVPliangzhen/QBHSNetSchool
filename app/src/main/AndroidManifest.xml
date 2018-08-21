@@ -123,6 +123,12 @@
         </activity>
 
         <activity
+            android:name=".activity.ChangeNickNameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
             android:screenOrientation="portrait"

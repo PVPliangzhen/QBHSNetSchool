@@ -9,21 +9,33 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.activity.MyCouponActivity;
 import com.qbhsnetschool.activity.MyOrderActivity;
 import com.qbhsnetschool.activity.UserInfoActivity;
+import com.qbhsnetschool.entity.UserManager;
+import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
+import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.UIUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MineFragment extends Fragment{
 
     private HomeActivity activity;
     private View rootView;
     private CardView user_card;
+    private Button login_out;
 
     @Nullable
     @Override
@@ -31,7 +43,12 @@ public class MineFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_mine, container, false);
         initView(rootView);
+        initData();
         return rootView;
+    }
+
+    private void initData() {
+
     }
 
     private void initView(View rootView) {
@@ -47,6 +64,8 @@ public class MineFragment extends Fragment{
         coupon_layout.setOnClickListener(clickListener);
         RelativeLayout service_layout = rootView.findViewById(R.id.service_layout);
         service_layout.setOnClickListener(clickListener);
+        login_out = rootView.findViewById(R.id.login_out);
+        login_out.setOnClickListener(clickListener);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -66,6 +85,10 @@ public class MineFragment extends Fragment{
                     startActivity(intent2);
                     break;
                 case R.id.service_layout:
+                    break;
+                case R.id.login_out:
+                    UserManager.getInstance().clearUser();
+                    activity.clickCourseTab();
                     break;
             }
         }

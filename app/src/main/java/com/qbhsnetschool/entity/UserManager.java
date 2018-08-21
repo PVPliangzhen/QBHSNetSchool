@@ -1,7 +1,6 @@
 package com.qbhsnetschool.entity;
 
-import android.content.Context;
-
+import com.qbhsnetschool.app.QBHSApplication;
 import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.StringUtils;
 
@@ -9,7 +8,15 @@ public class UserManager {
 
     private User user;
 
+    private String token;
+
     private static UserManager userManager = null;
+
+    private QBHSApplication qbhsApplication;
+
+    public void registerApplication(QBHSApplication application){
+        qbhsApplication = application;
+    }
 
     private UserManager(){}
 
@@ -24,19 +31,21 @@ public class UserManager {
         return userManager;
     }
 
-    public void setUser(Context context, User user){
+    public void setUser(User user){
         this.user = user;
-        SpUtils spUtils = SpUtils.getInstance(context);
-        spUtils.put("user_id", user.getUserId());
-        spUtils.put("nickname", user.getNickname());
-        spUtils.put("code", user.getResponseCode());
-        spUtils.put("msg", user.getResponseMsg());
-        spUtils.put("tel", user.getUserTel());
-        spUtils.put("token", user.getUserToken());
+        if (user != null) {
+            SpUtils spUtils = SpUtils.getInstance(qbhsApplication);
+            spUtils.put("user_id", user.getUserId());
+            spUtils.put("nickname", user.getNickname());
+            spUtils.put("code", user.getResponseCode());
+            spUtils.put("msg", user.getResponseMsg());
+            spUtils.put("tel", user.getUserTel());
+            spUtils.put("token", user.getUserToken());
+        }
     }
 
-    public User getUser(Context context){
-        SpUtils spUtils = SpUtils.getInstance(context);
+    public User getUser(){
+        SpUtils spUtils = SpUtils.getInstance(qbhsApplication);
         if (user == null){
             String token = spUtils.get("token", "");
             if (!StringUtils.isEmpty(token)){
@@ -53,7 +62,26 @@ public class UserManager {
         return user;
     }
 
-    public boolean isLogin(Context context){
-        return getUser(context) != null;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void clearUser(){
+        setUser(null);
+        SpUtils spUtils = SpUtils.getInstance(qbhsApplication);
+        spUtils.put("user_id", -1);
+        spUtils.put("nickname", "");
+        spUtils.put("code", "");
+        spUtils.put("msg", "");
+        spUtils.put("tel", "");
+        spUtils.put("token", "");
+    }
+
+    public boolean isLogin(){
+        return getUser() != null;
     }
 }

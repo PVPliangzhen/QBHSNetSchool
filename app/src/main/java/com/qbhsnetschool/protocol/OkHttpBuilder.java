@@ -1,6 +1,10 @@
 package com.qbhsnetschool.protocol;
 
+import android.content.Context;
+
 import com.httputils.HttpContent;
+import com.qbhsnetschool.entity.User;
+import com.qbhsnetschool.entity.UserManager;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +41,9 @@ public class OkHttpBuilder {
 
     public OkHttpBuilder setParams(HttpContent request, Map<String, String> params){
         if (null != request && null != params){
+//            if (UserManager.getInstance().getUser(context) != null){
+//                request.addParameter("Authorization", "JWT" + UserManager.getInstance().getUser(context).getUserToken());
+//            }
             for (Map.Entry<String, String> entry : params.entrySet()){
                 request.addParameter(entry.getKey(), entry.getValue());
             }
@@ -57,6 +64,10 @@ public class OkHttpBuilder {
 
     public HttpContent build() {
         HttpContent request = innerBuilder.build();
+        if (UserManager.getInstance().getUser() != null){
+            String token = UserManager.getInstance().getUser().getUserToken();
+            addHeader(request, "Authorization", "JWT " + token);
+        }
         //request.addFeature(HttpContent.F_PACKET, "only-params/json");
         //request.addFeature(HttpContent.F_BODY, "{*}");
         return request;

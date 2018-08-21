@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.qbhsnetschool.entity.User;
+import com.qbhsnetschool.entity.UserManager;
 
 /**
  * created by liangzhen at 2018/8/10
@@ -24,6 +25,7 @@ public class QBHSApplication extends MultiDexApplication{
             context = this;
         }
         QBHSCrashHandler.getInstance().setCustomCrashHanler(this);
+        UserManager.getInstance().registerApplication(this);
     }
 
     public static Context getContext() {

@@ -354,10 +354,15 @@ public class OkHttp3Executor implements HttpExecutor {
                                 case "DELETE":
                                     request.delete(requestBody);
                                     break;
+                                case "GET":
+                                    request.get();
+                                    break;
                             }
                         } else
                             request.get();
 
+                    }else{
+                        request.get();
                     }
 
 

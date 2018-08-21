@@ -41,4 +41,8 @@ public class UrlHelper {
     public static String login(){
         return BaseUrl.BASE_HTTP_URL +"app/authorizations/";
     }
+
+    public static String getPersonalInfo(){
+        return BaseUrl.BASE_HTTP_URL + "app/user/";
+    }
 }
