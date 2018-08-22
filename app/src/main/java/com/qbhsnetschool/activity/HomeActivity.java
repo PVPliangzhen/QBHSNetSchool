@@ -15,6 +15,7 @@ import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.fragment.CourseSelectionFragment;
 import com.qbhsnetschool.fragment.LearnFragment;
 import com.qbhsnetschool.fragment.MineFragment;
+import com.qbhsnetschool.fragment.TestFragment;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import java.util.LinkedList;
@@ -22,14 +23,15 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity {
 
-    private int[] img_tab_checked = new int[]{R.mipmap.ico_tab_course_pre,
-            R.mipmap.ico_tab_study_pre, R.mipmap.ico_tab_me_pre};
-    private int[] img_tab_unchecked = new int[]{R.mipmap.ico_tab_course_nor,
-            R.mipmap.ico_tab_study_nor, R.mipmap.ico_tab_me_nor};
+    private int[] img_tab_checked = new int[]{R.mipmap.icon_tab_choose_sel,
+            R.mipmap.icon_tab_course_sel, R.mipmap.icon_tab_test_sel, R.mipmap.icon_tab_me_sel};
+    private int[] img_tab_unchecked = new int[]{R.mipmap.icon_tab_choose_nor,
+            R.mipmap.icon_tab_course_nor, R.mipmap.icon_tab_test_nor, R.mipmap.icon_tab_me_nor};
     private int position_change;
 
     private CourseSelectionFragment courseSelectionFragment;
     private LearnFragment learnFragment;
+    private TestFragment testFragment;
     private MineFragment mineFragment;
     private Fragment currentFragment;
     private List<ImageView> img_tab;
@@ -52,14 +54,18 @@ public class HomeActivity extends BaseActivity {
         lne_tab_learn.setOnClickListener(clickListener);
         LinearLayout lne_tab_mine = (LinearLayout) findViewById(R.id.lne_tab_mine);
         lne_tab_mine.setOnClickListener(clickListener);
+        LinearLayout lne_tab_test = (LinearLayout) findViewById(R.id.lne_tab_test);
+        lne_tab_test.setOnClickListener(clickListener);
         img_tab = new LinkedList<>();
         img_tab.add((ImageView) findViewById(R.id.img_tab_choose_course));
         img_tab.add((ImageView) findViewById(R.id.img_tab_learn));
+        img_tab.add((ImageView) findViewById(R.id.img_tab_test));
         img_tab.add((ImageView) findViewById(R.id.img_tab_mine));
 
         txt_tab = new LinkedList<>();
         txt_tab.add((TextView) findViewById(R.id.txt_tab_choose_course));
         txt_tab.add((TextView) findViewById(R.id.txt_tab_learn));
+        txt_tab.add((TextView) findViewById(R.id.txt_tab_test));
         txt_tab.add((TextView) findViewById(R.id.txt_tab_mime));
     }
 
@@ -126,13 +132,22 @@ public class HomeActivity extends BaseActivity {
         position_change = 1;
     }
 
+    public void clickTestTab() {
+        if (testFragment == null) {
+            testFragment = new TestFragment();
+        }
+        addOrShowFragment(getSupportFragmentManager().beginTransaction(), testFragment);
+        changeTabView(2);
+        position_change = 2;
+    }
+
     public void clickMineTab() {
         if (mineFragment == null) {
             mineFragment = new MineFragment();
         }
         addOrShowFragment(getSupportFragmentManager().beginTransaction(), mineFragment);
-        changeTabView(2);
-        position_change = 2;
+        changeTabView(3);
+        position_change = 3;
     }
 
     private void changeTabView(int position_current) {
@@ -160,6 +175,11 @@ public class HomeActivity extends BaseActivity {
                 case R.id.img_tab_learn:
                 case R.id.txt_tab_learn:
                     clickLearnTab();
+                    break;
+                case R.id.lne_tab_test:
+                case R.id.img_tab_test:
+                case R.id.txt_tab_test:
+                    clickTestTab();
                     break;
                 case R.id.lne_tab_mine:
                     if (!UserManager.getInstance().isLogin()) {

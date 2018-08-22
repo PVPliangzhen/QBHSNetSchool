@@ -56,4 +56,7 @@
     <color name="android_l_status_tran">#22222222</color>
     <color name="status_bar_bg_color">#E20000</color>
     <color name="loading_dialog">#7f000000</color>
+    <color name="color_111111">#111111</color>
+    <color name="color_FDEBEB">#FDEBEB</color>
+    <color name="color_D40000">#D40000</color>
 </resources>

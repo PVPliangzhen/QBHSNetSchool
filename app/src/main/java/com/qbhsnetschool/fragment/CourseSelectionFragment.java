@@ -7,11 +7,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +43,7 @@ import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.ViewPagerScroller;
 import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
+import com.zyyoona7.popup.EasyPopup;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -71,6 +76,11 @@ public class CourseSelectionFragment extends Fragment {
     private RecyclerView hlg_list;
     private RecyclerView jianzi_list;
     private BannerBean bannerBean;
+    private TextView grade_shown_txt;
+    private int screenWith;
+    private int screenHeight;
+    private EasyPopup gradePopup;
+    private TextView[] grade_textView;
 
     private static class CourseSelectionHandler extends Handler {
 
@@ -98,6 +108,11 @@ public class CourseSelectionFragment extends Fragment {
                         String bannerInfo = (String) msg.obj;
                         courseSelectionFragment.handleHomeBanner(bannerInfo);
                         break;
+                    case 0x04:
+                        courseSelectionFragment.swipeRefreshLayout.setRefreshing(false);
+                        String result1 = (String) msg.obj;
+                        courseSelectionFragment.handleParseJson(result1);
+                        break;
                 }
             }
         }
@@ -109,7 +124,7 @@ public class CourseSelectionFragment extends Fragment {
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_course_selection, container, false);
         initView(rootView);
-        initData();
+        initData(false);
         initBannerPic();
         return rootView;
     }
@@ -131,16 +146,23 @@ public class CourseSelectionFragment extends Fragment {
         }
     }
 
-    private void initData() {
+    private void initData(final boolean isRefresh) {
         if (UIUtils.isNetworkAvailable(activity)) {
             HttpHelper.httpGetRequest(UrlHelper.homePage(3), "GET", new StandardCallBack(activity) {
                 @Override
                 public void onSuccess(String response) {
                     try {
-                        Message message = Message.obtain();
-                        message.what = 0x02;
-                        message.obj = response;
-                        courseSelectionHandler.sendMessage(message);
+                        if (isRefresh){
+                            Message message = Message.obtain();
+                            message.what = 0x04;
+                            message.obj = response;
+                            courseSelectionHandler.sendMessage(message);
+                        }else {
+                            Message message = Message.obtain();
+                            message.what = 0x02;
+                            message.obj = response;
+                            courseSelectionHandler.sendMessage(message);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -155,6 +177,12 @@ public class CourseSelectionFragment extends Fragment {
         courseSelectionHandler = new CourseSelectionHandler(this);
         swipeRefreshLayout = rootView.findViewById(R.id.home_swipe_layout);
         swipeRefreshLayout.setEnabled(true);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(true);
+            }
+        });
         discount_list_above_layout = rootView.findViewById(R.id.discount_list_above_layout);
         discount_list_bottom_layout = rootView.findViewById(R.id.discount_list_bottom_layout);
         initBanner(rootView);
@@ -193,11 +221,52 @@ public class CourseSelectionFragment extends Fragment {
         };
         jianzi_list_lm.setOrientation(LinearLayoutManager.VERTICAL);
         jianzi_list.setLayoutManager(jianzi_list_lm);
-        TextView page_title = (TextView) rootView.findViewById(R.id.page_title);
+        TextView page_title = rootView.findViewById(R.id.page_title);
         page_title.setText("选课");
-        ImageView page_back = (ImageView) rootView.findViewById(R.id.page_back);
+        ImageView page_back = rootView.findViewById(R.id.page_back);
         page_back.setVisibility(View.INVISIBLE);
+        LinearLayout grade_select_layout = rootView.findViewById(R.id.grade_select_layout);
+        grade_select_layout.setOnClickListener(clickListener);
+        grade_shown_txt = rootView.findViewById(R.id.grade_shown_txt);
+
+        WindowManager manager = activity.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        screenWith = outMetrics.widthPixels;
+        screenHeight = outMetrics.heightPixels;
+        gradePopup = EasyPopup.create().setContentView(activity, R.layout.grade_select_popupp).setFocusAndOutsideEnable(true)
+                .setBackgroundDimEnable(true).setDimValue(0.4f)
+                .setHeight((int) (screenHeight - getResources().getDimension(R.dimen.dp700)))
+                .setWidth((int) (screenWith - getResources().getDimension(R.dimen.dp140))).apply();
+
+        grade_textView = new TextView[12];
+        grade_textView [0] = gradePopup.findViewById(R.id.yinianji);
+        grade_textView [1] = gradePopup.findViewById(R.id.ernianji);
+        grade_textView [2] = gradePopup.findViewById(R.id.sannianji);
+        grade_textView [3] = gradePopup.findViewById(R.id.sannianji);
+        grade_textView [4] = gradePopup.findViewById(R.id.wunianji);
+        grade_textView [5] = gradePopup.findViewById(R.id.liunianji);
+        grade_textView [6] = gradePopup.findViewById(R.id.chuyi);
+        grade_textView [7] = gradePopup.findViewById(R.id.chuer);
+        grade_textView [8] = gradePopup.findViewById(R.id.chusan);
+        grade_textView [9] = gradePopup.findViewById(R.id.gaoyi);
+        grade_textView [10] = gradePopup.findViewById(R.id.gaoer);
+        grade_textView [11] = gradePopup.findViewById(R.id.gaosan);
+        grade_textView[0].setTextColor(getResources().getColor(R.color.color_333333));
+        grade_textView[1].setBackgroundResource(R.drawable.grade_enable);
+        grade_textView[1].setTextColor(getResources().getColor(R.color.color_D40000));
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.grade_select_layout:
+                    gradePopup.showAtLocation(view, Gravity.CENTER, 0, 0);
+                    break;
+            }
+        }
+    };
 
     private void initBanner(View rootView) {
         banner = rootView.findViewById(R.id.banner);

@@ -153,8 +153,7 @@
                 android:id="@+id/teacher_show"
                 android:layout_width="@dimen/dp218"
                 android:layout_height="@dimen/dp345"
-                android:layout_marginTop="@dimen/dp44"
-                android:background="@mipmap/teacher_placeholder"/>
+                android:layout_marginTop="@dimen/dp44"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

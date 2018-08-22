@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp67"
+        android:text="设置当前所在年级"
+        android:textColor="@color/color_111111"
+        android:textSize="@dimen/dp30" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp67"
+        android:text="小学"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp25" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp40"
+        android:orientation="vertical">
+        //------------------------------------1-3年级start
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/yinianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="一年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/ernianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="二年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/sannianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="三年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        //-------------------------------1-3年级end
+        //-------------------------------4-6年级start
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp30">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/sinianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="四年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/wunianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="五年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/liunianji"
+                    android:layout_width="@dimen/dp158"
+                    android:layout_height="@dimen/dp50"
+                    android:gravity="center"
+                    android:text="六年级"
+                    android:background="@drawable/grade_normal"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/dp25"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        //---------------------------------4-6年级end
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp50"
+        android:text="中学"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp25" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp40">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/chuyi"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="初一"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/chuer"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="初二"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/chusan"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="初三"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    //----------------------------------------初中end
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp50"
+        android:text="高中"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp25" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp40">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/gaoyi"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="高一"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/gaoer"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="高二"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/gaosan"
+                android:layout_width="@dimen/dp158"
+                android:layout_height="@dimen/dp50"
+                android:gravity="center"
+                android:text="高三"
+                android:background="@drawable/grade_normal"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
