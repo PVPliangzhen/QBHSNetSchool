@@ -83,4 +83,34 @@
         <attr name="hv_shadow_width" format="dimension|reference"/>
         <attr name="hv_shadow_color" format="color|reference"/>
     </declare-styleable>
+
+    <declare-styleable name="TabGroupLayout">
+        <attr name="indicatorWidth" format="reference|dimension" />
+        <attr name="indicatorHeight" format="reference|dimension" />
+        <attr name="indicatorColor" format="reference|color" />
+        <attr name="tabTextAppearance" format="reference" />
+        <attr name="tabSelectedTextAppearance" format="reference" />
+        <attr name="tabLayout">
+            <flag name="from_child" value="0" />
+            <flag name="from_parent" value="1" />
+        </attr>
+        <attr name="chainStyle">
+            <flag name="spread" value="0" />
+        </attr>
+
+    </declare-styleable>
+
+
+    <!--TabViewLayout子视图布局参数（LayoutParams）-->
+    <declare-styleable name="TabGroupLayout.Layout">
+        <!--是否是TAB项-->
+        <attr name="tabView">
+            <enum name="TRUE" value="1" />
+            <enum name="FALSE" value="0" />
+        </attr>
+        <attr name="tabSelected">
+            <enum name="TRUE" value="1" />
+            <enum name="FALSE" value="0" />
+        </attr>
+    </declare-styleable>
 </resources>

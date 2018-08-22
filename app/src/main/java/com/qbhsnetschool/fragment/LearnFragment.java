@@ -7,9 +7,13 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bokecc.sdk.mobile.live.DWLive;
@@ -24,20 +28,34 @@ import com.bokecc.sdk.mobile.live.pojo.Viewer;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.activity.WebActivity;
+import com.qbhsnetschool.widget.TabGroupLayout;
 import com.qbhsnetschool.widget.ccvideo.PcLivePlayActivity;
+
+import java.lang.ref.WeakReference;
 
 public class LearnFragment extends Fragment{
 
     private HomeActivity activity;
     private View rootView;
 
-    Handler handler = new Handler(){
+    private static class LearnHandler extends Handler{
+
+        WeakReference<LearnFragment> weakReference;
+
+        public LearnHandler(LearnFragment fragment){
+            weakReference = new WeakReference<>(fragment);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            Intent intent = new Intent(activity, PcLivePlayActivity.class);
-            startActivity(intent);
+            LearnFragment learnFragment = weakReference.get();
+            if (learnFragment != null) {
+                switch (msg.what) {
+
+                }
+            }
         }
-    };
+    }
 
     @Nullable
     @Override
@@ -48,13 +66,43 @@ public class LearnFragment extends Fragment{
         return rootView;
     }
 
-    boolean isSuccessed = false;
     private void initView(View rootView) {
-        rootView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+        TextView page_title = rootView.findViewById(R.id.page_title);
+        page_title.setText("上课");
+        ImageView page_back = rootView.findViewById(R.id.page_back);
+        page_back.setVisibility(View.INVISIBLE);
+        TabGroupLayout tabGroupLayout = rootView.findViewById(R.id.tab_layout);
+        ViewPager course_viewpager = rootView.findViewById(R.id.course_viewpager);
+        course_viewpager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, WebActivity.class);
-                startActivity(intent);
+            public Fragment getItem(int position) {
+                Fragment fragment = null;
+                switch (position){
+                    case 0:
+                        fragment = new WaitClassFragment();
+                        break;
+                    case 1:
+                        fragment = new AlreadyClassFragment();
+                        break;
+                }
+                return fragment;
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        });
+        tabGroupLayout.setupViewPager(course_viewpager);
+    }
+
+//    boolean isSuccessed = false;
+//    private void test(View rootView) {
+//        rootView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(activity, WebActivity.class);
+//                startActivity(intent);
 //                Toast.makeText(activity, "123", Toast.LENGTH_SHORT).show();
 //                isSuccessed = false;
 //
@@ -97,9 +145,9 @@ public class LearnFragment extends Fragment{
 //
 //                DWLive.getInstance().setSecure(true);
 //                DWLive.getInstance().startLogin();
-            }
-        });
-    }
+//            }
+//        });
+//    }
 
 
 }

@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_layout" />
+
+    <com.qbhsnetschool.widget.TabGroupLayout
+        android:id="@+id/test_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp128"
+        app:tabSelectedTextAppearance="@style/TextAppearance_Tab_Selected"
+        app:tabTextAppearance="@style/TextAppearance_Tab_Unselected"
+        app:indicatorHeight="0dp"
+        android:background="@color/color_ffffff">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="待测试题"
+            app:tabView="TRUE"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="已测试题"
+            app:tabView="TRUE"/>
+    </com.qbhsnetschool.widget.TabGroupLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/color_e7e7e7"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp30"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/test_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

@@ -366,4 +366,13 @@
         <item name="android:textSize">@dimen/dp30</item>
     </style>
 
+    <style name="TextAppearance_Tab_Unselected">
+        <item name="android:textSize">@dimen/dp30</item>
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+    <style name="TextAppearance_Tab_Selected">
+        <item name="android:textSize">@dimen/dp30</item>
+        <item name="android:textColor">@color/color_D20000</item>
+    </style>
+
 </resources>
