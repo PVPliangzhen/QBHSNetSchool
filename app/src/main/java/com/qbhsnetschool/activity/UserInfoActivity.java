@@ -19,12 +19,22 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -48,9 +58,13 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -125,7 +139,7 @@ public class UserInfoActivity extends BaseActivity{
             realname_txt.setText(personalInfo.getRealname());
             birthday_txt.setText(personalInfo.getBirthday());
             grade_txt.setText(ConstantUtil.getGradeItems().get(personalInfo.getGrade()));
-            contactNumber.setText(personalInfo.getTel());
+            contactNumber.setText(subStringPhoneNumber(personalInfo.getTel()));
             genderEvent(personalInfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,7 +261,108 @@ public class UserInfoActivity extends BaseActivity{
                 case R.id.female_txt:
                     changeGender("f");
                     break;
+                case R.id.birthday_layout:
+                case R.id.birthday_img:
+                    final TimePickerView timePickerView = new TimePickerBuilder(activity, new OnTimeSelectListener() {
+                        @Override
+                        public void onTimeSelect(Date date, View v) {
+                            if (!UIUtils.isNetworkAvailable(activity)) {
+                                Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            birthday_txt.setText(getTime(date));
+                            LoadingDialog.loading(activity);
+                            Map<String, String> params = new HashMap<>();
+                            params.put("birthday", getTime(date));
+                            HttpHelper.httpRequest(UrlHelper.getPersonalInfo(), params, "PATCH", new StandardCallBack(activity) {
+                                @Override
+                                public void onSuccess(final String result) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(result);
+                                                String responseCode = jsonObject.optString("code");
+                                                if (responseCode.equalsIgnoreCase("200")) {
+                                                    if (!LoadingDialog.isDissMissLoading()) {
+                                                        LoadingDialog.dismissLoading();
+                                                    }
+                                                    Toast.makeText(activity, "修改成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(activity, "修改失败", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
+                        @Override
+                        public void onTimeSelectChanged(Date date) {
+
+                        }
+                    }).setTitleText("生日").isDialog(false).setType(new boolean[]{true, true, true, false, false, false}).build();
+                    timePickerView.show();
+                    break;
+                case R.id.grade_layout:
+                case R.id.grade_img:
+                    OptionsPickerView optionsPickerView = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
+                        @Override
+                        public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                            if (!UIUtils.isNetworkAvailable(activity)) {
+                                Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String grade = ConstantUtil.getGrades().get(options1);
+                            grade_txt.setText(grade);
+                            LoadingDialog.loading(activity);
+                            Map<String, String> params = new HashMap<>();
+                            int gradeIndex = ConstantUtil.getGradeIndex().get(grade);
+                            params.put("grade", gradeIndex + "");
+                            HttpHelper.httpRequest(UrlHelper.getPersonalInfo(), params, "PATCH", new StandardCallBack(activity) {
+                                @Override
+                                public void onSuccess(final String result) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(result);
+                                                String responseCode = jsonObject.optString("code");
+                                                if (responseCode.equalsIgnoreCase("200")) {
+                                                    if (!LoadingDialog.isDissMissLoading()) {
+                                                        LoadingDialog.dismissLoading();
+                                                    }
+                                                    Toast.makeText(activity, "修改成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(activity, "修改失败", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }).setTitleText("选择年级").isRestoreItem(true).isCenterLabel(false).setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                        @Override
+                        public void onOptionsSelectChanged(int options1, int options2, int options3) {
+
+                        }
+                    }).build();
+                    optionsPickerView.setPicker(ConstantUtil.getGrades());
+                    optionsPickerView.show();
+                    break;
             }
+        }
+
+        private String getTime(Date date) {//可根据需要自行截取数据显示
+            Log.d("getTime()", "choice date millis: " + date.getTime());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            return format.format(date);
         }
 
         private void createAvatar() {
@@ -312,11 +427,11 @@ public class UserInfoActivity extends BaseActivity{
     };
 
     private void changeGender(final String gender) {
-        if (personalInfo.getSex().equalsIgnoreCase(gender)){
-            return;
-        }
         if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (personalInfo.getSex().equalsIgnoreCase(gender)){
             return;
         }
         LoadingDialog.loading(activity);
@@ -508,5 +623,28 @@ public class UserInfoActivity extends BaseActivity{
                     cropImage.getHeight());
         }
         return cropImage;
+    }
+
+    private String subStringPhoneNumber(String mobile){
+        String maskNumber = mobile;
+        if (judgePhoneNumberFormat(mobile)) {
+            maskNumber = mobile.substring(0, 3) + "****" + mobile.substring(7, mobile.length());
+        }
+        return maskNumber;
+    }
+
+    /**
+     * 判断手机号格式
+     *
+     * @return
+     */
+    public boolean judgePhoneNumberFormat(String mobile) {
+        Pattern mobileReg = Pattern
+                .compile("((^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$)|(^\\d{7,8}$)|(^0[1," +
+                        "2]{1}\\d{1}(-|_)?\\d{8}$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}$)|(^0[1,2]{1}\\d{1}(-|_)?\\d{8}" +
+                        "(-|_)(\\d{1,4})$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}(-|_)(\\d{1,4})$))");
+        Matcher mobileMatcher = mobileReg.matcher(mobile);
+        boolean isMobile = mobileMatcher.matches();
+        return isMobile;
     }
 }
