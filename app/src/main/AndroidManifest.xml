@@ -59,7 +59,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,74 +72,74 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme1" />
 
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
         <activity
             android:name=".activity.LoginTrasitActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.RegisterActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.VerifyCodeAtivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.ForgetPassWordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.UserInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme1" >
         </activity>
 
         <activity
             android:name=".activity.MyOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.MyCouponActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.ChangeNickNameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
 
         <activity
             android:name=".activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <activity
             android:name=".widget.ccvideo.PcLivePlayActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
