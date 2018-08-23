@@ -23,6 +23,7 @@ import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
@@ -73,33 +74,40 @@ public class LoginActivity extends BaseActivity {
                 switch (msg.what) {
                     case 0x01:
                         String result = (String) msg.obj;
-                        saveUser(loginActivity, result);
+                        loginActivity.saveUser(result);
                         break;
                 }
             }
         }
     }
 
-    private static void saveUser(LoginActivity loginActivity, String result) {
+    private void saveUser(String result) {
         try {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
             JSONObject jsonObject = new JSONObject(result);
-            User user = new User();
-            int userId = jsonObject.optInt("id");
-            String nickName = jsonObject.optString("nickname");
             String code = jsonObject.optString("code");
             String responseMsg = jsonObject.optString("msg");
-            String tel = jsonObject.optString("tel");
-            String token = jsonObject.optString("token");
-            user.setUserId(userId);
-            user.setNickname(nickName);
-            user.setResponseCode(code);
-            user.setResponseMsg(responseMsg);
-            user.setUserTel(tel);
-            user.setUserToken(token);
-            UserManager.getInstance().setUser(user);
-            Intent intent = new Intent(loginActivity, HomeActivity.class);
-            intent.putExtra("home_tab", "2");
-            loginActivity.startActivity(intent);
+            if (code.equalsIgnoreCase("200")) {
+                int userId = jsonObject.optInt("id");
+                String nickName = jsonObject.optString("nickname");
+                String tel = jsonObject.optString("tel");
+                String token = jsonObject.optString("token");
+                User user = new User();
+                user.setUserId(userId);
+                user.setNickname(nickName);
+                user.setResponseCode(code);
+                user.setResponseMsg(responseMsg);
+                user.setUserTel(tel);
+                user.setUserToken(token);
+                UserManager.getInstance().setUser(user);
+                Intent intent = new Intent(activity, HomeActivity.class);
+                intent.putExtra("home_tab", "2");
+                startActivity(intent);
+            }else{
+                Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,40 +192,44 @@ public class LoginActivity extends BaseActivity {
     };
 
     private void login() {
-        if (UIUtils.isNetworkAvailable(activity)) {
-            if (judgePhoneNumberFormat()) {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", phonenNumber);
-                params.put("password", login_password.getText().toString().trim());
-                HttpHelper.httpRequest(UrlHelper.login(), params, "POST", new StandardCallBack(activity) {
-                    @Override
-                    public void onSuccess(String response) {
-                        try {
-                            Message message = Message.obtain();
-                            message.what = 0x01;
-                            message.obj = response;
-                            loginHandler.sendMessage(message);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!judgePhoneNumberFormat()) {
+            Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", phonenNumber);
+        params.put("password", login_password.getText().toString().trim());
+        HttpHelper.httpRequest(UrlHelper.login(), params, "POST", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = response;
+                    loginHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(int code) {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(int code) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    public void run() {
+                        if (!LoadingDialog.isDissMissLoading()){
+                            LoadingDialog.dismissLoading();
+                        }
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
-                Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
     private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {

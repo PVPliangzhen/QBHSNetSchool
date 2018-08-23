@@ -39,6 +39,8 @@ import com.qbhsnetschool.entity.PeiuBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.ConstantUtil;
+import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.ViewPagerScroller;
@@ -81,6 +83,10 @@ public class CourseSelectionFragment extends Fragment {
     private int screenHeight;
     private EasyPopup gradePopup;
     private TextView[] grade_textView;
+    private int currentGradeIndex = 3;
+    private LinearLayout peiu_list_layout;
+    private LinearLayout jianzi_list_layout;
+    private LinearLayout hlg_list_layout;
 
     private static class CourseSelectionHandler extends Handler {
 
@@ -101,17 +107,18 @@ public class CourseSelectionFragment extends Fragment {
                         courseSelectionFragment.courseSelectionHandler.sendEmptyMessageDelayed(0x01, 3000);
                         break;
                     case 0x02:
+                        if (courseSelectionFragment.swipeRefreshLayout.isRefreshing()) {
+                            courseSelectionFragment.swipeRefreshLayout.setRefreshing(false);
+                        }
+                        if (!LoadingDialog.isDissMissLoading()) {
+                            LoadingDialog.dismissLoading();
+                        }
                         String result = (String) msg.obj;
                         courseSelectionFragment.handleParseJson(result);
                         break;
                     case 0x03:
                         String bannerInfo = (String) msg.obj;
                         courseSelectionFragment.handleHomeBanner(bannerInfo);
-                        break;
-                    case 0x04:
-                        courseSelectionFragment.swipeRefreshLayout.setRefreshing(false);
-                        String result1 = (String) msg.obj;
-                        courseSelectionFragment.handleParseJson(result1);
                         break;
                 }
             }
@@ -124,7 +131,7 @@ public class CourseSelectionFragment extends Fragment {
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_course_selection, container, false);
         initView(rootView);
-        initData(false);
+        initData(currentGradeIndex, false);
         initBannerPic();
         return rootView;
     }
@@ -146,31 +153,27 @@ public class CourseSelectionFragment extends Fragment {
         }
     }
 
-    private void initData(final boolean isRefresh) {
-        if (UIUtils.isNetworkAvailable(activity)) {
-            HttpHelper.httpGetRequest(UrlHelper.homePage(3), "GET", new StandardCallBack(activity) {
-                @Override
-                public void onSuccess(String response) {
-                    try {
-                        if (isRefresh){
-                            Message message = Message.obtain();
-                            message.what = 0x04;
-                            message.obj = response;
-                            courseSelectionHandler.sendMessage(message);
-                        }else {
-                            Message message = Message.obtain();
-                            message.what = 0x02;
-                            message.obj = response;
-                            courseSelectionHandler.sendMessage(message);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } else {
+    private void initData(int gradeIndex, final boolean isRefresh) {
+        if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+            return;
         }
+        if (isRefresh) {
+            LoadingDialog.loading(activity);
+        }
+        HttpHelper.httpGetRequest(UrlHelper.homePage(gradeIndex), "GET", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x02;
+                    message.obj = response;
+                    courseSelectionHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initView(View rootView) {
@@ -180,11 +183,14 @@ public class CourseSelectionFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData(true);
+                initData(currentGradeIndex, true);
             }
         });
         discount_list_above_layout = rootView.findViewById(R.id.discount_list_above_layout);
         discount_list_bottom_layout = rootView.findViewById(R.id.discount_list_bottom_layout);
+        peiu_list_layout = rootView.findViewById(R.id.peiu_list_layout);
+        jianzi_list_layout = rootView.findViewById(R.id.jianzi_list_layout);
+        hlg_list_layout = rootView.findViewById(R.id.hlg_list_layout);
         initBanner(rootView);
         discount_list_above = rootView.findViewById(R.id.discount_list_above);
         LinearLayoutManager discount_list_above_lm = new LinearLayoutManager(activity);
@@ -229,38 +235,70 @@ public class CourseSelectionFragment extends Fragment {
         grade_select_layout.setOnClickListener(clickListener);
         grade_shown_txt = rootView.findViewById(R.id.grade_shown_txt);
 
-        WindowManager manager = activity.getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-        screenWith = outMetrics.widthPixels;
-        screenHeight = outMetrics.heightPixels;
-        gradePopup = EasyPopup.create().setContentView(activity, R.layout.grade_select_popupp).setFocusAndOutsideEnable(true)
-                .setBackgroundDimEnable(true).setDimValue(0.4f)
-                .setHeight((int) (screenHeight - getResources().getDimension(R.dimen.dp700)))
-                .setWidth((int) (screenWith - getResources().getDimension(R.dimen.dp140))).apply();
+        initPopup();
+    }
 
-        grade_textView = new TextView[12];
-        grade_textView [0] = gradePopup.findViewById(R.id.yinianji);
-        grade_textView [1] = gradePopup.findViewById(R.id.ernianji);
-        grade_textView [2] = gradePopup.findViewById(R.id.sannianji);
-        grade_textView [3] = gradePopup.findViewById(R.id.sannianji);
-        grade_textView [4] = gradePopup.findViewById(R.id.wunianji);
-        grade_textView [5] = gradePopup.findViewById(R.id.liunianji);
-        grade_textView [6] = gradePopup.findViewById(R.id.chuyi);
-        grade_textView [7] = gradePopup.findViewById(R.id.chuer);
-        grade_textView [8] = gradePopup.findViewById(R.id.chusan);
-        grade_textView [9] = gradePopup.findViewById(R.id.gaoyi);
-        grade_textView [10] = gradePopup.findViewById(R.id.gaoer);
-        grade_textView [11] = gradePopup.findViewById(R.id.gaosan);
-        grade_textView[0].setTextColor(getResources().getColor(R.color.color_333333));
-        grade_textView[1].setBackgroundResource(R.drawable.grade_enable);
-        grade_textView[1].setTextColor(getResources().getColor(R.color.color_D40000));
+    private void initPopup() {
+        try {
+            WindowManager manager = activity.getWindowManager();
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            manager.getDefaultDisplay().getMetrics(outMetrics);
+            screenWith = outMetrics.widthPixels;
+            screenHeight = outMetrics.heightPixels;
+            gradePopup = EasyPopup.create().setContentView(activity, R.layout.grade_select_popupp).setFocusAndOutsideEnable(true)
+                    .setBackgroundDimEnable(true).setDimValue(0.4f)
+                    .setHeight((int) (screenHeight - getResources().getDimension(R.dimen.dp700)))
+                    .setWidth((int) (screenWith - getResources().getDimension(R.dimen.dp140))).apply();
+
+            grade_textView = new TextView[12];
+            grade_textView[0] = gradePopup.findViewById(R.id.yinianji);
+            grade_textView[1] = gradePopup.findViewById(R.id.ernianji);
+            grade_textView[2] = gradePopup.findViewById(R.id.sannianji);
+            grade_textView[3] = gradePopup.findViewById(R.id.sinianji);
+            grade_textView[4] = gradePopup.findViewById(R.id.wunianji);
+            grade_textView[5] = gradePopup.findViewById(R.id.liunianji);
+            grade_textView[6] = gradePopup.findViewById(R.id.chuyi);
+            grade_textView[7] = gradePopup.findViewById(R.id.chuer);
+            grade_textView[8] = gradePopup.findViewById(R.id.chusan);
+            grade_textView[9] = gradePopup.findViewById(R.id.gaoyi);
+            grade_textView[10] = gradePopup.findViewById(R.id.gaoer);
+            grade_textView[11] = gradePopup.findViewById(R.id.gaosan);
+            for (int i = 0; i < grade_textView.length; i++) {
+                final int index = i;
+                grade_textView[i].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for (int j = 0; j < grade_textView.length; j++) {
+                            if (j == index) {
+                                grade_textView[j].setBackgroundResource(R.drawable.grade_enable);
+                                grade_textView[j].setTextColor(getResources().getColor(R.color.color_D40000));
+                                grade_textView[j].setEnabled(true);
+                                currentGradeIndex = index + 1;
+                                initData(currentGradeIndex, true);
+                            } else if (usingGrades.contains(j)) {
+                                grade_textView[j].setBackgroundResource(R.drawable.grade_normal);
+                                grade_textView[j].setTextColor(getResources().getColor(R.color.color_333333));
+                                grade_textView[j].setEnabled(true);
+                            } else {
+                                grade_textView[j].setBackgroundResource(R.drawable.grade_normal);
+                                grade_textView[j].setTextColor(getResources().getColor(R.color.color_999999));
+                                grade_textView[j].setEnabled(false);
+                            }
+                        }
+
+                        gradePopup.dismiss();
+                        grade_shown_txt.setText(ConstantUtil.getGradeItemsPopUp().get(currentGradeIndex));
+                    }
+                });
+            }
+        } catch (Exception e) {
+        }
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.grade_select_layout:
                     gradePopup.showAtLocation(view, Gravity.CENTER, 0, 0);
                     break;
@@ -283,12 +321,27 @@ public class CourseSelectionFragment extends Fragment {
                 String responseCode = jsonObject.optString("code");
                 if (responseCode.equalsIgnoreCase("200")) {
                     JSONArray using_grade = jsonObject.optJSONArray("using_grade");
-                    if (using_grade != null && using_grade.length() > 0) {
+                    if (using_grade != null) {
+                        usingGrades.clear();
                         for (int i = 0; i < using_grade.length(); i++) {
                             int grade = (int) using_grade.get(i);
-                            usingGrades.add(grade);
+                            usingGrades.add(grade - 1);
+                        }
+                        for (int i = 0; i < grade_textView.length; i++) {
+                            if (usingGrades.contains(i)) {
+                                grade_textView[i].setBackgroundResource(R.drawable.grade_normal);
+                                grade_textView[i].setTextColor(getResources().getColor(R.color.color_333333));
+                                grade_textView[i].setEnabled(true);
+                            } else {
+                                grade_textView[i].setBackgroundResource(R.drawable.grade_normal);
+                                grade_textView[i].setTextColor(getResources().getColor(R.color.color_999999));
+                                grade_textView[i].setEnabled(false);
+                            }
                         }
                     }
+                    grade_textView[currentGradeIndex - 1].setBackgroundResource(R.drawable.grade_enable);
+                    grade_textView[currentGradeIndex - 1].setTextColor(getResources().getColor(R.color.color_D40000));
+                    grade_textView[currentGradeIndex - 1].setEnabled(true);
                     JSONArray cheapie = jsonObject.optJSONArray("cheapie");
                     Gson gson = new Gson();
                     cheapieBeans = gson.fromJson(cheapie.toString(), new TypeToken<List<CheapieBean>>() {
@@ -309,6 +362,9 @@ public class CourseSelectionFragment extends Fragment {
                     if (peiuBeans != null && peiuBeans.size() > 0) {
                         PeiuAdapter peiuAdapter = new PeiuAdapter(activity, peiuBeans);
                         peiu_list.setAdapter(peiuAdapter);
+                        peiu_list_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        peiu_list_layout.setVisibility(View.GONE);
                     }
                     JSONArray hlg = index_list.optJSONArray("hlg");
                     hlgBeans = gson.fromJson(hlg.toString(), new TypeToken<List<HLGBean>>() {
@@ -316,6 +372,9 @@ public class CourseSelectionFragment extends Fragment {
                     if (hlgBeans != null && hlgBeans.size() > 0) {
                         HLGAdapter hlgAdapter = new HLGAdapter(activity, hlgBeans);
                         hlg_list.setAdapter(hlgAdapter);
+                        hlg_list_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        hlg_list_layout.setVisibility(View.GONE);
                     }
                     JSONArray jz = index_list.optJSONArray("jz");
                     jianziBeans = gson.fromJson(jz.toString(), new TypeToken<List<JianziBean>>() {
@@ -323,6 +382,9 @@ public class CourseSelectionFragment extends Fragment {
                     if (jianziBeans != null && jianziBeans.size() > 0) {
                         JianziAdapter jianziAdapter = new JianziAdapter(activity, jianziBeans);
                         jianzi_list.setAdapter(jianziAdapter);
+                        jianzi_list_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        jianzi_list_layout.setVisibility(View.GONE);
                     }
                 }
             }

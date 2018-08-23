@@ -37,6 +37,7 @@
             android:text="课程标题"/>
         
         <TextView
+            android:id="@+id/all_chapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全部章节>"
@@ -60,6 +61,7 @@
             android:layout_gravity="center_vertical"/>
         
         <TextView
+            android:id="@+id/wait_date_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp25"
@@ -82,6 +84,7 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
+            android:id="@+id/wait_time_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp25"
@@ -107,6 +110,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <TextView
+                android:id="@+id/wait_course_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dp25"
@@ -117,6 +121,7 @@
         </LinearLayout>
         
         <TextView
+            android:id="@+id/course_test"
             android:layout_width="@dimen/dp188"
             android:layout_height="@dimen/dp62"
             android:layout_alignParentEnd="true"
@@ -136,6 +141,7 @@
     </ImageView>
 
     <TextView
+        android:id="@+id/chapter_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dp25"
@@ -145,6 +151,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <TextView
+        android:id="@+id/chapter_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp40"
@@ -154,6 +161,7 @@
         android:layout_gravity="center_horizontal"/>
 
     <LinearLayout
+        android:id="@+id/go_to_room"
         android:layout_width="@dimen/dp238"
         android:layout_height="@dimen/dp62"
         android:orientation="horizontal"

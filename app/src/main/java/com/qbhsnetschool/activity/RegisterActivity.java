@@ -19,6 +19,7 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.ProtocolCode;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
@@ -55,6 +56,9 @@ public class RegisterActivity extends BaseActivity {
                 switch (msg.what) {
                     case 0x01:
                         try {
+                            if (!LoadingDialog.isDissMissLoading()) {
+                                LoadingDialog.dismissLoading();
+                            }
                             String result = (String) msg.obj;
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");
@@ -72,6 +76,9 @@ public class RegisterActivity extends BaseActivity {
                         break;
                     case 0x02:
                         try {
+                            if (!LoadingDialog.isDissMissLoading()) {
+                                LoadingDialog.dismissLoading();
+                            }
                             String result = (String) msg.obj;
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");
@@ -79,7 +86,7 @@ public class RegisterActivity extends BaseActivity {
                             if (code.equalsIgnoreCase(ProtocolCode.CODE_1202.getValue())) {
                                 Toast.makeText(registerActivity, responseMsg, Toast.LENGTH_SHORT).show();
                             } else {
-                                registerActivity.requestVerifyCode(registerActivity.phonenumber);
+                                registerActivity.requestVerifyCode();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -133,7 +140,7 @@ public class RegisterActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.verify_code_btn:
-                    judgePhoneRegister(phonenumber);
+                    judgePhoneRegister();
                     break;
                 case R.id.num_delete:
                     phone_number_imput.setText("");
@@ -169,72 +176,80 @@ public class RegisterActivity extends BaseActivity {
         }
     };
 
-    private void judgePhoneRegister(String phonenumber) {
-        if (UIUtils.isNetworkAvailable(activity)) {
-            if (judgePhoneNumberFormat()) {
-                HttpHelper.httpGetRequest(UrlHelper.isPhoneRegister(phonenumber), "GET", new StandardCallBack(activity) {
-                    @Override
-                    public void onSuccess(String response) {
-                        try {
-                            Message message = Message.obtain();
-                            message.what = 0x02;
-                            message.obj = response;
-                            registerHandler.sendMessage(message);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+    private void judgePhoneRegister() {
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!judgePhoneNumberFormat()) {
+            Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        HttpHelper.httpGetRequest(UrlHelper.isPhoneRegister(phonenumber), "GET", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x02;
+                    message.obj = response;
+                    registerHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(int code) {
+                if (!LoadingDialog.isDissMissLoading()) {
+                    LoadingDialog.dismissLoading();
+                }
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(int code) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    public void run() {
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
-                Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
-    private void requestVerifyCode(String phonenumber) {
-        if (UIUtils.isNetworkAvailable(activity)) {
-            if (judgePhoneNumberFormat()) {
-                HttpHelper.httpGetRequest(UrlHelper.getVerifyCode(phonenumber), "GET", new StandardCallBack(activity) {
-                    @Override
-                    public void onSuccess(String response) {
-                        try {
-                            Message message = Message.obtain();
-                            message.what = 0x01;
-                            message.obj = response;
-                            registerHandler.sendMessage(message);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+    private void requestVerifyCode() {
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!judgePhoneNumberFormat()) {
+            Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        HttpHelper.httpGetRequest(UrlHelper.getVerifyCode(phonenumber), "GET", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = response;
+                    registerHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(int code) {
+                if (!LoadingDialog.isDissMissLoading()) {
+                    LoadingDialog.dismissLoading();
+                }
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(int code) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    public void run() {
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
-                Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
     /**

@@ -27,7 +27,7 @@ public class UrlHelper {
     }
 
     public static String registerUser(){
-        return BaseUrl.BASE_HTTP_URL + "app/users";
+        return BaseUrl.BASE_HTTP_URL + "app/users/";
     }
 
     public static String getVerifyCode(String phoneNumber){
@@ -44,5 +44,9 @@ public class UrlHelper {
 
     public static String getPersonalInfo(){
         return BaseUrl.BASE_HTTP_URL + "app/user/";
+    }
+
+    public static String myCourses(){
+        return BaseUrl.BASE_HTTP_URL + "app/mycourses/";
     }
 }

@@ -1,5 +1,6 @@
 package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONObject;
@@ -68,31 +70,40 @@ public class VerifyCodeAtivity extends BaseActivity {
                 switch (msg.what) {
                     case 0x01:
                         String result = (String) msg.obj;
-                        handleUser(verifyCodeAtivity, result);
+                        verifyCodeAtivity.handleUser(result);
                         break;
                 }
             }
         }
     }
 
-    private static void handleUser(VerifyCodeAtivity verifyCodeAtivity, String result) {
+    private void handleUser(String result) {
         try {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
             JSONObject jsonObject = new JSONObject(result);
-            User user = new User();
-            int userId = jsonObject.optInt("id");
-            String nickName = jsonObject.optString("nickname");
             String code = jsonObject.optString("code");
             String responseMsg = jsonObject.optString("msg");
-            String tel = jsonObject.optString("tel");
-            String token = jsonObject.optString("token");
-            user.setUserId(userId);
-            user.setNickname(nickName);
-            user.setResponseCode(code);
-            user.setResponseMsg(responseMsg);
-            user.setUserTel(tel);
-            user.setUserToken(token);
-            UserManager.getInstance().setUser(user);
-            verifyCodeAtivity.finish();
+            if (code.equalsIgnoreCase("200")) {
+                int userId = jsonObject.optInt("id");
+                String nickName = jsonObject.optString("nickname");
+                String tel = jsonObject.optString("tel");
+                String token = jsonObject.optString("token");
+                User user = new User();
+                user.setUserId(userId);
+                user.setNickname(nickName);
+                user.setResponseCode(code);
+                user.setResponseMsg(responseMsg);
+                user.setUserTel(tel);
+                user.setUserToken(token);
+                UserManager.getInstance().setUser(user);
+                Intent intent = new Intent(activity, HomeActivity.class);
+                intent.putExtra("home_tab", "2");
+                startActivity(intent);
+            }else{
+                Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -200,36 +211,39 @@ public class VerifyCodeAtivity extends BaseActivity {
     };
 
     private void registerUser() {
-        if (UIUtils.isNetworkAvailable(activity)) {
-            Map<String, String> params = new HashMap<>();
-            params.put("password", pwd_content.getText().toString().trim());
-            params.put("tel", phonenumber);
-            params.put("tel_code", verify_code_edit.getText().toString().trim());
-            HttpHelper.httpRequest(UrlHelper.registerUser(), params, "POST", new StandardCallBack(activity) {
-                @Override
-                public void onSuccess(String response) {
-                    try {
-                        Message message = Message.obtain();
-                        message.what = 0x01;
-                        message.obj = response;
-                        verifyCodeHandler.sendMessage(message);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(int code) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-        } else {
+        if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
         }
+        Map<String, String> params = new HashMap<>();
+        params.put("password", pwd_content.getText().toString().trim());
+        params.put("tel", phonenumber);
+        params.put("tel_code", verify_code_edit.getText().toString().trim());
+        LoadingDialog.loading(activity);
+        HttpHelper.httpRequest(UrlHelper.registerUser(), params, "POST", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = response;
+                    verifyCodeHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                if (!LoadingDialog.isDissMissLoading()){
+                    LoadingDialog.dismissLoading();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }

@@ -44,6 +44,23 @@ public class ConstantUtil {
         return gradeItems;
     }
 
+    public static SparseArray<String> getGradeItemsPopUp(){
+        SparseArray<String> gradeItems = new SparseArray<>(12);
+        gradeItems.put(1, "一年级");
+        gradeItems.put(2, "二年级");
+        gradeItems.put(3, "三年级");
+        gradeItems.put(4, "四年级");
+        gradeItems.put(5, "五年级");
+        gradeItems.put(6, "六年级");
+        gradeItems.put(7, "初一");
+        gradeItems.put(8, "初二");
+        gradeItems.put(9, "初三");
+        gradeItems.put(10, "高一");
+        gradeItems.put(11, "高二");
+        gradeItems.put(12, "高三");
+        return gradeItems;
+    }
+
     public static List<String> getGrades(){
         List<String> grades = new ArrayList<>(12);
         grades.add("一年级");

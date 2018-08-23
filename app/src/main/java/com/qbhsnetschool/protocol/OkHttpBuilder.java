@@ -5,6 +5,7 @@ import android.content.Context;
 import com.httputils.HttpContent;
 import com.qbhsnetschool.entity.User;
 import com.qbhsnetschool.entity.UserManager;
+import com.qbhsnetschool.uitls.StringUtils;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +65,7 @@ public class OkHttpBuilder {
 
     public HttpContent build() {
         HttpContent request = innerBuilder.build();
-        if (UserManager.getInstance().getUser() != null){
+        if (UserManager.getInstance().getUser() != null && !StringUtils.isEmpty(UserManager.getInstance().getUser().getUserToken())){
             String token = UserManager.getInstance().getUser().getUserToken();
             addHeader(request, "Authorization", "JWT " + token);
         }

@@ -26,6 +26,7 @@ import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
+import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +67,8 @@ public class MineFragment extends Fragment{
         service_layout.setOnClickListener(clickListener);
         login_out = rootView.findViewById(R.id.login_out);
         login_out.setOnClickListener(clickListener);
+        ViewPagerSwipeRefreshLayout mine_swipe_layout = rootView.findViewById(R.id.mine_swipe_layout);
+        mine_swipe_layout.setEnabled(false);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

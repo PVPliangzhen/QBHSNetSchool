@@ -1,11 +1,16 @@
 package com.qbhsnetschool.protocol;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.Toast;
 
 import com.httputils.Callback;
 import com.httputils.HttpResponse;
 import com.qbhsnetschool.activity.LoginTrasitActivity;
+import com.qbhsnetschool.uitls.LoadingDialog;
 
 import org.json.JSONObject;
 
@@ -14,6 +19,24 @@ import okhttp3.internal.http.RealResponseBody;
 public abstract class StandardCallBack implements Callback{
 
     private Context context;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0x01:
+                    if (!LoadingDialog.isDissMissLoading()){
+                        LoadingDialog.dismissLoading();
+                    }
+                    String message = (String) msg.obj;
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, LoginTrasitActivity.class);
+                    context.startActivity(intent);
+                    break;
+            }
+        }
+    };
 
     public StandardCallBack(Context context) {
         this.context = context;
@@ -26,11 +49,13 @@ public abstract class StandardCallBack implements Callback{
                 String result = (((RealResponseBody) response.body()).string());
                 JSONObject jsonObject = new JSONObject(result);
                 String code = jsonObject.optString("code");
+                String msg = jsonObject.optString("msg");
                 if (code.equalsIgnoreCase(ProtocolCode.CODE_1204.getValue())) {
                     if (context != null) {
-                        Intent intent = new Intent(context, LoginTrasitActivity.class);
-                        context.startActivity(intent);
-                        return;
+                        Message message = Message.obtain();
+                        message.what = 0x01;
+                        message.obj = msg;
+                        handler.sendMessage(message);
                     }
                 } else {
                     onSuccess(result);

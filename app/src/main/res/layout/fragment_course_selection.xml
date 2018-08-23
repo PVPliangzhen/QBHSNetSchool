@@ -20,7 +20,9 @@
                 android:id="@+id/home_root_lne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusableInTouchMode="true"
+                android:descendantFocusability="blocksDescendants">
                 //-------------------------------课程头开始-------------------------------------
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -272,9 +274,11 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/peiu_list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp20">
+                    android:layout_marginTop="@dimen/dp20"
+                    android:visibility="gone">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/peiu_list"
                         android:layout_width="match_parent"
@@ -402,9 +406,11 @@
                     </LinearLayout>
                 </RelativeLayout>
                 <LinearLayout
+                    android:id="@+id/jianzi_list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp20">
+                    android:layout_marginTop="@dimen/dp20"
+                    android:visibility="gone">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/jianzi_list"
                         android:layout_width="match_parent"
@@ -536,9 +542,11 @@
                     </LinearLayout>
                 </RelativeLayout>
                 <LinearLayout
+                    android:id="@+id/hlg_list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp20">
+                    android:layout_marginTop="@dimen/dp20"
+                    android:visibility="gone">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/hlg_list"
                         android:layout_width="match_parent"
