@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FaceRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/xn_white"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    tools:ignore="UnusedIds">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/xn_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/btn_voice"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/nt_chat_voice"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/rl_robot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ib_robot"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/nt_chat_voice"
+                tools:ignore="UnusedIds" />
+
+            <TextView
+                android:id="@+id/ib_roberttext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/xn_swifttorobot"
+                android:textColor="@color/xn_gray"
+                android:textSize="10sp"
+                tools:ignore="UnusedIds" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_et_sendmessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_toStartOf="@id/btn_face"
+            android:layout_weight="1"
+            tools:ignore="UnusedIds">
+
+            <cn.xiaoneng.uiview.FaceEditText
+                android:id="@+id/et_sendmessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/white"
+                android:focusable="true"
+                android:hint="请输入文字"
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:singleLine="true"
+                android:textColor="@color/xn_black"
+                android:textColorHint="#BFBFC7"
+                android:textCursorDrawable="@null"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/btn_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/et_sendmessage"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/nt_chat_voice_record_selector"
+                android:gravity="center"
+                android:minHeight="36dp"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/nt_chat_voiceicon" />
+
+                <TextView
+                    android:id="@+id/tv_record_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/xn_sdk_presstalk"
+                    android:textColor="@color/xn_press_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/btn_face"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/nt_chat_facebtn"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_plus"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/nt_chat_plus_defaut"
+                android:scaleType="fitXY" />
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_alignTop="@+id/btn_plus"
+                android:background="@drawable/nt_chat_background_sendbtn"
+                android:text="@string/xn_custom_send"
+                android:textColor="@color/xn_white"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view07"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/xn_edge"
+        tools:ignore="UnusedIds" />
+
+    <FrameLayout
+        android:id="@+id/fl_extension_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

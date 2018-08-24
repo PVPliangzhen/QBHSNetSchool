@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="246px"
+        android:background="@drawable/nt_kefu_background"
+        skin:enable="true" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="246px">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52px"
+            android:layout_marginTop="26px">
+            
+            <cn.xiaoneng.utils.common.NtKFImageView
+                android:id="@+id/nt_iv_newchatwindow_kficon_detail"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart ="60px"
+                android:src="@drawable/nt_cust_serv"
+                android:scaleType="fitCenter"
+                skin:enable="true" />
+            
+            <TextView
+                android:id="@+id/nt_tv_newchatwindow_kfname_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart ="34px"
+                android:layout_marginEnd ="34px"
+                android:layout_toEndOf="@id/nt_iv_newchatwindow_kficon_detail"
+                android:singleLine="true"
+                android:text="小能客服"
+                android:textColor="#ffffff"
+                android:textSize="28px" />
+    
+            <TextView
+                android:id="@+id/nt_tv_newchatwindow_kfsign_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart ="@id/nt_tv_newchatwindow_kfname_detail"
+                android:layout_below ="@id/nt_tv_newchatwindow_kfname_detail"
+                android:maxLines="4"
+                android:layout_marginTop="20px"
+                android:textColor="#ffffff"
+                android:ellipsize="end"
+                android:textSize="28px"
+                skin:enable="true" />
+            
+            <ImageView
+                android:id="@+id/nt_iv_newchatwindow_kfsex_detail"
+                android:layout_width="28px"
+                android:layout_height="28px"
+                android:layout_marginStart ="18px"
+                android:layout_toEndOf="@id/nt_tv_newchatwindow_kfname_detail"
+                android:src="@drawable/nt_usersex_male" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

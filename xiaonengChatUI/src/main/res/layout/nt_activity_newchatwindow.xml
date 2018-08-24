@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.xiaoneng.uiview.CustomInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nt_base_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/chatpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/nt_view_all_bubble" />
+
+                <ImageView
+                    android:id="@+id/nt_background_chatarea"
+                    android:layout_width="match_parent"
+                    android:layout_height="1280px"
+                    android:background="@drawable/nt_chat_background"
+                    skin:enable="true"
+                    tools:ignore="UnusedIds" />
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <include
+            layout="@layout/nt_newchatwindow_transfer"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/rl_chathead"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl_chathead"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/chat_area"
+                layout="@layout/nt_newchatwindow_chatarea"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <cn.xiaoneng.chatoperator.ChatOperator
+                android:id="@+id/nt_chat_operator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/nt_chat_operator_frame2" />
+
+            </cn.xiaoneng.chatoperator.ChatOperator>
+        </LinearLayout>
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/nt_input_relativelayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true">-->
+        <!---->
+        <!--<cn.xiaoneng.chatoperator.ChatOperator-->
+        <!--android:id="@+id/nt_chat_operator"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--</RelativeLayout>-->
+        <!---->
+        <!--<include-->
+        <!--layout="@layout/nt_newchatwindow_chatarea"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_above="@+id/nt_input_relativelayout"-->
+        <!--android:layout_below="@id/rl_chathead" />-->
+
+        <LinearLayout
+            android:id="@+id/nt_tv_newchatwindow_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150px"
+            android:background="#88000000"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/nt_rl_newchatwindow_nettip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_chathead"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="70px"
+            android:visibility="gone">
+
+            <include
+                layout="@layout/nt_newchatwindow_network_tip"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/nt_chat_kef_detail"
+            layout="@layout/nt_newchatwindow_kfdetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_chathead"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/msg_refresh_top_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/msg_head"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/nt_oval_new_msg"
+            android:drawablePadding="10px"
+            android:drawableStart="@drawable/nt_img_down_history"
+            android:paddingBottom="5px"
+            android:paddingLeft="40px"
+            android:paddingRight="40px"
+            android:paddingTop="5px"
+            android:text="@string/xn_down_more_history"
+            android:textColor="@color/msg_system_text"
+            android:visibility="gone"
+            skin:enable="true"
+            tools:visibility="visible" />
+
+        <include
+            android:id="@+id/rl_chathead"
+            layout="@layout/nt_newchatwindow_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false" />
+
+
+        <RelativeLayout
+            android:id="@+id/msg_head"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_marginTop="85px">
+
+
+            <cn.xiaoneng.utils.common.NtKFImageView
+                android:id="@+id/nt_iv_newchatwindow_kficon"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nt_cust_serv"/>
+            <ImageView
+                android:id="@+id/msg_loading"
+                android:layout_width="110px"
+                android:layout_height="110px"
+                android:layout_centerInParent="true"
+                android:src="@drawable/nt_msg_loading"
+                android:visibility="gone"
+                skin:enable="true" />
+
+        </RelativeLayout>
+
+
+        <!--<LinearLayout-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="50px"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal" >-->
+
+        <!--<Button-->
+        <!--android:id="@+id/btn_front"-->
+        <!--android:layout_width="196px"-->
+        <!--android:layout_height="66px"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:text="前台"-->
+        <!--android:textColor="#269ae2"-->
+        <!--android:textSize="28px" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/btn_backgroud"-->
+        <!--android:layout_width="196px"-->
+        <!--android:layout_height="66px"-->
+        <!--android:layout_marginLeft="60px"-->
+        <!--android:text="后台"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#fff"-->
+        <!--android:textSize="28px" />-->
+        <!--</LinearLayout>-->
+
+
+    </RelativeLayout>
+
+</cn.xiaoneng.uiview.CustomInsetsFrameLayout>

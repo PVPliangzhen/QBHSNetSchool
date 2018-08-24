@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/xn_ll"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="156px"
+        android:background="#DADADA"
+
+        >
+    <TextView
+        android:drawablePadding="15px"
+        android:drawableTop="@drawable/nt_chat_btn_camera_gray"
+        android:layout_centerInParent="true"
+        android:id="@+id/xn_tv_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:text="@string/xn_function_camera"
+        android:gravity="center"
+
+        />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="2dp"
+
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="156px"
+        android:background="#DADADA"
+
+        >
+        <TextView
+            android:drawablePadding="15px"
+
+            android:drawableTop="@drawable/nt_chat_btn_album_gray"
+            android:layout_centerInParent="true"
+            android:id="@+id/xn_tv_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="@string/xn_function_album"
+            android:gravity="center"
+
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>
+    <cn.xiaoneng.uiview.HorizontalListView
+        android:layout_toEndOf="@id/xn_ll"
+        android:layout_weight="1"
+        android:id="@+id/xn_list_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="2dp" />
+</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96px">
+    <TextView
+        android:layout_centerVertical="true"
+
+        android:layout_below="@id/xn_ll"
+        android:id="@+id/xn_tv_select_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/xn_camera_select_default"
+        android:layout_marginTop="38px"
+        android:layout_marginStart="38px"
+        />
+
+
+
+    <Button
+        android:layout_centerVertical="true"
+        android:id="@+id/xn_btn_send"
+        android:layout_width="120px"
+        android:layout_height="58px"
+        android:layout_gravity="end"
+        android:textSize="14dp"
+        android:textColor="@color/xn_white"
+        android:text="@string/xn_custom_send"
+        android:background="@drawable/nt_radius_gray_gb"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30px" />
+    </RelativeLayout>
+</LinearLayout>

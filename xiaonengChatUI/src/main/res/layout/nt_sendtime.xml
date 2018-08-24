@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    
+    <TextView
+        android:id="@+id/tv_sendtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/nt_chat_msg_system_shape"
+        android:gravity="center"
+        android:paddingBottom="4px"
+        android:paddingLeft="12px"
+        android:paddingRight="12px"
+        android:paddingTop="4px"
+        android:text="1231231231"
+        android:textColor="@color/msg_system_text"
+        android:textSize="22px"
+        android:visibility="gone"
+        skin:enable="true" />
+
+</LinearLayout>

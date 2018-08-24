@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 27
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.google.protobuf:protobuf-java:3.0.0'
+    api files('libs/Msc.jar')
+    api files('libs/org.eclipse.paho.client.mqttv3-1.1.0.jar')
+    api files('libs/skinlibrary.jar')
+    api files('libs/Sunflower.jar')
+    api files('libs/xiaonengchatcore.jar')
+    api files('libs/xiaonengchatui.jar')
+    api files('libs/xiaonengimcc.jar')
+    api files('libs/xiaonengv4.jar')
+    api files('libs/xn_glide.jar')
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:layout_width="560px"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="560px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="fill_parent"
+            android:layout_height="70px"
+            android:background="@drawable/nt_top_fillet_deep_gray"
+            android:gravity="center"
+            android:text="@string/xn_normaldialog_title"
+            android:textColor="#121212"
+            android:textSize="32px" />
+        
+        <TextView
+            android:id="@+id/tv_contents"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70px"
+            android:layout_marginTop="70px"
+            android:gravity="center_horizontal"
+            android:text="@string/xn_getservicefail"
+            android:textColor="#121212"
+            android:textSize="28px" />
+        
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45px"
+            android:gravity="center">
+            
+            <TextView
+                android:id="@+id/tv_tocancel"
+                android:layout_width="150px"
+                android:layout_height="60px"
+                android:layout_gravity="center"
+                android:layout_marginEnd="60px"
+                android:background="@drawable/nt_fillet_button_hollow_blue"
+                android:gravity="center"
+                android:text="@string/xn_cancel"
+                android:textColor="@color/theme_text_color"
+                android:textSize="28px"
+                skin:enable="true" />
+            
+            <TextView
+                android:id="@+id/tv_toconfirm"
+                android:layout_width="150px"
+                android:layout_height="60px"
+                android:layout_gravity="center"
+                android:layout_marginStart="60px"
+                android:background="@drawable/nt_fillet_button_blue"
+                android:gravity="center"
+                android:text="@string/xn_confirm"
+                android:textColor="#fff"
+                android:textSize="28px"
+                skin:enable="true" />
+        </LinearLayout>
+    
+    </LinearLayout>
+</LinearLayout>

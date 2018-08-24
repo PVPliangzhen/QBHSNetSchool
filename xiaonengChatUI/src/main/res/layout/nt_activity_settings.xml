@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/nt_chat_background"
+        skin:enable="true"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150px"
+        android:background="@color/setting_theme_background"
+        skin:enable="true"/>
+    <RelativeLayout
+        android:id="@+id/nt_setting_title"
+        android:layout_width="match_parent"
+        android:layout_height="150px">
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/chat_activity_bar"
+            skin:enable="true" />
+        
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="80px"
+            android:layout_height="40px"
+            android:layout_alignParentStart ="true"
+            android:layout_marginTop="80px"
+            android:src="@drawable/nt_chat_keyback_white" />
+        
+        <TextView
+            android:id="@+id/nt_tv_chat_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80px"
+            android:text="设置"
+            android:textColor="#e6ffffff"
+            android:textSize="32px"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    
+    
+    <RelativeLayout
+        android:id="@+id/nt_rl_windowsettings"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_below="@id/nt_setting_title"
+        android:layout_marginTop="1px"
+        android:background="@color/xn_white"
+        android:gravity="center_vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart ="30px"
+            android:gravity="center_vertical"
+            android:text="自定义皮肤"
+            android:textColor="#353535"
+            android:textSize="28px" />
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd ="true"
+            android:layout_marginEnd ="30px"
+            android:background="@drawable/nt_icon_setting_windonsettings" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/nt_rl_igsettings"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:visibility="gone"
+        android:layout_below="@id/nt_rl_windowsettings"
+        android:layout_marginTop="1px"
+        android:background="@color/xn_white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart ="30px"
+            android:gravity="center_vertical"
+            android:text="输入引导"
+            android:textColor="#353535"
+            android:textSize="28px" />
+
+        <ImageView
+            android:id="@+id/iv_ig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd ="true"
+            android:layout_marginEnd ="30px"
+            android:background="@drawable/nt_icon_setting_ig_selector" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nt_rl_showKFName"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:visibility="visible"
+        android:layout_below="@id/nt_rl_igsettings"
+        android:layout_marginTop="1px"
+        android:background="@color/xn_white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart ="30px"
+            android:gravity="center_vertical"
+            android:text="是否显示客服名称"
+            android:textColor="#353535"
+            android:textSize="28px" />
+
+        <ImageView
+            android:id="@+id/nt_iv_swift_kfName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd ="true"
+            android:layout_marginEnd ="30px"
+            android:background="@drawable/nt_icon_setting_ig_selector" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
