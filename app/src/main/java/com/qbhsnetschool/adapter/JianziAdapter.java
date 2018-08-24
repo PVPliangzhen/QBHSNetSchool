@@ -68,7 +68,7 @@ public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return jianziBeans.size();
+        return jianziBeans == null ? 0 : jianziBeans.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

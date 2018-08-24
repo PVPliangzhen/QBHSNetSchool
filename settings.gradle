@@ -1,1 +1,1 @@
-include ':app', ':DimenLibrary', ':httputils'
+include ':app', ':DimenLibrary', ':httputils', ':xiaonengChatUI'

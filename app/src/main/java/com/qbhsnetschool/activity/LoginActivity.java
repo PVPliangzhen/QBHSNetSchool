@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity {
             String code = jsonObject.optString("code");
             String responseMsg = jsonObject.optString("msg");
             if (code.equalsIgnoreCase("200")) {
-                int userId = jsonObject.optInt("id");
+                int userId = jsonObject.optInt("user_id");
                 String nickName = jsonObject.optString("nickname");
                 String tel = jsonObject.optString("tel");
                 String token = jsonObject.optString("token");

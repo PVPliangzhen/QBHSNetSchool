@@ -11,4 +11,8 @@
     <files-path
         name="file3"
         path="/"/>
+
+    <external-path
+        name="external_storage_root"
+        path="." />
 </paths>

@@ -68,7 +68,7 @@ public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return peiuBeans.size();
+        return peiuBeans == null ? 0 : peiuBeans.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

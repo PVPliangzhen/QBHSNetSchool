@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,9 +24,14 @@ import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.adapter.AlreadyClassAdapter;
 import com.qbhsnetschool.entity.CourseBean;
+import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.StandardCallBack;
+import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.CourseUtil;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
+import com.qbhsnetschool.uitls.UIUtils;
+import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,6 +45,8 @@ public class AlreadyClassFragment extends Fragment{
     private View rootView;
     private RecyclerView already_class_list;
     private AlreadyClassAdapter alreadyClassAdapter;
+    private AlreadyClassHandler alreadyClassHandler;
+    private ViewPagerSwipeRefreshLayout already_class_refresh;
 
     private static class AlreadyClassHandler extends Handler {
 
@@ -68,10 +76,28 @@ public class AlreadyClassFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_already_class, container, false);
         initView(rootView);
+        initData();
         IntentFilter intentFilter = new IntentFilter("load_already_class_data");
         LoadAlreadyClassReceiver loadAlreadyClassReceiver = new LoadAlreadyClassReceiver();
         activity.registerReceiver(loadAlreadyClassReceiver, intentFilter);
         return rootView;
+    }
+
+    private void initData() {
+        if (!UIUtils.isNetworkAvailable(activity)){
+            Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        HttpHelper.httpGetRequest(UrlHelper.myCourses(), "GET", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String result) {
+                Message message = Message.obtain();
+                message.what = 0x01;
+                message.obj = result;
+                alreadyClassHandler.sendMessage(message);
+            }
+        });
     }
 
     private void initView(View rootView) {
@@ -81,12 +107,23 @@ public class AlreadyClassFragment extends Fragment{
         already_class_lm.setOrientation(LinearLayoutManager.VERTICAL);
         already_class_list.setLayoutManager(already_class_lm);
         already_class_list.setAdapter(alreadyClassAdapter);
+        already_class_refresh = rootView.findViewById(R.id.already_class_refresh);
+        already_class_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
+        alreadyClassHandler = new AlreadyClassHandler(this);
     }
 
     private void handleAlreadyCourse(String result) {
         try{
             if (!LoadingDialog.isDissMissLoading()){
                 LoadingDialog.dismissLoading();
+            }
+            if (already_class_refresh.isRefreshing()){
+                already_class_refresh.setRefreshing(false);
             }
             if (!StringUtils.isEmpty(result)){
                 JSONObject jsonObject = new JSONObject(result);
@@ -100,9 +137,12 @@ public class AlreadyClassFragment extends Fragment{
                     CourseUtil.setPastCourse(past_courses_list);
                     CourseUtil.setFutureCourse(future_courses_list);
                     if (alreadyClassAdapter != null){
-                        alreadyClassAdapter.setData(future_courses_list);
+                        alreadyClassAdapter.setData(past_courses_list);
                         alreadyClassAdapter.notifyDataSetChanged();
                     }
+                    Intent intent = new Intent();
+                    intent.setAction("load_wait_class_data");
+                    activity.sendBroadcast(intent);
                 }else{
                     Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
                 }

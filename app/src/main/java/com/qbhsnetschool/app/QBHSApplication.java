@@ -6,6 +6,9 @@ import android.support.multidex.MultiDexApplication;
 import com.qbhsnetschool.entity.User;
 import com.qbhsnetschool.entity.UserManager;
 
+import cn.xiaoneng.api.Ntalker;
+import cn.xiaoneng.manager.inf.outer.NtalkerCoreCallback;
+
 /**
  * created by liangzhen at 2018/8/10
  */
@@ -26,6 +29,17 @@ public class QBHSApplication extends MultiDexApplication{
         }
         QBHSCrashHandler.getInstance().setCustomCrashHanler(this);
         UserManager.getInstance().registerApplication(this);
+        Ntalker.getInstance().initSDK(this, "kf_20013", new NtalkerCoreCallback() {
+            @Override
+            public void successed() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void failed(int i) {
+                System.out.println("failure" + i);
+            }
+        });
     }
 
     public static Context getContext() {

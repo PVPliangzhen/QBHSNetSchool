@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.qbhsnetschool.uitls.CourseUtil;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
+import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,6 +47,7 @@ public class WaitClassFragment extends Fragment{
     private RecyclerView wait_class_list;
     private WaitClassHandler waitClassHandler;
     private WaitingClassAdapter waitingClassAdapter;
+    private ViewPagerSwipeRefreshLayout wait_class_refresh;
 
     private static class WaitClassHandler extends Handler{
 
@@ -109,6 +112,13 @@ public class WaitClassFragment extends Fragment{
         wait_class_lm.setOrientation(LinearLayoutManager.VERTICAL);
         wait_class_list.setLayoutManager(wait_class_lm);
         wait_class_list.setAdapter(waitingClassAdapter);
+        wait_class_refresh = rootView.findViewById(R.id.wait_class_refresh);
+        wait_class_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
         waitClassHandler = new WaitClassHandler(this);
     }
 
@@ -116,6 +126,9 @@ public class WaitClassFragment extends Fragment{
         try{
             if (!LoadingDialog.isDissMissLoading()){
                 LoadingDialog.dismissLoading();
+            }
+            if (wait_class_refresh.isRefreshing()){
+                wait_class_refresh.setRefreshing(false);
             }
             if (!StringUtils.isEmpty(result)){
                 JSONObject jsonObject = new JSONObject(result);
@@ -162,7 +175,7 @@ public class WaitClassFragment extends Fragment{
         public void onReceive(Context context, Intent intent) {
             if (CourseUtil.getFutureCourse() != null){
                 if (waitingClassAdapter != null){
-                    waitingClassAdapter.setData(CourseUtil.getPastCourse());
+                    waitingClassAdapter.setData(CourseUtil.getFutureCourse());
                     waitingClassAdapter.notifyDataSetChanged();
                 }
             }

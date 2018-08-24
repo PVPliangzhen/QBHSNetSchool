@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.xiaoneng.api.Ntalker;
+import cn.xiaoneng.manager.bean.ChatParamsBody;
+import cn.xiaoneng.manager.inf.outer.NtalkerCoreCallback;
 
 public class MineFragment extends Fragment{
 
@@ -88,6 +93,34 @@ public class MineFragment extends Fragment{
                     startActivity(intent2);
                     break;
                 case R.id.service_layout:
+                    String userId = String.valueOf(UserManager.getInstance().getUser().getUserId());
+                    String userName = UserManager.getInstance().getUser().getUserTel();
+                    Ntalker.getInstance().login(userId, userName, new NtalkerCoreCallback() {
+
+                        @Override
+                        public void successed() {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ChatParamsBody chatParamsBody = new ChatParamsBody();
+                                    chatParamsBody.settingId = "kf_20013_template_5";
+                                    Ntalker.getInstance().startChat(activity, chatParamsBody);
+                                    //Toast.makeText(activity, "登录成功", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void failed(final int errorcode) {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(activity, "登录失败" + errorcode, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    });
                     break;
                 case R.id.login_out:
                     UserManager.getInstance().clearUser();

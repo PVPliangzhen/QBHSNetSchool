@@ -174,12 +174,22 @@ public class HomeActivity extends BaseActivity {
                 case R.id.lne_tab_learn:
                 case R.id.img_tab_learn:
                 case R.id.txt_tab_learn:
-                    clickLearnTab();
+                    if (!UserManager.getInstance().isLogin()) {
+                        Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        startActivity(intent);
+                    } else {
+                        clickLearnTab();
+                    }
                     break;
                 case R.id.lne_tab_test:
                 case R.id.img_tab_test:
                 case R.id.txt_tab_test:
-                    clickTestTab();
+                    if (!UserManager.getInstance().isLogin()) {
+                        Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        startActivity(intent);
+                    } else {
+                        clickTestTab();
+                    }
                     break;
                 case R.id.lne_tab_mine:
                     if (!UserManager.getInstance().isLogin()) {

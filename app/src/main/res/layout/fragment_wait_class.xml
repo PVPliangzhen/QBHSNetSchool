@@ -3,10 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/wait_class_list"
+    <com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout
+        android:id="@+id/wait_class_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/wait_class_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout>
 
 </LinearLayout>

@@ -52,4 +52,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.contrarywind:Android-PickerView:4.1.5'
     implementation 'com.github.zyyoona7:EasyPopup:1.1.2'
+    implementation project(':xiaonengChatUI')
 }
