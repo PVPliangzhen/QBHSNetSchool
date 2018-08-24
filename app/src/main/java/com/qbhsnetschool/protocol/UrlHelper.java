@@ -49,4 +49,8 @@ public class UrlHelper {
     public static String myCourses(){
         return BaseUrl.BASE_HTTP_URL + "app/mycourses/";
     }
+
+    public static String getCoupons(){
+        return BaseUrl.BASE_HTTP_URL + "app/coupons/";
+    }
 }

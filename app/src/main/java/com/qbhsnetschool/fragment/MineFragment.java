@@ -31,6 +31,8 @@ import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cn.xiaoneng.api.Ntalker;
 import cn.xiaoneng.manager.bean.ChatParamsBody;
@@ -74,6 +76,32 @@ public class MineFragment extends Fragment{
         login_out.setOnClickListener(clickListener);
         ViewPagerSwipeRefreshLayout mine_swipe_layout = rootView.findViewById(R.id.mine_swipe_layout);
         mine_swipe_layout.setEnabled(false);
+        ImageView user_avatar = rootView.findViewById(R.id.user_avatar);
+        TextView user_phone = rootView.findViewById(R.id.user_phone);
+        user_phone.setText(subStringPhoneNumber(UserManager.getInstance().getUser().getUserTel()));
+    }
+
+    private String subStringPhoneNumber(String mobile){
+        String maskNumber = mobile;
+        if (judgePhoneNumberFormat(mobile)) {
+            maskNumber = mobile.substring(0, 3) + "****" + mobile.substring(7, mobile.length());
+        }
+        return maskNumber;
+    }
+
+    /**
+     * 判断手机号格式
+     *
+     * @return
+     */
+    public boolean judgePhoneNumberFormat(String mobile) {
+        Pattern mobileReg = Pattern
+                .compile("((^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$)|(^\\d{7,8}$)|(^0[1," +
+                        "2]{1}\\d{1}(-|_)?\\d{8}$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}$)|(^0[1,2]{1}\\d{1}(-|_)?\\d{8}" +
+                        "(-|_)(\\d{1,4})$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}(-|_)(\\d{1,4})$))");
+        Matcher mobileMatcher = mobileReg.matcher(mobile);
+        boolean isMobile = mobileMatcher.matches();
+        return isMobile;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

@@ -159,7 +159,7 @@
         <activity
             android:name="cn.xiaoneng.newchatwindow.ChatActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/XNAppTheme"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -170,7 +170,7 @@
         <activity
             android:name="cn.xiaoneng.leavemsg.LeaveMsgActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/BlueBarTheme"
             android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
@@ -181,30 +181,30 @@
         <activity
             android:name="cn.xiaoneng.album.ShowAlbumActivity"
             android:theme="@style/XNAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name="cn.xiaoneng.valuation.ValuationActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/translucent" />
         <activity
             android:name="cn.xiaoneng.picture.ShowPictureActivity"
             android:launchMode="singleTask"
             android:theme="@style/XNAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name="cn.xiaoneng.nsettings.NtSettingsActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/BlueBarTheme" />
         <activity
             android:name="cn.xiaoneng.nsettings.NtWindowSettings"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/BlueBarTheme" />
         <activity
             android:name="cn.xiaoneng.utils.common.XNExplorerActivity"
             android:launchMode="singleTask"
             android:theme="@style/XNAppTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="${packageName}.exploreactivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -213,14 +213,14 @@
         <activity
             android:name="cn.xiaoneng.video.VideoPreviewActivity"
             android:theme="@style/XNAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name="cn.xiaoneng.video.RecordVideoActivity2"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/BlueBarTheme" />
         <activity
             android:name="cn.xiaoneng.video.XNVideoPlayer"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/BlueBarTheme" />
 
         <!--<provider-->
