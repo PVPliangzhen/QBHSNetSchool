@@ -63,7 +63,7 @@ public class BaseActivity extends SwipeBackActivity{
      * @param color 状态栏需要填充的布局颜色
      */
     public void setBaseContentView(int resId, boolean canSwipeBack, int color, boolean isLightStatusBar) {
-        getSwipeBackLayout().setEnableGesture(canSwipeBack);
+        getSwipeBackLayout().setEnableGesture(false);
         // 先把布局填充成一个view
         baseContentView = (RelativeLayout) LayoutInflater.from(this).inflate(
                 R.layout.activity_base, null);
