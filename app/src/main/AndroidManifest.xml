@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.qbhsnetschool"
     android:versionCode="1"
     android:versionName="1.0">
@@ -233,6 +234,19 @@
                 <!--android:resource="@xml/nt_file_paths" />-->
         <!--</provider>-->
         //-----------------------------------------------------小能end
+        //-----------------------------------------------------ping++
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:launchMode">
+        </activity>
+
+        <activity-alias
+            android:name="com.qbhsnetschool.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
     </application>
 

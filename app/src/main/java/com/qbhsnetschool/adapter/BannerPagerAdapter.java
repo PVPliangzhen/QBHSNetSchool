@@ -1,24 +1,20 @@
 package com.qbhsnetschool.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
-import com.qbhsnetschool.app.QBHSApplication;
+import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.entity.BannerBean;
-import com.qbhsnetschool.uitls.Util;
+import com.qbhsnetschool.uitls.ConstantUtil;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,28 +53,30 @@ public class BannerPagerAdapter extends PagerAdapter{
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull final ViewGroup container, int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
         ImageView imageView = view.findViewById(R.id.banner_img);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WXWebpageObject webpage = new WXWebpageObject();
-                webpage.webpageUrl = "http://www.tiantiandongnao.com";
-                WXMediaMessage msg = new WXMediaMessage(webpage);
-                msg.title = "清北华数邀您装B";
-                msg.description = "清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B";
-                Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_app);
-                Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
-                bmp.recycle();
-                msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
-
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = buildTransaction("webpage");
-                req.message = msg;
-                req.scene = mTargetScene;
-                QBHSApplication application = (QBHSApplication) context.getApplicationContext();
-                application.iwxapi.sendReq(req);
+//                WXWebpageObject webpage = new WXWebpageObject();
+//                webpage.webpageUrl = "http://www.tiantiandongnao.com";
+//                WXMediaMessage msg = new WXMediaMessage(webpage);
+//                msg.title = "清北华数邀您装B";
+//                msg.description = "清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B";
+//                Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_app);
+//                Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+//                bmp.recycle();
+//                msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+//
+//                SendMessageToWX.Req req = new SendMessageToWX.Req();
+//                req.transaction = buildTransaction("webpage");
+//                req.message = msg;
+//                req.scene = mTargetScene;
+//                QBHSApplication application = (QBHSApplication) context.getApplicationContext();
+//                application.iwxapi.sendReq(req);
+                HomeActivity activity = (HomeActivity) context;
+                Pingpp.createPayment(activity, ConstantUtil.data);
             }
         });
         Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder).into(imageView);

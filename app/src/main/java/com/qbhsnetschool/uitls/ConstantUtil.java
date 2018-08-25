@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class ConstantUtil {
 
+    public static final String data = "{    \"id\": \"ch_f5GaPO9WDePCSKurPGyr5i1C\",    \"object\": \"charge\",    \"created\": 1535200696,    \"livemode\": true,    \"paid\": false,    \"refunded\": false,    \"reversed\": false,    \"app\": \"app_1azb18LK84u5iDSW\",    \"channel\": \"wx\",    \"order_no\": \"16b7844216ce09a4\",    \"client_ip\": \"222.128.11.87\",    \"amount\": 1,    \"amount_settle\": 1,    \"currency\": \"cny\",    \"subject\": \"测试订单 by demo 20180825-203815\",    \"body\": \"Your Body - 订单详情\",    \"extra\": {},    \"time_paid\": null,    \"time_expire\": 1535200995,    \"time_settle\": null,    \"transaction_no\": null,    \"refunds\": {        \"object\": \"list\",        \"url\": \"/v1/charges/ch_f5GaPO9WDePCSKurPGyr5i1C/refunds\",        \"has_more\": false,        \"data\": []    },    \"amount_refunded\": 0,    \"failure_code\": null,    \"failure_msg\": null,    \"metadata\": {        \"ori_channel\": \"wx\"    },    \"credential\": {        \"object\": \"credential\",        \"wx\": {            \"appId\": \"wx3eba2286c6acb2b6\",            \"partnerId\": \"1250015001\",            \"prepayId\": \"wx2520381628286276eacc1ef10504528232\",            \"nonceStr\": \"6c9df93ae742f61c64d1fb6f187b1e90\",            \"timeStamp\": 1535200696,            \"packageValue\": \"Sign=WXPay\",            \"sign\": \"921D6897F3B597067BE7CE22001225E8\"        }    },    \"description\": null}";
+
     public static SparseArray<String> getSanqiItems(){
         SparseArray<String> sanqiItems = new SparseArray<>(13);
         sanqiItems.put(1, "第一期");

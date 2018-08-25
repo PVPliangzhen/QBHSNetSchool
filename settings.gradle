@@ -1,1 +1,2 @@
-include ':app', ':DimenLibrary', ':httputils', ':xiaonengChatUI'
+include ':app', ':DimenLibrary', ':httputils', ':xiaonengChatUI' , ':pingpp'
+//, 'pingpp_ui'

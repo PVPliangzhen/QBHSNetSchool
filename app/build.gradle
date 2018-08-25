@@ -65,6 +65,10 @@ dependencies {
     implementation 'com.github.zyyoona7:EasyPopup:1.1.2'
     implementation project(':xiaonengChatUI')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    implementation 'com.pingxx:pingpp-core:2.1.18' // (Ping++ 标准版 SDK) 必须添加
-    implementation 'com.pingxx:pingpp-ui:2.1.18' // (Ping++ UI 控件) 使用 Ping++ UI 时添加
+    implementation 'com.pingxx:pingpp-core:2.1.18'
+    // (Ping++ 标准版 SDK) 必须添加
+    //implementation 'com.pingxx:pingpp-ui:2.1.18'
+    // (Ping++ UI 控件) 使用 Ping++ UI 时添加
+//    implementation project(':pingpp')
+   // implementation project(':pingpp_ui')
 }

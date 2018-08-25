@@ -2,6 +2,7 @@ package com.qbhsnetschool.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.app.QBHSApplication;
 import com.qbhsnetschool.entity.UserManager;
@@ -202,4 +204,22 @@ public class HomeActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("-------------------------------------");
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            String result = data.getExtras().getString("pay_result");
+            /* 处理返回值
+             * "success" - 支付成功
+             * "fail"    - 支付失败
+             * "cancel"  - 取消支付
+             * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+             * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+             */
+            String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+            String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+        }
+    }
 }
