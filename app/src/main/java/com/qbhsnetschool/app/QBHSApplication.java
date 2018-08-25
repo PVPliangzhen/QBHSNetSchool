@@ -5,6 +5,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.qbhsnetschool.entity.User;
 import com.qbhsnetschool.entity.UserManager;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import cn.xiaoneng.api.Ntalker;
 import cn.xiaoneng.manager.inf.outer.NtalkerCoreCallback;
@@ -20,6 +22,7 @@ public class QBHSApplication extends MultiDexApplication{
     public static final boolean REPLAY_CHAT_FOLLOW_TIME = true; // 是否让回放的聊天内容随时间轴推进展示
 
     public static final boolean REPLAY_QA_FOLLOW_TIME = true; // 是否让回放的问答内容随时间轴推进展示
+    public IWXAPI iwxapi;
 
     @Override
     public void onCreate() {
@@ -40,6 +43,9 @@ public class QBHSApplication extends MultiDexApplication{
                 System.out.println("failure" + i);
             }
         });
+
+        iwxapi = WXAPIFactory.createWXAPI(this, null);
+        iwxapi.registerApp("wx97d8ae0952554984");
     }
 
     public static Context getContext() {
