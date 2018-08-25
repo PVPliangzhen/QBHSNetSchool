@@ -5,7 +5,7 @@ import com.qbhsnetschool.BuildConfig;
 public class UrlHelper {
 
     public static final class BaseUrl {
-        public static String BASE_HTTP_URL = "online";
+        public static String BASE_HTTP_URL = "http://192.168.1.70:8888/";
 
         static {
             if (BuildConfig.DEBUG) {
