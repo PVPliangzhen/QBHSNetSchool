@@ -248,7 +248,6 @@ public class CourseSelectionFragment extends Fragment {
             screenHeight = outMetrics.heightPixels;
             gradePopup = EasyPopup.create().setContentView(activity, R.layout.grade_select_popupp).setFocusAndOutsideEnable(true)
                     .setBackgroundDimEnable(true).setDimValue(0.4f)
-                    .setHeight((int) (screenHeight - getResources().getDimension(R.dimen.dp700)))
                     .setWidth((int) (screenWith - getResources().getDimension(R.dimen.dp140))).apply();
 
             grade_textView = new TextView[12];
