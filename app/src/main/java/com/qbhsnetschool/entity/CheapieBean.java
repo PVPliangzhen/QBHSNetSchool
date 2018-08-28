@@ -1,6 +1,8 @@
 package com.qbhsnetschool.entity;
 
-public class CheapieBean {
+import java.io.Serializable;
+
+public class CheapieBean implements Serializable{
 
     /**
      * product_id : 2n3n4n3n2n3n4nrnend3
@@ -237,7 +239,7 @@ public class CheapieBean {
         this.chapter_times = chapter_times;
     }
 
-    public static class Teacher1Bean {
+    public static class Teacher1Bean implements Serializable{
         /**
          * id : 4
          * name : 彭薏霖

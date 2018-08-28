@@ -57,4 +57,12 @@ public class UrlHelper {
     public static String getOrders(){
         return BaseUrl.BASE_HTTP_URL + "app/myorders/";
     }
+
+    public static String getChapters(String product_id){
+        return BaseUrl.BASE_HTTP_URL + "app/chapters/" + product_id + "/";
+    }
+
+    public static String nopasswords(){
+        return BaseUrl.BASE_HTTP_URL + "app/nopasswords/";
+    }
 }

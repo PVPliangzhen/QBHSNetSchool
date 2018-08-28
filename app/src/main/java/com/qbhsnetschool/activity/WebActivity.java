@@ -44,7 +44,7 @@ public class WebActivity extends BaseActivity{
         mWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
         mWebView.getSettings().setLoadWithOverviewMode(true);
         syncWebViewCookies();
-        mWebView.loadUrl("http://www.hualuogengshuxue.com/courses/wating");
+        mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
     }
 
     public void syncWebViewCookies() {
@@ -60,8 +60,8 @@ public class WebActivity extends BaseActivity{
             }
         }
         cookieManager.setAcceptCookie(true);
-        cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "csrftoken=9B6BiaHXZQCspEumh4Pwbd1vyc9rF80i6zm6qIzywvCGgsyZZBUAH6kAylaSit31");
-        cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "sessionid=dgqwccdidqc576c3jctxk31nthrsakm6");
+        //cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "csrftoken=9B6BiaHXZQCspEumh4Pwbd1vyc9rF80i6zm6qIzywvCGgsyZZBUAH6kAylaSit31");
+        //cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "sessionid=dgqwccdidqc576c3jctxk31nthrsakm6");
 
 //        if (webCookie != null && webCookie.size() > 0) {
 //            for (int i = 0; i < AppContext.webCookie.size(); i++) {

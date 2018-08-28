@@ -36,7 +36,7 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        CheapieBean cheapieBean = cheapieBeans.get(position);
+        final CheapieBean cheapieBean = cheapieBeans.get(position);
         String gradeItem = ConstantUtil.getGradeItems().get(cheapieBean.getItems());
         String title1 = cheapieBean.getTitle1();
         viewHolder.discount_title.setText("【"+ gradeItem + "】 " + title1);
@@ -47,6 +47,7 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                intent.putExtra("cheapieBean", cheapieBean);
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }

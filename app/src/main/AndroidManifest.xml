@@ -140,7 +140,7 @@
         </activity>
 
         <activity
-            android:name=".activity.C"
+            android:name=".activity.ConfirmOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="nosensor">
         </activity>
