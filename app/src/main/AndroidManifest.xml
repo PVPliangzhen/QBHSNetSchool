@@ -103,12 +103,6 @@
         </activity>
 
         <activity
-            android:name=".activity.ForgetPassWordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="nosensor">
-        </activity>
-
-        <activity
             android:name=".activity.UserInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="nosensor"
