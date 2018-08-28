@@ -87,6 +87,7 @@ public class CourseSelectionFragment extends Fragment {
     private LinearLayout peiu_list_layout;
     private LinearLayout jianzi_list_layout;
     private LinearLayout hlg_list_layout;
+    private BannerPagerAdapter bannerPagerAdapter;
 
     private static class CourseSelectionHandler extends Handler {
 
@@ -308,10 +309,12 @@ public class CourseSelectionFragment extends Fragment {
 
     private void initBanner(View rootView) {
         banner = rootView.findViewById(R.id.banner);
-        banner.setCurrentItem(1000);
         ViewPagerScroller viewPagerScroller = new ViewPagerScroller(activity);
         viewPagerScroller.setScrollDuration(500);
         viewPagerScroller.initViewPagerScroll(banner);
+        bannerPagerAdapter = new BannerPagerAdapter(activity);
+        banner.setAdapter(bannerPagerAdapter);
+        banner.setCurrentItem(1000);
     }
 
     private void handleParseJson(String result) {
@@ -403,8 +406,10 @@ public class CourseSelectionFragment extends Fragment {
                     JSONObject bannerJson = (JSONObject) carousel.get(0);
                     Gson gson = new Gson();
                     bannerBean = gson.fromJson(bannerJson.toString(), BannerBean.class);
-                    BannerPagerAdapter bannerPagerAdapter = new BannerPagerAdapter(activity, bannerBean);
-                    banner.setAdapter(bannerPagerAdapter);
+                    if (bannerPagerAdapter != null){
+                        bannerPagerAdapter.setBanner(bannerBean);
+                        bannerPagerAdapter.notifyDataSetChanged();
+                    }
                     courseSelectionHandler.sendEmptyMessageDelayed(0x01, 3000);
                 }
             }

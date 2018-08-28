@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
@@ -24,12 +25,14 @@ public class BannerPagerAdapter extends PagerAdapter{
     private Context context;
     private BannerBean bannerBean;
     private int banners [] = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3, R.drawable.banner4};
-    private List<String> bannerUrls;
+    private List<String> bannerUrls = new ArrayList<>();
 
-    public BannerPagerAdapter(Context context, BannerBean bannerBean) {
+    public BannerPagerAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setBanner(BannerBean bannerBean){
         this.bannerBean = bannerBean;
-        bannerUrls = new ArrayList<>();
         bannerUrls.add(bannerBean.getPic1());
         bannerUrls.add(bannerBean.getPic2());
         bannerUrls.add(bannerBean.getPic3());
@@ -49,6 +52,11 @@ public class BannerPagerAdapter extends PagerAdapter{
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @NonNull
@@ -75,11 +83,17 @@ public class BannerPagerAdapter extends PagerAdapter{
 //                req.scene = mTargetScene;
 //                QBHSApplication application = (QBHSApplication) context.getApplicationContext();
 //                application.iwxapi.sendReq(req);
-                HomeActivity activity = (HomeActivity) context;
-                Pingpp.createPayment(activity, ConstantUtil.data);
+//                HomeActivity activity = (HomeActivity) context;
+//                Pingpp.createPayment(activity, ConstantUtil.data);
             }
         });
-        Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder).into(imageView);
+        if (bannerUrls != null && bannerUrls.size() > 0) {
+            Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
+        }else{
+            Glide.with(context).load(R.mipmap.banner_placeholder).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
+        }
         container.addView(view);
         return view;
     }
