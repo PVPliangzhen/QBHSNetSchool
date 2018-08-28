@@ -1,6 +1,7 @@
 package com.qbhsnetschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.activity.CourseDetailActivity;
 import com.qbhsnetschool.entity.CheapieBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
@@ -44,7 +46,9 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
         viewHolder.buy_discount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(context, CourseDetailActivity.class);
+                context.startActivity(intent);
             }
         });
     }

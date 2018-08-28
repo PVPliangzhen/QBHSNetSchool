@@ -134,6 +134,18 @@
         </activity>
 
         <activity
+            android:name=".activity.CourseDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="nosensor">
+        </activity>
+
+        <activity
+            android:name=".activity.C"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="nosensor">
+        </activity>
+
+        <activity
             android:name=".activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
             android:screenOrientation="nosensor"
