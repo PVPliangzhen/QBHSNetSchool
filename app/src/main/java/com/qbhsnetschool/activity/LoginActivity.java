@@ -181,8 +181,6 @@ public class LoginActivity extends BaseActivity {
                     startActivity(intent);
                     break;
                 case R.id.forget_pwd:
-                    Intent intent1 = new Intent(activity, ForgetPassWordActivity.class);
-                    startActivity(intent1);
                     break;
                 case R.id.page_back:
                     finish();

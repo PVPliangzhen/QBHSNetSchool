@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_logo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/test_btn"
-        android:layout_width="@dimen/dp300"
-        android:layout_height="@dimen/dp300"
-        android:text="btn"/>
-
-</LinearLayout>
+</RelativeLayout>
