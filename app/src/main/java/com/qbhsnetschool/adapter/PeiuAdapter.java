@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
-import com.qbhsnetschool.entity.PeiuBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
@@ -21,9 +21,9 @@ import java.util.List;
 public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
 
     private Context context;
-    private List<PeiuBean> peiuBeans;
+    private List<HomeCourseBean> peiuBeans;
 
-    public PeiuAdapter(Context context, List<PeiuBean> peiuBeans) {
+    public PeiuAdapter(Context context, List<HomeCourseBean> peiuBeans) {
         this.context = context;
         this.peiuBeans = peiuBeans;
     }
@@ -36,7 +36,7 @@ public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        PeiuBean peiuBean = peiuBeans.get(position);
+        HomeCourseBean peiuBean = peiuBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(peiuBean.getItems());
         String title1 = peiuBean.getTitle1();
         viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
@@ -48,7 +48,7 @@ public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
         viewHolder.home_class_time_txt.setText(course_time);
         String chapter_times = peiuBean.getChapter_times();
         viewHolder.home_class_course_txt.setText(chapter_times);
-        PeiuBean.Teacher1Bean teacher1Bean = peiuBean.getTeacher1();
+        HomeCourseBean.Teacher1Bean teacher1Bean = peiuBean.getTeacher1();
         String teacher_name = teacher1Bean.getName();
         viewHolder.teacher_btn.setText(teacher_name);
         viewHolder.teacher_btn.setOnClickListener(new View.OnClickListener() {

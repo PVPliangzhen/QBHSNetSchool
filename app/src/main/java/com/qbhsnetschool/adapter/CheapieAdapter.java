@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.CourseDetailActivity;
-import com.qbhsnetschool.entity.CheapieBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.List;
 public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHolder>{
 
     private Context context;
-    private List<CheapieBean> cheapieBeans;
+    private List<HomeCourseBean> cheapieBeans;
 
-    public CheapieAdapter(Context context, List<CheapieBean> cheapieBeans) {
+    public CheapieAdapter(Context context, List<HomeCourseBean> cheapieBeans) {
         this.context = context;
         this.cheapieBeans = cheapieBeans;
     }
@@ -36,7 +35,7 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        final CheapieBean cheapieBean = cheapieBeans.get(position);
+        final HomeCourseBean cheapieBean = cheapieBeans.get(position);
         String gradeItem = ConstantUtil.getGradeItems().get(cheapieBean.getItems());
         String title1 = cheapieBean.getTitle1();
         viewHolder.discount_title.setText("【"+ gradeItem + "】 " + title1);
@@ -47,7 +46,7 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("cheapieBean", cheapieBean);
+                intent.putExtra("homeCourseBean", cheapieBean);
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }

@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.httputils.HttpResponse;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.adapter.BannerPagerAdapter;
@@ -32,10 +31,7 @@ import com.qbhsnetschool.adapter.HLGAdapter;
 import com.qbhsnetschool.adapter.JianziAdapter;
 import com.qbhsnetschool.adapter.PeiuAdapter;
 import com.qbhsnetschool.entity.BannerBean;
-import com.qbhsnetschool.entity.CheapieBean;
-import com.qbhsnetschool.entity.HLGBean;
-import com.qbhsnetschool.entity.JianziBean;
-import com.qbhsnetschool.entity.PeiuBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
@@ -54,8 +50,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.http.RealResponseBody;
-
 public class CourseSelectionFragment extends Fragment {
 
     private HomeActivity activity;
@@ -66,10 +60,10 @@ public class CourseSelectionFragment extends Fragment {
     private ViewPager banner;
 
     private List<Integer> usingGrades = new ArrayList<>();
-    private List<CheapieBean> cheapieBeans = new ArrayList<>();
-    private List<PeiuBean> peiuBeans = new ArrayList<>();
-    private List<HLGBean> hlgBeans = new ArrayList<>();
-    private List<JianziBean> jianziBeans = new ArrayList<>();
+    private List<HomeCourseBean> cheapieBeans = new ArrayList<>();
+    private List<HomeCourseBean> peiuBeans = new ArrayList<>();
+    private List<HomeCourseBean> hlgBeans = new ArrayList<>();
+    private List<HomeCourseBean> jianziBeans = new ArrayList<>();
     private RecyclerView discount_list_above;
     private LinearLayout discount_list_above_layout;
     private LinearLayout discount_list_bottom_layout;
@@ -346,7 +340,7 @@ public class CourseSelectionFragment extends Fragment {
                     grade_textView[currentGradeIndex - 1].setEnabled(true);
                     JSONArray cheapie = jsonObject.optJSONArray("cheapie");
                     Gson gson = new Gson();
-                    cheapieBeans = gson.fromJson(cheapie.toString(), new TypeToken<List<CheapieBean>>() {
+                    cheapieBeans = gson.fromJson(cheapie.toString(), new TypeToken<List<HomeCourseBean>>() {
                     }.getType());
                     if (cheapieBeans != null && cheapieBeans.size() > 0) {
                         CheapieAdapter cheapieAdapter = new CheapieAdapter(activity, cheapieBeans);
@@ -359,7 +353,7 @@ public class CourseSelectionFragment extends Fragment {
 //                  courseSelectionFragment.discount_list_bottom.setAdapter(sanQiLianBaoAdapter);
                     JSONObject index_list = jsonObject.optJSONObject("index_list");
                     JSONArray pu = index_list.optJSONArray("pu");
-                    peiuBeans = gson.fromJson(pu.toString(), new TypeToken<List<PeiuBean>>() {
+                    peiuBeans = gson.fromJson(pu.toString(), new TypeToken<List<HomeCourseBean>>() {
                     }.getType());
                     if (peiuBeans != null && peiuBeans.size() > 0) {
                         PeiuAdapter peiuAdapter = new PeiuAdapter(activity, peiuBeans);
@@ -369,7 +363,7 @@ public class CourseSelectionFragment extends Fragment {
                         peiu_list_layout.setVisibility(View.GONE);
                     }
                     JSONArray hlg = index_list.optJSONArray("hlg");
-                    hlgBeans = gson.fromJson(hlg.toString(), new TypeToken<List<HLGBean>>() {
+                    hlgBeans = gson.fromJson(hlg.toString(), new TypeToken<List<HomeCourseBean>>() {
                     }.getType());
                     if (hlgBeans != null && hlgBeans.size() > 0) {
                         HLGAdapter hlgAdapter = new HLGAdapter(activity, hlgBeans);
@@ -379,7 +373,7 @@ public class CourseSelectionFragment extends Fragment {
                         hlg_list_layout.setVisibility(View.GONE);
                     }
                     JSONArray jz = index_list.optJSONArray("jz");
-                    jianziBeans = gson.fromJson(jz.toString(), new TypeToken<List<JianziBean>>() {
+                    jianziBeans = gson.fromJson(jz.toString(), new TypeToken<List<HomeCourseBean>>() {
                     }.getType());
                     if (jianziBeans != null && jianziBeans.size() > 0) {
                         JianziAdapter jianziAdapter = new JianziAdapter(activity, jianziBeans);

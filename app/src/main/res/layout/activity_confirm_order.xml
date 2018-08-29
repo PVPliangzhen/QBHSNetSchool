@@ -35,6 +35,7 @@
                     android:textSize="@dimen/dp24" />
 
                 <TextView
+                    android:id="@+id/real_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp8"
@@ -97,6 +98,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/add_address"
                     android:layout_width="@dimen/dp262"
                     android:layout_height="@dimen/dp76"
                     android:layout_marginLeft="@dimen/dp32"
@@ -122,15 +124,47 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:layout_width="@dimen/dp262"
-                    android:layout_height="@dimen/dp76"
+                    android:id="@+id/address_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp85"
                     android:layout_marginLeft="@dimen/dp32"
-                    android:layout_marginTop="@dimen/dp30">
+                    android:layout_marginTop="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp32">
 
                     <TextView
+                        android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        />
+                        android:text="lz"
+                        android:textSize="@dimen/dp32"
+                        android:textColor="@color/color_333333"/>
+
+                    <TextView
+                        android:id="@+id/user_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="18515010456"
+                        android:layout_toRightOf="@+id/user_name"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:textSize="@dimen/dp32"
+                        android:textColor="@color/color_333333"/>
+
+                    <TextView
+                        android:id="@+id/user_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="北京北京北京"
+                        android:layout_alignLeft="@+id/user_name"
+                        android:layout_below="@+id/user_name"
+                        android:textSize="@dimen/dp25"
+                        android:textColor="@color/color_666666"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/rectangle13"/>
 
                 </RelativeLayout>
 
@@ -177,6 +211,7 @@
                                 android:src="@mipmap/summer2"/>
 
                             <TextView
+                                android:id="@+id/course_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="直播尖子班（全国适用）"
@@ -185,6 +220,7 @@
                                 android:textSize="@dimen/dp30"/>
 
                             <TextView
+                                android:id="@+id/course_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="第四期"
@@ -201,6 +237,7 @@
                             android:layout_marginTop="@dimen/dp22">
 
                             <TextView
+                                android:id="@+id/course_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="date"
@@ -208,15 +245,17 @@
                                 android:textColor="@color/color_666666"/>
 
                             <TextView
+                                android:id="@+id/course_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="course"
+                                android:text="time"
                                 android:layout_marginLeft="@dimen/dp8"
                                 android:textColor="@color/color_666666"
                                 android:textSize="@dimen/dp25"/>
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/course_chapter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="chapter"
@@ -240,6 +279,7 @@
                                 android:background="@drawable/teacher_bg2" />
 
                             <TextView
+                                android:id="@+id/teacher_name_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="teachername"
@@ -256,6 +296,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_alignParentEnd="true">
                                 <TextView
+                                    android:id="@+id/original_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="原价800元"
@@ -263,6 +304,7 @@
                                     android:textSize="@dimen/dp25"/>
 
                                 <TextView
+                                    android:id="@+id/current_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="￥99"

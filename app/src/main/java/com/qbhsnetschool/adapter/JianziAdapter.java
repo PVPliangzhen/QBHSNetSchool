@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
-import com.qbhsnetschool.entity.JianziBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
@@ -21,9 +21,9 @@ import java.util.List;
 public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder>{
 
     private Context context;
-    private List<JianziBean> jianziBeans;
+    private List<HomeCourseBean> jianziBeans;
 
-    public JianziAdapter(Context context, List<JianziBean> jianziBeans) {
+    public JianziAdapter(Context context, List<HomeCourseBean> jianziBeans) {
         this.context = context;
         this.jianziBeans = jianziBeans;
     }
@@ -36,7 +36,7 @@ public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull JianziAdapter.ViewHolder viewHolder, int position) {
-        JianziBean jianziBean = jianziBeans.get(position);
+        HomeCourseBean jianziBean = jianziBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(jianziBean.getItems());
         String title1 = jianziBean.getTitle1();
         viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
@@ -48,7 +48,7 @@ public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder
         viewHolder.home_class_time_txt.setText(course_time);
         String chapter_times = jianziBean.getChapter_times();
         viewHolder.home_class_course_txt.setText(chapter_times);
-        JianziBean.Teacher1Bean teacher1Bean = jianziBean.getTeacher1();
+        HomeCourseBean.Teacher1Bean teacher1Bean = jianziBean.getTeacher1();
         String teacher_name = teacher1Bean.getName();
         viewHolder.teacher_btn.setText(teacher_name);
         viewHolder.teacher_btn.setOnClickListener(new View.OnClickListener() {

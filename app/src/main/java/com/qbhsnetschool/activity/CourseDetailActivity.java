@@ -19,7 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.ChapterAdapter;
 import com.qbhsnetschool.entity.ChapterBean;
-import com.qbhsnetschool.entity.CheapieBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
@@ -41,7 +41,7 @@ public class CourseDetailActivity extends BaseActivity{
 
     private CourseDetailActivity activity;
     private LinearLayout sign_up_btn;
-    private CheapieBean cheapieBean;
+    private HomeCourseBean homeCourseBean;
     private ImageView star1;
     private ImageView star2;
     private ImageView star3;
@@ -109,7 +109,7 @@ public class CourseDetailActivity extends BaseActivity{
     }
 
     private void initData() {
-        String product_id = cheapieBean.getProduct_id();
+        String product_id = homeCourseBean.getProduct_id();
         if (!UIUtils.isNetworkAvailable(activity)){
             Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
         }
@@ -143,7 +143,7 @@ public class CourseDetailActivity extends BaseActivity{
 
     private void initIntent() {
         Intent intent = getIntent();
-        cheapieBean = (CheapieBean) intent.getSerializableExtra("cheapieBean");
+        homeCourseBean = (HomeCourseBean) intent.getSerializableExtra("homeCourseBean");
     }
 
     private void initView() {
@@ -158,27 +158,27 @@ public class CourseDetailActivity extends BaseActivity{
         star3 = (ImageView) findViewById(R.id.star3);
         star4 = (ImageView) findViewById(R.id.star4);
         star5 = (ImageView) findViewById(R.id.star5);
-        initDifficulty(cheapieBean.getStars());
+        initDifficulty(homeCourseBean.getStars());
         TextView course_date = (TextView) findViewById(R.id.course_date);
-        course_date.setText(cheapieBean.getCourse_date());
+        course_date.setText(homeCourseBean.getCourse_date());
         TextView course_time = (TextView) findViewById(R.id.course_time);
-        course_time.setText(cheapieBean.getCourse_time());
+        course_time.setText(homeCourseBean.getCourse_time());
         TextView chapter_time = (TextView) findViewById(R.id.chapter_time);
-        chapter_time.setText(cheapieBean.getChapter_times());
+        chapter_time.setText(homeCourseBean.getChapter_times());
 
         ImageView teacher_head = (ImageView) findViewById(R.id.teacher_head);
-        Glide.with(activity).load(cheapieBean.getTeacher1().getApp_head_pic_small()).asBitmap()
+        Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
                 .placeholder(R.mipmap.teacher_placeholder).error(R.mipmap.teacher_placeholder)
-                .transform(new GlideCircleTransform(activity, cheapieBean.getTeacher1().getApp_head_pic_small())).into(teacher_head);
+                .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head);
         TextView teacher_name = (TextView) findViewById(R.id.teacher_name);
-        teacher_name.setText(cheapieBean.getTeacher1().getName());
+        teacher_name.setText(homeCourseBean.getTeacher1().getName());
         TextView intro1 = (TextView) findViewById(R.id.intro1);
         TextView intro2 = (TextView) findViewById(R.id.intro2);
         TextView intro3 = (TextView) findViewById(R.id.intro3);
-        intro1.setText(cheapieBean.getTeacher1().getIntro1());
-        intro2.setText(cheapieBean.getTeacher1().getIntro2());
-        intro3.setText(cheapieBean.getTeacher1().getIntro3());
+        intro1.setText(homeCourseBean.getTeacher1().getIntro1());
+        intro2.setText(homeCourseBean.getTeacher1().getIntro2());
+        intro3.setText(homeCourseBean.getTeacher1().getIntro3());
         chapter_list = (RecyclerView) findViewById(R.id.chapter_list);
         LinearLayoutManager lm = new LinearLayoutManager(activity){
             @Override
@@ -224,7 +224,7 @@ public class CourseDetailActivity extends BaseActivity{
                     break;
                 case R.id.sign_up_btn:
                     Intent intent = new Intent(activity, ConfirmOrderActivity.class);
-                    intent.putExtra("cheapieBean", cheapieBean);
+                    intent.putExtra("homeCourseBean", homeCourseBean);
                     startActivity(intent);
                     break;
             }

@@ -65,4 +65,16 @@ public class UrlHelper {
     public static String nopasswords(){
         return BaseUrl.BASE_HTTP_URL + "app/nopasswords/";
     }
+
+    public static String getAddresses(){
+        return BaseUrl.BASE_HTTP_URL + "app/addresses/";
+    }
+
+    public static String getOrderCoupon(){
+        return BaseUrl.BASE_HTTP_URL + "app/coupon/";
+    }
+
+    public static String createOrder(){
+        return BaseUrl.BASE_HTTP_URL + "app/orders/";
+    }
 }

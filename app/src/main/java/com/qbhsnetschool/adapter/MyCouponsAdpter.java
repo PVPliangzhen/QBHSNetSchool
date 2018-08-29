@@ -36,7 +36,6 @@ public class MyCouponsAdpter extends RecyclerView.Adapter<MyCouponsAdpter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyCouponsAdpter.ViewHolder viewHolder, int position) {
-
         CouponBean couponBean = couponBeanList.get(position);
         viewHolder.coupon_price.setText(couponBean.getAmount() + "");
         viewHolder.coupon_title.setText(couponBean.getDesc());

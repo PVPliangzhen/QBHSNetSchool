@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
-import com.qbhsnetschool.entity.HLGBean;
+import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
@@ -21,9 +21,9 @@ import java.util.List;
 public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
 
     private Context context;
-    private List<HLGBean> hlgBeans;
+    private List<HomeCourseBean> hlgBeans;
 
-    public HLGAdapter(Context context, List<HLGBean> hlgBeans) {
+    public HLGAdapter(Context context, List<HomeCourseBean> hlgBeans) {
         this.context = context;
         this.hlgBeans = hlgBeans;
     }
@@ -36,7 +36,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull HLGAdapter.ViewHolder viewHolder, int position) {
-        HLGBean hlgBean = hlgBeans.get(position);
+        HomeCourseBean hlgBean = hlgBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(hlgBean.getItems());
         String title1 = hlgBean.getTitle1();
         viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
@@ -48,7 +48,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
         viewHolder.home_class_time_txt.setText(course_time);
         String chapter_times = hlgBean.getChapter_times();
         viewHolder.home_class_course_txt.setText(chapter_times);
-        HLGBean.Teacher1Bean teacher1Bean = hlgBean.getTeacher1();
+        HomeCourseBean.Teacher1Bean teacher1Bean = hlgBean.getTeacher1();
         String teacher_name = teacher1Bean.getName();
         viewHolder.teacher_btn.setText(teacher_name);
         viewHolder.teacher_btn.setOnClickListener(new View.OnClickListener() {

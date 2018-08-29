@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.adapter.WaitingClassAdapter;
-import com.qbhsnetschool.entity.CheapieBean;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
