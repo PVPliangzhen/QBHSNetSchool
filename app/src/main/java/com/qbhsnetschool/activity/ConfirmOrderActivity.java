@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.MyCouponsAdpter;
 import com.qbhsnetschool.entity.AddressBean;
@@ -31,6 +33,7 @@ import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -239,13 +242,68 @@ public class ConfirmOrderActivity extends BaseActivity{
                     HttpHelper.httpRequest(UrlHelper.createOrder(), params, "POST", new StandardCallBack(activity) {
                         @Override
                         public void onSuccess(String result) {
-//                            System.out.println(result);
-                            String data = "{\"code\":\"200\",\"charge\":{\"id\":\"ch_PiTSGSSufXn1bXH44SKa5SO8\",\"object\":\"charge\",\"created\":1535524280,\"livemode\":true,\"paid\":false,\"refunded\":false,\"reversed\":false,\"app\":\"app_uTiDO4CarXnPSeTu\",\"channel\":\"wx\",\"order_no\":\"2018082914312061797910\",\"client_ip\":\"127.0.0.1\",\"amount\":9900,\"amount_settle\":9841,\"currency\":\"cny\",\"subject\":\"四年级暑假第四期直播尖子班(全国适用)尖子班2班\",\"body\":\"四年级暑假第四期直播尖子班(全国适用)尖子班2班\",\"extra\":{},\"time_paid\":null,\"time_expire\":1535531480,\"time_settle\":null,\"transaction_no\":null,\"refunds\":{\"object\":\"list\",\"url\":\"/v1/charges/ch_PiTSGSSufXn1bXH44SKa5SO8/refunds\",\"has_more\":false,\"data\":[]},\"amount_refunded\":0,\"failure_code\":null,\"failure_msg\":null,\"metadata\":{\"phone_number\":\"18701073115\",\"user_id\":23443},\"credential\":{\"object\":\"credential\",\"wx\":{\"appId\":\"wx97d8ae0952554984\",\"partnerId\":\"1512997051\",\"prepayId\":\"wx291431211011855edcd5a3cf0303915673\",\"nonceStr\":\"f6cb100fb0581e4c3f164f11ac181da7\",\"timeStamp\":1535524281,\"packageValue\":\"Sign=WXPay\",\"sign\":\"2DCB2495DF6A96301ADA57ECC4B3B582\"}},\"description\":null}}";
-
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                String code = jsonObject.optString("code");
+                                if (code.equalsIgnoreCase("200")){
+                                    String chargeString = jsonObject.optString("charge");
+                                    Pingpp.createPayment(activity, chargeString);
+                                }else{
+                                    final String msg = jsonObject.optString("msg");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (!LoadingDialog.isDissMissLoading()){
+                                                LoadingDialog.dismissLoading();
+                                            }
+                                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     });
                     break;
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
+            String result = data.getExtras().getString("pay_result");
+            switch (result){
+                case "fail":
+                    Toast.makeText(activity, "支付失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case "success":
+                    Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                    break;
+                case "cancel":
+                    Toast.makeText(activity, "取消支付", Toast.LENGTH_SHORT).show();
+                    break;
+                case "invalid":
+                    Toast.makeText(activity, "未安装微信客户端，请安装后重试", Toast.LENGTH_SHORT).show();
+                    break;
+                case "unknown":
+                    Toast.makeText(activity, "支付失败", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            /* 处理返回值
+             * "success" - 支付成功
+             * "fail"    - 支付失败
+             * "cancel"  - 取消支付
+             * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+             * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+             */
+            String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+            String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+        }
+    }
 }
