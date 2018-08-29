@@ -224,6 +224,7 @@ public class CourseDetailActivity extends BaseActivity{
                     break;
                 case R.id.sign_up_btn:
                     Intent intent = new Intent(activity, ConfirmOrderActivity.class);
+                    intent.putExtra("cheapieBean", cheapieBean);
                     startActivity(intent);
                     break;
             }

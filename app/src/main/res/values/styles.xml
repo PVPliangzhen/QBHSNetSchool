@@ -38,7 +38,7 @@
     </style>
 
     <style name="AppTheme.Splash" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-        <item name="android:windowBackground">@mipmap/login</item>
+        <item name="android:windowBackground">@mipmap/splash_img</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
