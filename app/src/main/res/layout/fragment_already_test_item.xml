@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp375"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        app:cardCornerRadius="@dimen/dp10"
+        app:cardElevation="@dimen/dp10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5">
+
+                <TextView
+                    android:id="@+id/course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dp30"
+                    android:text="2018-暑"/>
+
+                <TextView
+                    android:id="@+id/total_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dp30"
+                    android:textColor="@color/color_333333"
+                    android:layout_below="@+id/course_title"
+                    android:layout_marginTop="@dimen/dp30"
+                    android:text="总题数：5题"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/wrong_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="参加测试"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dp30"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_below="@+id/total_count"
+                    android:layout_marginTop="@dimen/dp30"/>
+
+                <TextView
+                    android:id="@+id/couse_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="作答时间"/>
+
+                <TextView
+                    android:id="@+id/go_to_test"
+                    android:layout_width="@dimen/dp230"
+                    android:layout_height="@dimen/dp60"
+                    android:background="@mipmap/button_bg"
+                    android:text="参加测试"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dp30"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_below="@+id/test_number"
+                    android:layout_marginTop="@dimen/dp30"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/complete"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
 
     <com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout
-        android:id="@+id/wait_test_refresh"
+        android:id="@+id/already_test_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/wait_test_list"
+            android:id="@+id/already_test_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>

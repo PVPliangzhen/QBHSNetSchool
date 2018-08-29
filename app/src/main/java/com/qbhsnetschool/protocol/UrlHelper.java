@@ -77,4 +77,12 @@ public class UrlHelper {
     public static String createOrder(){
         return BaseUrl.BASE_HTTP_URL + "app/orders/";
     }
+
+    public static String getWaitExam(){
+        return BaseUrl.BASE_HTTP_URL + "app/exams/";
+    }
+
+    public static String getAlreadyExam(){
+        return BaseUrl.BASE_HTTP_URL + "app/exam_results/";
+    }
 }

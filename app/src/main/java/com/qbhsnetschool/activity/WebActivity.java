@@ -1,5 +1,6 @@
 package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
@@ -20,11 +21,13 @@ import com.qbhsnetschool.R;
 public class WebActivity extends BaseActivity{
 
     private WebView mWebView;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        initIntent();
         mWebView = (WebView) findViewById(R.id.webView);
         //mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " " + HttpHelper.getUserAgent(appContext));
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -45,6 +48,11 @@ public class WebActivity extends BaseActivity{
         mWebView.getSettings().setLoadWithOverviewMode(true);
         syncWebViewCookies();
         mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
+    }
+
+    private void initIntent() {
+        Intent intent = getIntent();
+        url = intent.getStringExtra("url");
     }
 
     public void syncWebViewCookies() {
