@@ -88,11 +88,9 @@ public class BannerPagerAdapter extends PagerAdapter{
             }
         });
         if (bannerUrls != null && bannerUrls.size() > 0) {
-            Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
+            Glide.with(context).load(bannerUrls.get(position % 4)).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder).into(imageView);
         }else{
-            Glide.with(context).load(R.mipmap.banner_placeholder).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
+            Glide.with(context).load(R.mipmap.banner_placeholder).placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder).into(imageView);
         }
         container.addView(view);
         return view;
