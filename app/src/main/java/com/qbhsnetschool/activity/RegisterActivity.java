@@ -40,6 +40,7 @@ public class RegisterActivity extends BaseActivity {
     private String phonenumber;
     private ImageView num_delete;
     private ImageView page_back;
+    private boolean isRegister;
 
     private static class RegisterHandler extends Handler {
 
@@ -65,6 +66,7 @@ public class RegisterActivity extends BaseActivity {
                             String responseMsg = jsonObject.optString("msg");
                             if (code.equalsIgnoreCase(ProtocolCode.CODE_1100.getValue())) {
                                 Intent intent = new Intent(registerActivity, VerifyCodeAtivity.class);
+                                intent.putExtra("is_register", registerActivity.isRegister);
                                 intent.putExtra("phonenumber", registerActivity.phonenumber);
                                 registerActivity.startActivity(intent);
                             } else {
@@ -103,6 +105,8 @@ public class RegisterActivity extends BaseActivity {
         setBaseContentView(R.layout.activity_register, true, R.color.status_bar_bg_color, false);
         activity = this;
         registerHandler = new RegisterHandler(activity);
+        Intent intent = getIntent();
+        isRegister = intent.getBooleanExtra("is_register", true);
         verify_code_btn = (Button) findViewById(R.id.verify_code_btn);
         verify_code_btn.setOnClickListener(clickListener);
         phone_number_imput = (EditText) findViewById(R.id.phone_number_imput);
@@ -110,7 +114,11 @@ public class RegisterActivity extends BaseActivity {
         num_delete = (ImageView) findViewById(R.id.num_delete);
         num_delete.setOnClickListener(clickListener);
         TextView page_title = (TextView) findViewById(R.id.page_title);
-        page_title.setText("注册");
+        if (isRegister){
+            page_title.setText("注册");
+        }else{
+            page_title.setText("忘记密码");
+        }
         page_back = (ImageView) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         phone_number_imput.addTextChangedListener(new TextWatcher() {
@@ -140,7 +148,11 @@ public class RegisterActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.verify_code_btn:
-                    judgePhoneRegister();
+                    if (isRegister) {
+                        judgePhoneRegister();
+                    }else{
+                        requestVerifyCode();
+                    }
                     break;
                 case R.id.num_delete:
                     phone_number_imput.setText("");

@@ -20,16 +20,20 @@ import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.User;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
+import com.qbhsnetschool.protocol.ProtocolCode;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.internal.http.RealResponseBody;
 
@@ -54,6 +58,7 @@ public class VerifyCodeAtivity extends BaseActivity {
     private TextView register_protocol;
     private VerifyCodeAtivity activity;
     private VerifyCodeHandler verifyCodeHandler;
+    private boolean isRegister;
 
     private static class VerifyCodeHandler extends Handler {
 
@@ -77,9 +82,65 @@ public class VerifyCodeAtivity extends BaseActivity {
         }
     }
 
+    private void login() {
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!judgePhoneNumberFormat()) {
+            Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LoadingDialog.loading(activity);
+        Map<String, String> params = new HashMap<>();
+        params.put("username", phonenumber);
+        params.put("password", pwd_content.getText().toString().trim());
+        HttpHelper.httpRequest(UrlHelper.login(), params, "POST", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = response;
+                    verifyCodeHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!LoadingDialog.isDissMissLoading()) {
+                            LoadingDialog.dismissLoading();
+                        }
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 判断手机号格式
+     *
+     * @return
+     */
+    public boolean judgePhoneNumberFormat() {
+        Pattern mobileReg = Pattern
+                .compile("((^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$)|(^\\d{7,8}$)|(^0[1," +
+                        "2]{1}\\d{1}(-|_)?\\d{8}$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}$)|(^0[1,2]{1}\\d{1}(-|_)?\\d{8}" +
+                        "(-|_)(\\d{1,4})$)|(^0[3-9]{1}\\d{2}(-|_)?\\d{7,8}(-|_)(\\d{1,4})$))");
+        Matcher mobileMatcher = mobileReg.matcher(phonenumber);
+        boolean isMobile = mobileMatcher.matches();
+        return isMobile;
+    }
+
     private void handleUser(String result) {
         try {
-            if (!LoadingDialog.isDissMissLoading()){
+            if (!LoadingDialog.isDissMissLoading()) {
                 LoadingDialog.dismissLoading();
             }
             JSONObject jsonObject = new JSONObject(result);
@@ -101,7 +162,7 @@ public class VerifyCodeAtivity extends BaseActivity {
                 Intent intent = new Intent(activity, HomeActivity.class);
                 intent.putExtra("home_tab", "2");
                 startActivity(intent);
-            }else{
+            } else {
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
@@ -120,6 +181,7 @@ public class VerifyCodeAtivity extends BaseActivity {
 
     private void initView() {
         phonenumber = getIntent().getStringExtra("phonenumber");
+        isRegister = getIntent().getBooleanExtra("is_register", true);
         phone_number = (TextView) findViewById(R.id.phone_number);
         phone_number.setText(phonenumber);
         count_timer_txt = (TextView) findViewById(R.id.count_timer_txt);
@@ -198,7 +260,11 @@ public class VerifyCodeAtivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.login_btn:
-                    registerUser();
+                    if (isRegister) {
+                        registerUser();
+                    } else {
+                        forgetPassword();
+                    }
                     break;
                 case R.id.page_back:
                     finish();
@@ -209,6 +275,60 @@ public class VerifyCodeAtivity extends BaseActivity {
             }
         }
     };
+
+    private void forgetPassword() {
+        if (!UIUtils.isNetworkAvailable(activity)) {
+            Toast.makeText(activity, "当前网络不可用，请稍后重试", Toast.LENGTH_SHORT).show();
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("password", pwd_content.getText().toString().trim());
+        params.put("tel", phonenumber);
+        params.put("tel_code", verify_code_edit.getText().toString().trim());
+        LoadingDialog.loading(activity);
+        HttpHelper.httpRequest(UrlHelper.nopasswords(), params, "POST", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.optString("code");
+                    if (code.equalsIgnoreCase(ProtocolCode.CODE_1110.getValue())) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                activity.login();
+                            }
+                        });
+                    } else {
+                        if (!LoadingDialog.isDissMissLoading()) {
+                            LoadingDialog.dismissLoading();
+                        }
+                        final String msg = jsonObject.optString("msg");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int code) {
+                if (!LoadingDialog.isDissMissLoading()) {
+                    LoadingDialog.dismissLoading();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "服务器异常", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
 
     private void registerUser() {
         if (!UIUtils.isNetworkAvailable(activity)) {
@@ -234,7 +354,7 @@ public class VerifyCodeAtivity extends BaseActivity {
 
             @Override
             public void onFailure(int code) {
-                if (!LoadingDialog.isDissMissLoading()){
+                if (!LoadingDialog.isDissMissLoading()) {
                     LoadingDialog.dismissLoading();
                 }
                 runOnUiThread(new Runnable() {
@@ -246,4 +366,6 @@ public class VerifyCodeAtivity extends BaseActivity {
             }
         });
     }
+
+
 }

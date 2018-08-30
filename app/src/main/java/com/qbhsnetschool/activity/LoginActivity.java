@@ -178,9 +178,13 @@ public class LoginActivity extends BaseActivity {
                     break;
                 case R.id.to_register:
                     Intent intent = new Intent(activity, RegisterActivity.class);
+                    intent.putExtra("is_register", true);
                     startActivity(intent);
                     break;
                 case R.id.forget_pwd:
+                    Intent intent1 = new Intent(activity, RegisterActivity.class);
+                    intent1.putExtra("is_register", false);
+                    startActivity(intent1);
                     break;
                 case R.id.page_back:
                     finish();
