@@ -206,7 +206,7 @@ public class ConfirmOrderActivity extends BaseActivity{
         teacher_head_img = (ImageView) findViewById(R.id.teacher_head_img);
         Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-                .placeholder(R.mipmap.teacher_placeholder).error(R.mipmap.teacher_placeholder)
+                .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
                 .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head_img);
         coupon_list = (RecyclerView) findViewById(R.id.coupon_list);
         myCouponsAdpter = new MyCouponsAdpter(activity);

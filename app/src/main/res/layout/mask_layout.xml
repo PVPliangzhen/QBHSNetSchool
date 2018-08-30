@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mask_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dp25"
+        android:layout_marginTop="@dimen/dp70"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"/>
+    
+    <TextView
+        android:id="@+id/mask_btn"
+        android:layout_width="@dimen/dp238"
+        android:layout_height="@dimen/dp60"
+        android:textSize="@dimen/dp30"
+        android:textColor="@color/color_ffffff"
+        android:text="马上去选课"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:background="@mipmap/button_bg"
+        android:layout_marginTop="@dimen/dp70"/>
+
+</LinearLayout>

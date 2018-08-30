@@ -1,6 +1,7 @@
 package com.qbhsnetschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.activity.CourseDetailActivity;
 import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
@@ -36,7 +38,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull HLGAdapter.ViewHolder viewHolder, int position) {
-        HomeCourseBean hlgBean = hlgBeans.get(position);
+        final HomeCourseBean hlgBean = hlgBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(hlgBean.getItems());
         String title1 = hlgBean.getTitle1();
         viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
@@ -51,10 +53,13 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
         HomeCourseBean.Teacher1Bean teacher1Bean = hlgBean.getTeacher1();
         String teacher_name = teacher1Bean.getName();
         viewHolder.teacher_btn.setText(teacher_name);
-        viewHolder.teacher_btn.setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent();
+                intent.putExtra("homeCourseBean", hlgBean);
+                intent.setClass(context, CourseDetailActivity.class);
+                context.startActivity(intent);
             }
         });
         String teacherImg = teacher1Bean.getApp_head_pic();

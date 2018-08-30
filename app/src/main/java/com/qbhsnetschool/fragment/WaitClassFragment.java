@@ -148,7 +148,8 @@ public class WaitClassFragment extends Fragment{
                     intent.setAction("load_already_class_data");
                     activity.sendBroadcast(intent);
                 }else{
-                    Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
+                    String msg = jsonObject.optString("msg");
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
             }
         }catch (Exception e){

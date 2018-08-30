@@ -15,10 +15,13 @@ import com.qbhsnetschool.entity.AlreadyTestBean;
 
 import java.util.List;
 
-public class AlreadyTestAdapter extends RecyclerView.Adapter<AlreadyTestAdapter.ViewHolder>{
+public class AlreadyTestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
     private List<AlreadyTestBean> alreadyTestBeans;
+    public static final int EEMPTY_ITEM = 1;
+    public static final int DATA_ITEM = 2;
+
 
     public AlreadyTestAdapter(Context context) {
         this.context = context;
@@ -30,43 +33,71 @@ public class AlreadyTestAdapter extends RecyclerView.Adapter<AlreadyTestAdapter.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_already_test_item, viewGroup, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        RecyclerView.ViewHolder viewHolder = null;
+        if (viewType == EEMPTY_ITEM) {
+            viewHolder = new MaskViewHolder(LayoutInflater.from(context).inflate(R.layout.mask_layout, viewGroup, false));
+        } else if (viewType == DATA_ITEM) {
+            viewHolder = new ViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_already_test_item, viewGroup, false));
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        AlreadyTestBean alreadyTestBean = alreadyTestBeans.get(position);
-        int examType = alreadyTestBean.getExam_type();
-        if (examType == 1){
-            viewHolder.wrong_count.setVisibility(View.VISIBLE);
-            viewHolder.go_to_test.setVisibility(View.VISIBLE);
-            viewHolder.mark_layout.setVisibility(View.VISIBLE);
-            viewHolder.complete_layout.setVisibility(View.GONE);
-            viewHolder.course_title.setText(alreadyTestBean.getBefore_title() + "  " + alreadyTestBean.getTitle());
-            viewHolder.total_count.setText(alreadyTestBean.getItems());
-            viewHolder.wrong_count.setText(alreadyTestBean.getWrong_items());
-            viewHolder.couse_time.setText("作答时间 ：" + alreadyTestBean.getDatetime());
-            viewHolder.go_to_test.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        if (viewHolder instanceof ViewHolder){
+            ViewHolder viewHolder1 = (ViewHolder) viewHolder;
+            AlreadyTestBean alreadyTestBean = alreadyTestBeans.get(position);
+            int examType = alreadyTestBean.getExam_type();
+            if (examType == 1){
+                viewHolder1.wrong_count.setVisibility(View.VISIBLE);
+                viewHolder1.go_to_test.setVisibility(View.VISIBLE);
+                viewHolder1.mark_layout.setVisibility(View.VISIBLE);
+                viewHolder1.complete_layout.setVisibility(View.GONE);
+                viewHolder1.course_title.setText(alreadyTestBean.getBefore_title() + "  " + alreadyTestBean.getTitle());
+                viewHolder1.total_count.setText(alreadyTestBean.getItems());
+                viewHolder1.wrong_count.setText(alreadyTestBean.getWrong_items());
+                viewHolder1.couse_time.setText("作答时间 ：" + alreadyTestBean.getDatetime());
+                viewHolder1.go_to_test.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                }
-            });
-        }else{
-            viewHolder.wrong_count.setVisibility(View.GONE);
-            viewHolder.go_to_test.setVisibility(View.GONE);
-            viewHolder.mark_layout.setVisibility(View.GONE);
-            viewHolder.complete_layout.setVisibility(View.VISIBLE);
-            viewHolder.course_title.setText(alreadyTestBean.getBefore_title() + "  " + alreadyTestBean.getTitle());
-            viewHolder.total_count.setText(alreadyTestBean.getItems());
-            viewHolder.couse_time.setText("作答时间 ：" + alreadyTestBean.getDatetime());
+                    }
+                });
+            }else{
+                viewHolder1.wrong_count.setVisibility(View.GONE);
+                viewHolder1.go_to_test.setVisibility(View.GONE);
+                viewHolder1.mark_layout.setVisibility(View.GONE);
+                viewHolder1.complete_layout.setVisibility(View.VISIBLE);
+                viewHolder1.course_title.setText(alreadyTestBean.getBefore_title() + "  " + alreadyTestBean.getTitle());
+                viewHolder1.total_count.setText(alreadyTestBean.getItems());
+                viewHolder1.couse_time.setText("作答时间 ：" + alreadyTestBean.getDatetime());
+            }
+        }
+        if (viewHolder instanceof MaskViewHolder) {
+            MaskViewHolder maskViewHolder = (MaskViewHolder) viewHolder;
+            maskViewHolder.mask_btn.setText("马上去选课");
+            maskViewHolder.mask_btn.setVisibility(View.GONE);
+            maskViewHolder.mask_title.setText("您还没有参加过任何测试题~");
         }
     }
 
     @Override
     public int getItemCount() {
-        return alreadyTestBeans == null ? 0 : alreadyTestBeans.size();
+        if (alreadyTestBeans == null || alreadyTestBeans.size() <= 0){
+            return 1;
+        }else{
+            return alreadyTestBeans.size();
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (alreadyTestBeans == null || alreadyTestBeans.size() <= 0) {
+            return EEMPTY_ITEM;
+        }else{
+            return DATA_ITEM;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -98,6 +129,18 @@ public class AlreadyTestAdapter extends RecyclerView.Adapter<AlreadyTestAdapter.
             ten_img = itemView.findViewById(R.id.ten_img);
             per_img = itemView.findViewById(R.id.per_img);
             number_line = itemView.findViewById(R.id.number_line);
+        }
+    }
+
+    static class MaskViewHolder extends RecyclerView.ViewHolder {
+
+        TextView mask_title;
+        TextView mask_btn;
+
+        public MaskViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mask_title = itemView.findViewById(R.id.mask_title);
+            mask_btn = itemView.findViewById(R.id.mask_btn);
         }
     }
 }

@@ -40,6 +40,7 @@ public class AlreadyTestFragment extends Fragment{
     private AlreadyTestHandler alreadyTestHandler;
     private List<AlreadyTestBean> alreadyTestBeans;
     private AlreadyTestAdapter alreadyTestAdapter;
+    private ViewPagerSwipeRefreshLayout already_test_refresh;
 
     private static class AlreadyTestHandler extends Handler{
 
@@ -68,6 +69,9 @@ public class AlreadyTestFragment extends Fragment{
             if (!LoadingDialog.isDissMissLoading()){
                 LoadingDialog.dismissLoading();
             }
+            if (already_test_refresh.isRefreshing()){
+                already_test_refresh.setRefreshing(false);
+            }
             JSONObject jsonObject = new JSONObject(result);
             String code = jsonObject.optString("code");
             if (code.equalsIgnoreCase("200")){
@@ -79,7 +83,8 @@ public class AlreadyTestFragment extends Fragment{
                     alreadyTestAdapter.notifyDataSetChanged();
                 }
             }else{
-                Toast.makeText(activity, "请求错误", Toast.LENGTH_SHORT).show();
+                String msg = jsonObject.optString("msg");
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -104,8 +109,8 @@ public class AlreadyTestFragment extends Fragment{
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         already_test_list.setLayoutManager(lm);
         already_test_list.setAdapter(alreadyTestAdapter);
-        ViewPagerSwipeRefreshLayout wait_test_refresh = rootView.findViewById(R.id.already_test_refresh);
-        wait_test_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        already_test_refresh = rootView.findViewById(R.id.already_test_refresh);
+        already_test_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 initData();

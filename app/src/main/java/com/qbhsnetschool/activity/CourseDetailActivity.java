@@ -169,7 +169,7 @@ public class CourseDetailActivity extends BaseActivity{
         ImageView teacher_head = (ImageView) findViewById(R.id.teacher_head);
         Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-                .placeholder(R.mipmap.teacher_placeholder).error(R.mipmap.teacher_placeholder)
+                .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
                 .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head);
         TextView teacher_name = (TextView) findViewById(R.id.teacher_name);
         teacher_name.setText(homeCourseBean.getTeacher1().getName());
