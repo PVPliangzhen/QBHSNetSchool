@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp35"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/order_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp32"
+        android:text="订单号:12345678987654321"
+        android:textSize="@dimen/dp25"
+        android:textColor="@color/color_666666"/>
+
+    <TextView
+        android:id="@+id/pay_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dp25"
+        android:textColor="@color/color_666666"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp40"
+        android:text="已支付"/>
+    
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp380"
+        app:cardCornerRadius="@dimen/dp10"
+        app:cardElevation="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp32"
+        android:layout_below="@+id/pay_status"
+        android:layout_marginBottom="@dimen/dp10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/season_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/summer2"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp40"/>
+
+            <TextView
+                android:id="@+id/order_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="二升三年级直播尖子班"
+                android:textSize="@dimen/dp30"
+                android:textColor="@color/color_333333"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_toRightOf="@+id/season_img"
+                android:layout_marginLeft="@dimen/dp25"
+                android:layout_marginTop="@dimen/dp40"/>
+
+            <TextView
+                android:id="@+id/course_season"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第一期"
+                android:textColor="@color/color_E20000"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp32"/>
+
+            <TextView
+                android:id="@+id/course_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="date"
+                android:textSize="@dimen/dp25"
+                android:textColor="@color/color_666666"
+                android:layout_alignLeft="@+id/order_title"
+                android:layout_below="@+id/order_title"
+                android:layout_marginTop="@dimen/dp22"/>
+
+            <TextView
+                android:id="@+id/course_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp25"
+                android:textColor="@color/color_666666"
+                android:layout_alignLeft="@+id/order_title"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_below="@+id/course_date"
+                android:text="time"/>
+
+            <TextView
+                android:id="@+id/teacher_name"
+                android:layout_width="@dimen/dp120"
+                android:layout_height="@dimen/dp50"
+                android:textSize="@dimen/dp25"
+                android:textColor="@color/color_666666"
+                android:background="@color/color_e7e7e7"
+                android:text="张永福"
+                android:layout_alignLeft="@+id/order_title"
+                android:layout_below="@+id/course_time"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp22"/>
+
+            <TextView
+                android:id="@+id/pay_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实付:"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dp25"
+                android:layout_alignLeft="@+id/order_title"
+                android:layout_below="@+id/teacher_name"
+                android:layout_marginTop="@dimen/dp30"/>
+
+            <TextView
+                android:id="@+id/order_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥0"
+                android:layout_toRightOf="@+id/pay_actual"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_below="@+id/teacher_name"
+                android:layout_marginTop="@dimen/dp30"/>
+
+            <TextView
+                android:id="@+id/goto_pay"
+                android:layout_width="@dimen/dp120"
+                android:layout_height="@dimen/dp45"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/order_price"
+                android:text="去支付"
+                android:textColor="@color/color_E20000"
+                android:background="@drawable/add_address_bg"
+                android:layout_marginRight="@dimen/dp32"
+                android:gravity="center"
+                android:textSize="@dimen/dp24"/>
+
+            <TextView
+                android:id="@+id/order_cancel"
+                android:layout_width="@dimen/dp120"
+                android:layout_height="@dimen/dp45"
+                android:text="取消订单"
+                android:layout_toLeftOf="@+id/goto_pay"
+                android:layout_marginRight="@dimen/dp28"
+                android:layout_alignTop="@+id/order_price"
+                android:gravity="center"
+                android:textColor="@color/color_e7e7e7"
+                android:background="@drawable/cancel_order_bg"
+                android:textSize="@dimen/dp24"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
