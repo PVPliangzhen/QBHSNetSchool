@@ -89,4 +89,8 @@ public class UrlHelper {
     public static String upLoadHeads(){
         return BaseUrl.BASE_HTTP_URL + "app/headpics/";
     }
+
+    public static String addAddress(){
+        return BaseUrl.BASE_HTTP_URL + "app/addresses/";
+    }
 }

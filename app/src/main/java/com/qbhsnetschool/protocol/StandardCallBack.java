@@ -45,7 +45,7 @@ public abstract class StandardCallBack implements Callback{
     @Override
     public void onResponse(HttpResponse response) {
         try {
-            if (response.code() == 200) {
+            if (response.code() == 200 || response.code() == 201) {
                 String result = (((RealResponseBody) response.body()).string());
                 JSONObject jsonObject = new JSONObject(result);
                 String code = jsonObject.optString("code");

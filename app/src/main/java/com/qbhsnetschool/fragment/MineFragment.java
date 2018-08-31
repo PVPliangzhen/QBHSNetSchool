@@ -108,7 +108,21 @@ public class MineFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        if (activity.getCurrentFragment() instanceof MineFragment){
+            initData();
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        System.out.println(hidden);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        System.out.println(isVisibleToUser);
     }
 
     private void initData() {

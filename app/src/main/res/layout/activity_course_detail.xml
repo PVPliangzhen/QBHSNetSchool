@@ -27,6 +27,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/original_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="原价￥80元"
@@ -35,6 +36,7 @@
                     android:layout_marginLeft="@dimen/dp32"/>
 
                 <TextView
+                    android:id="@+id/current_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥99"

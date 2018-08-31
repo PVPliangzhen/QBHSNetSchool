@@ -30,6 +30,7 @@ import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.ConstantUtil;
 import com.qbhsnetschool.uitls.GlideCircleTransform;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONArray;
@@ -180,8 +181,10 @@ public class ConfirmOrderActivity extends BaseActivity{
             }
         });
         add_address = (LinearLayout) findViewById(R.id.add_address);
+        add_address.setOnClickListener(clickListener);
         add_address.setVisibility(View.GONE);
         address_layout = (RelativeLayout) findViewById(R.id.address_layout);
+        address_layout.setOnClickListener(clickListener);
         address_layout.setVisibility(View.INVISIBLE);
         user_name = (TextView) findViewById(R.id.user_name);
         user_num = (TextView) findViewById(R.id.user_num);
@@ -221,7 +224,6 @@ public class ConfirmOrderActivity extends BaseActivity{
         coupon_list.setAdapter(myCouponsAdpter);
         TextView real_price = (TextView) findViewById(R.id.real_price);
         real_price.setText("￥" + homeCourseBean.getPrice());
-
         LinearLayout sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);
     }
@@ -233,6 +235,11 @@ public class ConfirmOrderActivity extends BaseActivity{
                 case R.id.sign_up_btn:
                     if (!UIUtils.isNetworkAvailable(activity)){
                         Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (StringUtils.isEmpty(user_address.getText().toString().trim())){
+                        Toast.makeText(activity, "请添加收货地址", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                     LoadingDialog.loading(activity);
                     Map<String, String> params = new HashMap<>();
@@ -265,6 +272,14 @@ public class ConfirmOrderActivity extends BaseActivity{
                             }
                         }
                     });
+                    break;
+                case R.id.add_address:
+                    Intent intent = new Intent(activity, AddressActivity.class);
+                    startActivityForResult(intent, 0x10);
+                    break;
+                case R.id.address_layout:
+                    Intent intent1 = new Intent(activity, AddressManagerActivity.class);
+                    startActivity(intent1);
                     break;
             }
         }
@@ -304,6 +319,18 @@ public class ConfirmOrderActivity extends BaseActivity{
              */
             String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
             String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+        }
+        if (requestCode == 0x10){
+            if (resultCode == 0x11){
+                String result = data.getStringExtra("result");
+                Gson gson = new Gson();
+                AddressBean addressBean = gson.fromJson(result, AddressBean.class);
+                add_address.setVisibility(View.GONE);
+                address_layout.setVisibility(View.VISIBLE);
+                user_name.setText(addressBean.getName());
+                user_num.setText(addressBean.getTel());
+                user_address.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
+            }
         }
     }
 }

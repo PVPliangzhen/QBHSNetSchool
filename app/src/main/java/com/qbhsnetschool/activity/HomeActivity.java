@@ -35,6 +35,11 @@ public class HomeActivity extends BaseActivity {
     private LearnFragment learnFragment;
     private TestFragment testFragment;
     private MineFragment mineFragment;
+
+    public Fragment getCurrentFragment() {
+        return currentFragment;
+    }
+
     private Fragment currentFragment;
     private List<ImageView> img_tab;
     private List<TextView> txt_tab;

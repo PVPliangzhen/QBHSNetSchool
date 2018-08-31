@@ -1,6 +1,7 @@
 package com.qbhsnetschool.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -190,6 +191,11 @@ public class CourseDetailActivity extends BaseActivity{
         chapter_list.setLayoutManager(lm);
         chapterAdapter = new ChapterAdapter(activity);
         chapter_list.setAdapter(chapterAdapter);
+        TextView original_price = (TextView) findViewById(R.id.original_price);
+        original_price.setText("原价" + homeCourseBean.getOriginal_price() + "元");
+        original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        TextView currenr_price = (TextView) findViewById(R.id.current_price);
+        currenr_price.setText("￥" + homeCourseBean.getPrice());
     }
 
     private void initDifficulty(int stars){
