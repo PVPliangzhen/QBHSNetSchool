@@ -68,8 +68,11 @@ import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UserInfoActivity extends BaseActivity{
@@ -140,6 +143,7 @@ public class UserInfoActivity extends BaseActivity{
             birthday_txt.setText(personalInfo.getBirthday());
             grade_txt.setText(ConstantUtil.getGradeItems().get(personalInfo.getGrade()));
             contactNumber.setText(subStringPhoneNumber(personalInfo.getTel()));
+            Glide.with(activity).load(personalInfo.getHeadpic()).asBitmap().placeholder(R.mipmap.avatars).error(R.mipmap.avatars).transform(new GlideCircleTransform(activity, personalInfo.getHeadpic())).into(avatar_img);
             genderEvent(personalInfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -546,20 +550,22 @@ public class UserInfoActivity extends BaseActivity{
                     userPhotoPath = new File(getExternalFilesDir("avatar").getAbsolutePath()
                             + "/portrait.jpg");
                 }
-                Bitmap photo = BitmapFactory.decodeFile(userPhotoPath.getAbsolutePath());
-                // 设置图片裁剪大图640*640
-                photo = setImageSize(photo, 650);
-                // 保存图片到sd卡
-                if (fileUtils == null) {
-                    fileUtils = new FileUtil(activity);
-                }
-                fileUtils.writeImage(photo, "portrait.jpg", 80);
-                // 设置图片的裁剪小图220*220
-                photo = setImageSize(photo, 220);
-                // 如果是用相机拍照裁剪图片，裁剪完成后删除临时图片
-                if (temp != null && temp.exists()) {
-                    fileUtils.deleteFile(temp.getAbsolutePath());
-                }
+
+                handleUploadAvatar(userPhotoPath);
+//                Bitmap photo = BitmapFactory.decodeFile(userPhotoPath.getAbsolutePath());
+//                // 设置图片裁剪大图640*640
+//                photo = setImageSize(photo, 650);
+//                // 保存图片到sd卡
+//                if (fileUtils == null) {
+//                    fileUtils = new FileUtil(activity);
+//                }
+//                fileUtils.writeImage(photo, "portrait.jpg", 80);
+//                // 设置图片的裁剪小图220*220
+//                photo = setImageSize(photo, 220);
+//                // 如果是用相机拍照裁剪图片，裁剪完成后删除临时图片
+//                if (temp != null && temp.exists()) {
+//                    fileUtils.deleteFile(temp.getAbsolutePath());
+//                }
                 Glide.with(activity).load(userPhotoPath).asBitmap().placeholder(R.mipmap.avatars).error(R.mipmap.avatars).skipMemoryCache(true)
                         .diskCacheStrategy(DiskCacheStrategy.NONE).transform(new GlideCircleTransform(activity, userPhotoPath.toString())).into(avatar_img);
             }
@@ -570,6 +576,41 @@ public class UserInfoActivity extends BaseActivity{
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleUploadAvatar(final File uri) {
+        if (!UIUtils.isNetworkAvailable(activity)){
+            Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //LoadingDialog.loading(activity);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("headpic", uri.getName(), RequestBody.create(MediaType.parse("image/jpg"), uri))
+                        .addFormDataPart("user_id", UserManager.getInstance().getUser().getUserId() + "").build();
+
+                Request request = new Request.Builder().url(UrlHelper.upLoadHeads()).post(requestBody).build();
+
+                try {
+                    Response response = okHttpClient.newCall(request).execute();
+                    String result = response.body().string();
+                    System.out.println(result);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+//        HttpHelper.httpRequest(UrlHelper.upLoadHeads(), params, "POST", new StandardCallBack(activity) {
+//            @Override
+//            public void onSuccess(String result) {
+//                System.out.println(result);
+//            }
+//        });
     }
 
     /**

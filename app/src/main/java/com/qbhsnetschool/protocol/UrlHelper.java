@@ -85,4 +85,8 @@ public class UrlHelper {
     public static String getAlreadyExam(){
         return BaseUrl.BASE_HTTP_URL + "app/exam_results/";
     }
+
+    public static String upLoadHeads(){
+        return BaseUrl.BASE_HTTP_URL + "app/headpics/";
+    }
 }

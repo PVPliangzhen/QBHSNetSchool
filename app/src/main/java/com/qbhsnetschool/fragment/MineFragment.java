@@ -2,6 +2,8 @@ package com.qbhsnetschool.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,19 +18,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.activity.MyCouponActivity;
 import com.qbhsnetschool.activity.MyOrderActivity;
 import com.qbhsnetschool.activity.UserInfoActivity;
+import com.qbhsnetschool.entity.PersonalInfo;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.ConstantUtil;
+import com.qbhsnetschool.uitls.GlideCircleTransform;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout;
 
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -44,19 +54,78 @@ public class MineFragment extends Fragment{
     private View rootView;
     private CardView user_card;
     private Button login_out;
+    private MineHandler mineHandler;
+    private ImageView user_avatar;
+    private TextView user_phone;
+
+    private static class MineHandler extends Handler{
+
+        WeakReference<MineFragment> weakReference;
+
+        public MineHandler(MineFragment fragment){
+            weakReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            MineFragment mineFragment = weakReference.get();
+            if (mineFragment != null){
+                switch (msg.what){
+                    case 0x01:
+                        String result = (String) msg.obj;
+                        mineFragment.handlePersonalInfo(result);
+                        break;
+                }
+            }
+        }
+    }
+
+    private void handlePersonalInfo(String result) {
+        try {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
+            JSONObject jsonObject = new JSONObject(result);
+            Gson gson = new Gson();
+            PersonalInfo personalInfo = gson.fromJson(jsonObject.toString(), PersonalInfo.class);
+            user_phone.setText(subStringPhoneNumber(personalInfo.getTel()));
+            Glide.with(activity).load(personalInfo.getHeadpic()).asBitmap().placeholder(R.mipmap.avatars).error(R.mipmap.avatars).transform(new GlideCircleTransform(activity, personalInfo.getHeadpic())).into(user_avatar);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_mine, container, false);
+        mineHandler = new MineHandler(this);
         initView(rootView);
-        initData();
         return rootView;
     }
 
-    private void initData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
 
+    private void initData() {
+        LoadingDialog.loading(activity);
+        if (UIUtils.isNetworkAvailable(activity)){
+            HttpHelper.httpGetRequest(UrlHelper.getPersonalInfo(), "GET", new StandardCallBack(activity) {
+                @Override
+                public void onSuccess(String result) {
+                    Message message = Message.obtain();
+                    message.what = 0x01;
+                    message.obj = result;
+                    mineHandler.sendMessage(message);
+                }
+            });
+        }else{
+            Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initView(View rootView) {
@@ -76,8 +145,8 @@ public class MineFragment extends Fragment{
         login_out.setOnClickListener(clickListener);
         ViewPagerSwipeRefreshLayout mine_swipe_layout = rootView.findViewById(R.id.mine_swipe_layout);
         mine_swipe_layout.setEnabled(false);
-        ImageView user_avatar = rootView.findViewById(R.id.user_avatar);
-        TextView user_phone = rootView.findViewById(R.id.user_phone);
+        user_avatar = rootView.findViewById(R.id.user_avatar);
+        user_phone = rootView.findViewById(R.id.user_phone);
         user_phone.setText(subStringPhoneNumber(UserManager.getInstance().getUser().getUserTel()));
     }
 
