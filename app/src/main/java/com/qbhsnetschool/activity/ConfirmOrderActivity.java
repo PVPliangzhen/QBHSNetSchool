@@ -279,7 +279,7 @@ public class ConfirmOrderActivity extends BaseActivity{
                     break;
                 case R.id.address_layout:
                     Intent intent1 = new Intent(activity, AddressManagerActivity.class);
-                    startActivity(intent1);
+                    startActivityForResult(intent1, 0x14);
                     break;
             }
         }
@@ -325,6 +325,16 @@ public class ConfirmOrderActivity extends BaseActivity{
                 String result = data.getStringExtra("result");
                 Gson gson = new Gson();
                 AddressBean addressBean = gson.fromJson(result, AddressBean.class);
+                add_address.setVisibility(View.GONE);
+                address_layout.setVisibility(View.VISIBLE);
+                user_name.setText(addressBean.getName());
+                user_num.setText(addressBean.getTel());
+                user_address.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
+            }
+        }
+        if (requestCode == 0x14){
+            if (resultCode == 0x15){
+                AddressBean addressBean = (AddressBean) data.getSerializableExtra("address_bean");
                 add_address.setVisibility(View.GONE);
                 address_layout.setVisibility(View.VISIBLE);
                 user_name.setText(addressBean.getName());

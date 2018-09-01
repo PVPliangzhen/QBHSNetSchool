@@ -1,6 +1,8 @@
 package com.qbhsnetschool.entity;
 
-public class AddressBean {
+import java.io.Serializable;
+
+public class AddressBean implements Serializable{
 
     /**
      * id : 4

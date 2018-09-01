@@ -93,4 +93,12 @@ public class UrlHelper {
     public static String addAddress(){
         return BaseUrl.BASE_HTTP_URL + "app/addresses/";
     }
+
+    public static String modifyAddress(int addressId){
+        return BaseUrl.BASE_HTTP_URL + "app/addresses/" + addressId +"/";
+    }
+
+    public static String deleteAddress(int addressId){
+        return BaseUrl.BASE_HTTP_URL + "app/addresses/" + addressId + "/";
+    }
 }

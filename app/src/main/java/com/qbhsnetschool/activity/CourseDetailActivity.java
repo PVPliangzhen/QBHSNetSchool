@@ -123,22 +123,6 @@ public class CourseDetailActivity extends BaseActivity{
                 message.obj = result;
                 courseDetailHandler.sendMessage(message);
             }
-
-            @Override
-            public void onFailure(int code) {
-                super.onFailure(code);
-                if (!LoadingDialog.isDissMissLoading()){
-                    LoadingDialog.dismissLoading();
-                }
-            }
-
-            @Override
-            public void onError(Exception e) {
-                super.onError(e);
-                if (!LoadingDialog.isDissMissLoading()){
-                    LoadingDialog.dismissLoading();
-                }
-            }
         });
     }
 

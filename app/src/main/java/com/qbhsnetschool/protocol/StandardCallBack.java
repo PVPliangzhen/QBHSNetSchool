@@ -34,6 +34,14 @@ public abstract class StandardCallBack implements Callback{
                     Intent intent = new Intent(context, LoginTrasitActivity.class);
                     context.startActivity(intent);
                     break;
+                case 0x02:
+                    if (!LoadingDialog.isDissMissLoading()){
+                        LoadingDialog.dismissLoading();
+                    }
+                    if ((int)msg.obj == 10000) {
+                        Toast.makeText(context, "网络连接超时, 请重试！", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
         }
     };
@@ -70,6 +78,13 @@ public abstract class StandardCallBack implements Callback{
     }
 
     public abstract void onSuccess(String result);
-    public void onFailure(int code){}
-    public void onError(Exception e){}
+    public void onFailure(int code){
+        Message message = Message.obtain();
+        message.what = 0x02;
+        message.obj = code;
+        handler.sendMessage(message);
+    }
+    public void onError(Exception e){
+        handler.sendEmptyMessage(0x02);
+    }
 }

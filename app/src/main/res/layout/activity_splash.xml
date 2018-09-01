@@ -3,4 +3,10 @@
     android:id="@+id/rel_logo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:text="button"/>
 </RelativeLayout>

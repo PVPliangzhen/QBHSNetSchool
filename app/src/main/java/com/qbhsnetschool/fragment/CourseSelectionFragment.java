@@ -168,6 +168,22 @@ public class CourseSelectionFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int code) {
+                super.onFailure(code);
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                super.onError(e);
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
         });
     }
 

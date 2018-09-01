@@ -132,6 +132,22 @@ public class AlreadyTestFragment extends Fragment{
                 message.obj = result;
                 alreadyTestHandler.sendMessage(message);
             }
+
+            @Override
+            public void onFailure(int code) {
+                super.onFailure(code);
+                if (already_test_refresh.isRefreshing()){
+                    already_test_refresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                super.onError(e);
+                if (already_test_refresh.isRefreshing()){
+                    already_test_refresh.setRefreshing(false);
+                }
+            }
         });
     }
 }

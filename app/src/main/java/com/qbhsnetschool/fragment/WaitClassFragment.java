@@ -101,6 +101,22 @@ public class WaitClassFragment extends Fragment{
                 message.obj = result;
                 waitClassHandler.sendMessage(message);
             }
+
+            @Override
+            public void onFailure(int code) {
+                super.onFailure(code);
+                if (wait_class_refresh.isRefreshing()){
+                    wait_class_refresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                super.onError(e);
+                if (wait_class_refresh.isRefreshing()){
+                    wait_class_refresh.setRefreshing(false);
+                }
+            }
         });
     }
 

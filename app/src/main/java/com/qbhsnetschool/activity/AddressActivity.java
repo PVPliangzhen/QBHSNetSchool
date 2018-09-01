@@ -18,6 +18,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.entity.AddressBean;
 import com.qbhsnetschool.entity.JsonBean;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
@@ -59,6 +60,8 @@ public class AddressActivity extends BaseActivity{
     private String province = "";
     private String city = "";
     private String country = "";
+    private AddressBean addressBean;
+    private boolean isFromEdit;
 
     private static class AddressHandler extends Handler{
         WeakReference<AddressActivity> weakReference;
@@ -93,6 +96,21 @@ public class AddressActivity extends BaseActivity{
                             e.printStackTrace();
                         }
                         break;
+                    case 0x12:
+                        try{
+                            String result = (String) msg.obj;
+                            JSONObject jsonObject = new JSONObject(result);
+                            String code = jsonObject.optString("code");
+                            if (code.equalsIgnoreCase("200")){
+                                Toast.makeText(addressActivity, "地址修改成功", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                addressActivity.setResult(0x13, intent);
+                                addressActivity.finish();
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
                 }
             }
         }
@@ -113,6 +131,9 @@ public class AddressActivity extends BaseActivity{
         page_title.setText("地址");
         ImageView page_back = (ImageView) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
+        Intent intent = getIntent();
+        addressBean = (AddressBean) intent.getSerializableExtra("addressbean");
+        isFromEdit = intent.getBooleanExtra("is_from_edit", false);
         receive_goods = (EditText) findViewById(R.id.receive_goods);
         receive_goods.setOnFocusChangeListener(focusChangeListener);
         receive_goods_delete = (ImageView) findViewById(R.id.receive_goods_delete);
@@ -126,6 +147,16 @@ public class AddressActivity extends BaseActivity{
         address_detail_delete = (ImageView) findViewById(R.id.address_detail_delete);
         save_address = (TextView) findViewById(R.id.save_address);
         save_address.setOnClickListener(clickListener);
+        if (addressBean != null){
+            receive_goods.setText(addressBean.getName());
+            phone_number.setText(addressBean.getTel());
+            province = addressBean.getProvince();
+            city = addressBean.getCity();
+            country = addressBean.getCounty();
+            String regionResult = province + "-" + city + "-" + country;
+            region.setText(regionResult);
+            address_detail.setText(addressBean.getAddress());
+        }
         receive_goods.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -241,15 +272,27 @@ public class AddressActivity extends BaseActivity{
                     params.put("city", city);
                     params.put("county", country);
                     params.put("address", address_detail.getText().toString().trim());
-                    HttpHelper.httpRequest(UrlHelper.addAddress(), params, "POST", new StandardCallBack(activity) {
-                        @Override
-                        public void onSuccess(String result) {
-                            Message message = Message.obtain();
-                            message.what = 0x11;
-                            message.obj = result;
-                            addressHandler.sendMessage(message);
-                        }
-                    });
+                    if (isFromEdit){
+                        HttpHelper.httpRequest(UrlHelper.modifyAddress(addressBean.getId()), params, "PUT", new StandardCallBack(activity) {
+                            @Override
+                            public void onSuccess(String result) {
+                                Message message = Message.obtain();
+                                message.what = 0x12;
+                                message.obj = result;
+                                addressHandler.sendMessage(message);
+                            }
+                        });
+                    }else{
+                        HttpHelper.httpRequest(UrlHelper.addAddress(), params, "POST", new StandardCallBack(activity) {
+                            @Override
+                            public void onSuccess(String result) {
+                                Message message = Message.obtain();
+                                message.what = 0x11;
+                                message.obj = result;
+                                addressHandler.sendMessage(message);
+                            }
+                        });
+                    }
                     break;
             }
         }

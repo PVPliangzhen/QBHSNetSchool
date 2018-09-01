@@ -90,6 +90,22 @@ public class WaitTestFragment extends Fragment{
                 message.obj = result;
                 waitTestHandler.sendMessage(message);
             }
+
+            @Override
+            public void onFailure(int code) {
+                super.onFailure(code);
+                if (wait_test_refresh.isRefreshing()){
+                    wait_test_refresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                super.onError(e);
+                if (wait_test_refresh.isRefreshing()){
+                    wait_test_refresh.setRefreshing(false);
+                }
+            }
         });
     }
 

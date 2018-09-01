@@ -97,6 +97,22 @@ public class AlreadyClassFragment extends Fragment{
                 message.obj = result;
                 alreadyClassHandler.sendMessage(message);
             }
+
+            @Override
+            public void onFailure(int code) {
+                super.onFailure(code);
+                if (already_class_refresh.isRefreshing()){
+                    already_class_refresh.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                super.onError(e);
+                if (already_class_refresh.isRefreshing()){
+                    already_class_refresh.setRefreshing(false);
+                }
+            }
         });
     }
 
