@@ -36,32 +36,35 @@ public class MyCouponsAdpter extends RecyclerView.Adapter<MyCouponsAdpter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyCouponsAdpter.ViewHolder viewHolder, int position) {
-        CouponBean couponBean = couponBeanList.get(position);
-        viewHolder.coupon_price.setText(couponBean.getAmount() + "");
-        viewHolder.coupon_title.setText(couponBean.getDesc());
-        viewHolder.coupon_time.setText("有效期:" + couponBean.getExpiry_date());
+        if (couponBeanList != null && couponBeanList.size() > 0){
+            CouponBean couponBean = couponBeanList.get(position);
+            viewHolder.coupon_price.setText(couponBean.getAmount() + "");
+            viewHolder.coupon_title.setText(couponBean.getDesc());
+            viewHolder.coupon_time.setText("有效期:" + couponBean.getExpiry_date());
 
-        if (couponBean.isIs_used()){
-            viewHolder.coupon_img.setImageResource(R.mipmap.monry_b_yellow);
-            viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_yellow_line);
-            viewHolder.coupon_use.setText("已使用");
-            viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_FFCF00));
-        }else if (!couponBean.isIs_active()){
-            viewHolder.coupon_img.setImageResource(R.mipmap.money_b_gray);
-            viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_grayc);
-            viewHolder.coupon_use.setText("已过期");
-            viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_666666));
-        }else{
-            viewHolder.coupon_img.setImageResource(R.mipmap.monry_b_yellow);
-            viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_yellow_shadow);
-            viewHolder.coupon_use.setText(couponBean.getRest_date());
-            viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_FFCF00));
+            if (couponBean.isIs_used()){
+                viewHolder.coupon_img.setImageResource(R.mipmap.monry_b_yellow);
+                viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_yellow_line);
+                viewHolder.coupon_use.setText("已使用");
+                viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_FFCF00));
+            }else if (!couponBean.isIs_active()){
+                viewHolder.coupon_img.setImageResource(R.mipmap.money_b_gray);
+                viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_grayc);
+                viewHolder.coupon_use.setText("已过期");
+                viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_666666));
+            }else{
+                viewHolder.coupon_img.setImageResource(R.mipmap.monry_b_yellow);
+                viewHolder.coupon_root_layout.setBackgroundResource(R.mipmap.money_b_yellow_shadow);
+                viewHolder.coupon_use.setText(couponBean.getRest_date());
+                viewHolder.coupon_use.setTextColor(context.getResources().getColor(R.color.color_FFCF00));
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return couponBeanList == null ? 0 : couponBeanList.size();
+        //return couponBeanList == null ? 0 : couponBeanList.size();
+        return 1;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

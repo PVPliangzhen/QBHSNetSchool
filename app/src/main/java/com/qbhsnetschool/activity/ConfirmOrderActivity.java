@@ -23,6 +23,7 @@ import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.MyCouponsAdpter;
 import com.qbhsnetschool.entity.AddressBean;
+import com.qbhsnetschool.entity.CouponBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
@@ -38,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,8 @@ public class ConfirmOrderActivity extends BaseActivity{
     private RecyclerView coupon_list;
     private MyCouponsAdpter myCouponsAdpter;
     private AddressBean addressBean;
+    private TextView no_coupon_txt;
+    private RelativeLayout coupon_layout;
 
     private static class ConfirmOrderHandler extends Handler{
         WeakReference<ConfirmOrderActivity> weakReference;
@@ -83,6 +87,29 @@ public class ConfirmOrderActivity extends BaseActivity{
                         confirmOrderActivity.handleAddress(result);
                         break;
                     case 0x02:
+                        String result1 = (String) msg.obj;
+                        try {
+                            JSONObject jsonObject = new JSONObject(result1);
+                            String code = jsonObject.optString("code");
+                            if (code.equalsIgnoreCase("200")){
+                                confirmOrderActivity.no_coupon_txt.setVisibility(View.GONE);
+                                confirmOrderActivity.coupon_layout.setVisibility(View.VISIBLE);
+                                Gson gson = new Gson();
+                                List<CouponBean> couponBeans = new ArrayList<>();
+                                CouponBean couponBean = gson.fromJson(jsonObject.toString(), CouponBean.class);
+                                couponBeans.add(couponBean);
+                                if (confirmOrderActivity.myCouponsAdpter != null){
+                                    confirmOrderActivity.myCouponsAdpter.setData(couponBeans);
+                                    confirmOrderActivity.myCouponsAdpter.notifyDataSetChanged();
+                                }
+                            }
+                            if (code.equalsIgnoreCase("1601")){
+                                confirmOrderActivity.no_coupon_txt.setVisibility(View.VISIBLE);
+                                confirmOrderActivity.coupon_layout.setVisibility(View.GONE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
             }
@@ -226,6 +253,8 @@ public class ConfirmOrderActivity extends BaseActivity{
         real_price.setText("￥" + homeCourseBean.getPrice());
         LinearLayout sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);
+        no_coupon_txt = (TextView) findViewById(R.id.no_coupon_txt);
+        coupon_layout = (RelativeLayout) findViewById(R.id.coupon_layout);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
