@@ -101,4 +101,7 @@ public class UrlHelper {
     public static String deleteAddress(int addressId){
         return BaseUrl.BASE_HTTP_URL + "app/addresses/" + addressId + "/";
     }
+    public static String getAllChapters(String courseId){
+        return BaseUrl.BASE_HTTP_URL + "app/mychapters/" +courseId + "/";
+    }
 }

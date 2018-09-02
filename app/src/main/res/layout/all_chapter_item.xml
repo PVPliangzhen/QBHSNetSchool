@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/combinedshape"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp48"
+        android:textSize="@dimen/dp25"
+        android:textColor="@color/color_333333"
+        android:text="第一讲"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp32"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/dp25"
+        android:text="周一李老师"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp230"
+        android:layout_height="@dimen/dp60"
+        android:background="@drawable/chapter_play_bg1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp32"
+        android:layout_marginBottom="@dimen/dp32">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp30"
+            android:textColor="@color/color_ffffff"
+            android:text="进入教室"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_studio_white"
+            android:layout_marginLeft="@dimen/dp16"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

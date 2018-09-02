@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <include layout="@layout/head_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp32">
+
+                <ImageView
+                    android:id="@+id/course_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginTop="@dimen/dp50"
+                    android:layout_marginLeft="@dimen/dp32"
+                    android:src="@mipmap/summer"/>
+
+                <TextView
+                    android:id="@+id/course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp40"
+                    android:textSize="@dimen/dp30"
+                    android:textColor="@color/color_333333"
+                    android:layout_marginTop="@dimen/dp50"
+                    android:layout_toRightOf="@+id/course_image"
+                    android:layout_marginLeft="@dimen/dp22"
+                    android:text="直播尖子班"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/chapter_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp40"
+                    android:textSize="@dimen/dp25"
+                    android:textColor="@color/color_E20000"
+                    android:text="共八讲/已上一讲"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dp50"
+                    android:layout_marginRight="@dimen/dp32"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/course_image"
+                    android:layout_marginTop="@dimen/dp38"
+                    android:layout_marginLeft="@dimen/dp32">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp35"
+                            android:layout_height="@dimen/dp35"
+                            android:src="@drawable/home_date"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="date"
+                            android:textSize="@dimen/dp25"
+                            android:textColor="@color/color_666666"
+                            android:layout_marginLeft="@dimen/dp16"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp30">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp35"
+                            android:layout_height="@dimen/dp35"
+                            android:src="@drawable/home_time"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="time"
+                            android:textSize="@dimen/dp25"
+                            android:textColor="@color/color_666666"
+                            android:layout_marginLeft="@dimen/dp16"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp30">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp35"
+                            android:layout_height="@dimen/dp35"
+                            android:src="@drawable/home_course"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="course"
+                            android:textSize="@dimen/dp25"
+                            android:textColor="@color/color_666666"
+                            android:layout_marginLeft="@dimen/dp16"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/all_chapter_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

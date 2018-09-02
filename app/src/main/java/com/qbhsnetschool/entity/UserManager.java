@@ -82,7 +82,6 @@ public class UserManager {
     }
 
     public boolean isLogin(){
-        //return getUser() != null;
-        return true;
+        return getUser() != null;
     }
 }
