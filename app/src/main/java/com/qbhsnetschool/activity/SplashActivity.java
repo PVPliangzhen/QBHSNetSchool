@@ -15,10 +15,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
+import com.bokecc.sdk.mobile.live.Exception.DWLiveException;
+import com.bokecc.sdk.mobile.live.pojo.TemplateInfo;
+import com.bokecc.sdk.mobile.live.replay.DWLiveReplay;
+import com.bokecc.sdk.mobile.live.replay.DWLiveReplayLoginListener;
+import com.bokecc.sdk.mobile.live.replay.pojo.ReplayLiveInfo;
+import com.bokecc.sdk.mobile.live.replay.pojo.ReplayLoginInfo;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.uitls.DialogUtils;
 import com.qbhsnetschool.uitls.UIUtils;
+import com.qbhsnetschool.widget.ccvideo.ReplayActivity;
 
 /**
  * created by liangzhen at 2018/8/10
@@ -51,9 +59,49 @@ public class SplashActivity extends Activity{
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(activity, PurchaseSuccessActivity.class);
-                startActivity(intent);
+                // 创建登录信息
+                ReplayLoginInfo replayLoginInfo = new ReplayLoginInfo();
+                replayLoginInfo.setUserId("B27039502337407C");
+                replayLoginInfo.setRoomId("080D04CB846F0FB29C33DC5901307461");
+                replayLoginInfo.setLiveId("50743DD69A9B2C60");
+                replayLoginInfo.setRecordId("3804F642D564BE78");
+                replayLoginInfo.setViewerName("111");
+                replayLoginInfo.setViewerToken("111");
+
+                // 设置登录参数
+                DWLiveReplay.getInstance().setLoginParams(new DWLiveReplayLoginListener() {
+                    @Override
+                    public void onException(final DWLiveException exception) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onLogin(TemplateInfo templateInfo) {runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 回放的直播开始时间和结束时间必须在登录成功后再获取，否则为空
+                                ReplayLiveInfo replayLiveInfo = DWLiveReplay.getInstance().getReplayLiveInfo();
+                                if (replayLiveInfo != null) {
+                                    Toast.makeText(SplashActivity.this, "直播开始时间：" + replayLiveInfo.getStartTime() + "\n"
+                                            + "直播结束时间：" +  replayLiveInfo.getEndTime(), Toast.LENGTH_LONG).show();
+                                }
+                                Intent intent = new Intent(SplashActivity.this, ReplayActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                }, replayLoginInfo);
+
+                // 设置是否使用Https
+                DWLiveReplay.getInstance().setSecure(false);
+
+                // 执行登录操作
+                DWLiveReplay.getInstance().startLogin();
             }
         });
     }
