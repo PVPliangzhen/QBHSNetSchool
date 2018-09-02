@@ -48,6 +48,14 @@ public class SplashActivity extends Activity{
         });
 
         checkStoragePower();
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(activity, PurchaseSuccessActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkStoragePower() {
@@ -163,6 +171,6 @@ public class SplashActivity extends Activity{
         Intent intent = new Intent();
         intent.setClass(activity, HomeActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 }

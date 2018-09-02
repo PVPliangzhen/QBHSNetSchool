@@ -327,7 +327,10 @@ public class ConfirmOrderActivity extends BaseActivity{
                     Toast.makeText(activity, "支付失败", Toast.LENGTH_SHORT).show();
                     break;
                 case "success":
-                    Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(activity, PurchaseSuccessActivity.class);
+                    startActivity(intent);
                     break;
                 case "cancel":
                     Toast.makeText(activity, "取消支付", Toast.LENGTH_SHORT).show();
