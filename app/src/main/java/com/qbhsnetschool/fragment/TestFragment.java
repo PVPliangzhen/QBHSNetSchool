@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.TabGroupLayout;
 
 import java.lang.ref.WeakReference;
@@ -54,6 +56,12 @@ public class TestFragment extends Fragment{
     }
 
     private void initView(View rootView) {
+        RelativeLayout status_bar_mask = rootView.findViewById(R.id.status_bar_mask);
+        int height = UIUtils.getStatusBarHeight(activity);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) status_bar_mask.getLayoutParams();
+        lp.height = height;
+        status_bar_mask.setLayoutParams(lp);
+        status_bar_mask.setVisibility(View.VISIBLE);
         TextView page_title = rootView.findViewById(R.id.page_title);
         page_title.setText("测试");
         ImageView page_back = rootView.findViewById(R.id.page_back);

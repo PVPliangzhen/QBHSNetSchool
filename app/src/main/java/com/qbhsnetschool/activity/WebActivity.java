@@ -6,6 +6,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.JsResult;
@@ -15,6 +16,7 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import com.qbhsnetschool.R;
 
@@ -26,8 +28,15 @@ public class WebActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+        setBaseContentView(R.layout.activity_web, false, R.color.status_bar_bg_color, false);
         initIntent();
+        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        page_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mWebView = (WebView) findViewById(R.id.webView);
         //mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " " + HttpHelper.getUserAgent(appContext));
         mWebView.getSettings().setJavaScriptEnabled(true);

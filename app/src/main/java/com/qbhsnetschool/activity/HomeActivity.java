@@ -1,6 +1,7 @@
 package com.qbhsnetschool.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_home, false, R.color.status_bar_bg_color, false);
+        baseContentView.setPadding(0, 0, 0, 0);
         activity = this;
         initView();
         initTab();

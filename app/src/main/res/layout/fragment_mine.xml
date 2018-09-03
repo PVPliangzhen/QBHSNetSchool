@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp340"
+        android:background="@mipmap/me_bg"/>
 
-    <include layout="@layout/head_layout"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp90"
+        android:layout_marginTop="@dimen/dp70"
+        android:textSize="@dimen/dp40"
+        android:textColor="@color/color_ffffff"
+        android:text="我的"/>
 
     <com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout
         android:id="@+id/mine_swipe_layout"
@@ -32,7 +43,7 @@
                     android:background="@color/color_ffffff"
                     android:layout_marginLeft="@dimen/dp32"
                     android:layout_marginRight="@dimen/dp32"
-                    android:layout_marginTop="@dimen/dp60">
+                    android:layout_marginTop="@dimen/dp200">
                     
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -196,4 +207,4 @@
         </ScrollView>
     </com.qbhsnetschool.widget.ViewPagerSwipeRefreshLayout>
 
-</LinearLayout>
+</FrameLayout>

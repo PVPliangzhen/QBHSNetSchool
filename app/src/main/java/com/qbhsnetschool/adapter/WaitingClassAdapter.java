@@ -1,5 +1,6 @@
 package com.qbhsnetschool.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return viewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ViewHolder) {

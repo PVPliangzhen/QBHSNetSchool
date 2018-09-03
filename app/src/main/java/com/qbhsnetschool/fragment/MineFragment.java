@@ -1,6 +1,7 @@
 package com.qbhsnetschool.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -143,10 +144,6 @@ public class MineFragment extends Fragment{
     }
 
     private void initView(View rootView) {
-        TextView page_title = (TextView) rootView.findViewById(R.id.page_title);
-        page_title.setText("我的");
-        ImageView page_back = (ImageView) rootView.findViewById(R.id.page_back);
-        page_back.setVisibility(View.INVISIBLE);
         user_card = rootView.findViewById(R.id.user_card);
         user_card.setOnClickListener(clickListener);
         RelativeLayout order_layout = rootView.findViewById(R.id.order_layout);

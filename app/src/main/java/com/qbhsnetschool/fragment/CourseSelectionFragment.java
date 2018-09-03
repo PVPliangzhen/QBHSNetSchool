@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -188,6 +189,12 @@ public class CourseSelectionFragment extends Fragment {
     }
 
     private void initView(View rootView) {
+        RelativeLayout status_bar_mask = rootView.findViewById(R.id.status_bar_mask);
+        int height = UIUtils.getStatusBarHeight(activity);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) status_bar_mask.getLayoutParams();
+        lp.height = height;
+        status_bar_mask.setLayoutParams(lp);
+        status_bar_mask.setVisibility(View.VISIBLE);
         courseSelectionHandler = new CourseSelectionHandler(this);
         swipeRefreshLayout = rootView.findViewById(R.id.home_swipe_layout);
         swipeRefreshLayout.setEnabled(true);
