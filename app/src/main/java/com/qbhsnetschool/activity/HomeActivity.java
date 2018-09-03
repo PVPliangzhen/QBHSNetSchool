@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
@@ -19,6 +21,7 @@ import com.qbhsnetschool.fragment.CourseSelectionFragment;
 import com.qbhsnetschool.fragment.LearnFragment;
 import com.qbhsnetschool.fragment.MineFragment;
 import com.qbhsnetschool.fragment.TestFragment;
+import com.qbhsnetschool.uitls.ActivityStackUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import java.util.LinkedList;
@@ -228,5 +231,24 @@ public class HomeActivity extends BaseActivity {
             String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
             String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
         }
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (System.currentTimeMillis() - exitTime > 2000) {
+                    Toast.makeText(activity, "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    ActivityStackUtils.getInstance().clearAllActivity();
+                    System.gc();
+                }
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 }

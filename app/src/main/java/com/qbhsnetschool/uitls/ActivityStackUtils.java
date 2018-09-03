@@ -56,7 +56,6 @@ public class ActivityStackUtils {
         for (Activity activity : mActivityList) {
             activity.finish();
         }
-
         System.exit(0);
     }
 
