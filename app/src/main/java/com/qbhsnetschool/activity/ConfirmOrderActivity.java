@@ -117,6 +117,7 @@ public class ConfirmOrderActivity extends BaseActivity{
                     LoadingDialog.dismissLoading();
                 }
                 Intent intent = new Intent();
+                intent.putExtra("order_no", chargeBean.getOrder_no());
                 intent.setClass(activity, PurchaseSuccessActivity.class);
                 startActivity(intent);
             }

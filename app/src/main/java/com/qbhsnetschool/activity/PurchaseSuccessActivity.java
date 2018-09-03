@@ -14,6 +14,9 @@ public class PurchaseSuccessActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_purchase_success, false, R.color.status_bar_bg_color, false);
+        String order_no = getIntent().getStringExtra("order_no");
+        TextView order_number = (TextView) findViewById(R.id.order_number);
+        order_number.setText("订单号:" + order_no);
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("购买成功");
         ImageView page_back = (ImageView) findViewById(R.id.page_back);
