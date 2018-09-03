@@ -1,6 +1,8 @@
 package com.qbhsnetschool.entity;
 
-public class CourseBean {
+import java.io.Serializable;
+
+public class CourseBean implements Serializable{
 
     /**
      * product_id : 2n3n4n3n2n3n4nrnend3
@@ -166,7 +168,7 @@ public class CourseBean {
         this.exam_id = exam_id;
     }
 
-    public static class ChapterLatelyBean {
+    public static class ChapterLatelyBean implements Serializable{
         /**
          * chapter_name : 除法竖式
          * chapter_expire_time : 0
@@ -261,7 +263,7 @@ public class CourseBean {
             this.teacher = teacher;
         }
 
-        public static class CcVedioBean {
+        public static class CcVedioBean implements Serializable{
             /**
              * recordId : null
              * viewerName : 18352860820
@@ -318,7 +320,7 @@ public class CourseBean {
         }
     }
 
-    public static class Teacher1Bean {
+    public static class Teacher1Bean implements Serializable{
         /**
          * name : 彭薏霖
          */

@@ -4,15 +4,16 @@ public class AllChapterBean {
 
     /**
      * measure : 1
-     * chapter_name : 代数的形式
-     * chapter_start_time : 2018-09-09T03:00:00+08:00
-     * chapter_end_time : 2018-09-09T05:00:00+08:00
-     * chapter_date : 2018.9.8 (周六)
-     * chapter_time : 19:00－21:00
-     * chapter_expire_time : 17
+     * chapter_name : 三角形的角
+     * chapter_start_time : 2018-09-09T18:00:00+08:00
+     * chapter_end_time : 2018-09-09T20:00:00+08:00
+     * chapter_date : 2018.9.9 (周日)
+     * chapter_time : 10:00－12:00
+     * chapter_expire_time : 5
      * state : future
-     * cc_vedio : {"recordId":null,"roomId":null,"userId":"AA31D2BB588429C7","viewerName":"18352860817","token":"109475"}
+     * cc_vedio : {"userId":"AA31D2BB588429C7","roomId":null,"viewerName":"18701073115","token":"794353","recordId":null}
      * teacher : 李会平
+     * is_live : false
      */
 
     private int measure;
@@ -25,6 +26,7 @@ public class AllChapterBean {
     private String state;
     private CcVedioBean cc_vedio;
     private String teacher;
+    private boolean is_live;
 
     public int getMeasure() {
         return measure;
@@ -106,27 +108,35 @@ public class AllChapterBean {
         this.teacher = teacher;
     }
 
+    public boolean isIs_live() {
+        return is_live;
+    }
+
+    public void setIs_live(boolean is_live) {
+        this.is_live = is_live;
+    }
+
     public static class CcVedioBean {
         /**
-         * recordId : null
-         * roomId : null
          * userId : AA31D2BB588429C7
-         * viewerName : 18352860817
-         * token : 109475
+         * roomId : null
+         * viewerName : 18701073115
+         * token : 794353
+         * recordId : null
          */
 
-        private Object recordId;
-        private Object roomId;
         private String userId;
+        private Object roomId;
         private String viewerName;
         private String token;
+        private Object recordId;
 
-        public Object getRecordId() {
-            return recordId;
+        public String getUserId() {
+            return userId;
         }
 
-        public void setRecordId(Object recordId) {
-            this.recordId = recordId;
+        public void setUserId(String userId) {
+            this.userId = userId;
         }
 
         public Object getRoomId() {
@@ -135,14 +145,6 @@ public class AllChapterBean {
 
         public void setRoomId(Object roomId) {
             this.roomId = roomId;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
         }
 
         public String getViewerName() {
@@ -159,6 +161,14 @@ public class AllChapterBean {
 
         public void setToken(String token) {
             this.token = token;
+        }
+
+        public Object getRecordId() {
+            return recordId;
+        }
+
+        public void setRecordId(Object recordId) {
+            this.recordId = recordId;
         }
     }
 }

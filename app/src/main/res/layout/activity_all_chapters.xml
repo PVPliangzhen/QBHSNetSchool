@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -23,7 +24,7 @@
 
                 <ImageView
                     android:id="@+id/course_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp40"
                     android:layout_height="@dimen/dp40"
                     android:layout_marginTop="@dimen/dp50"
                     android:layout_marginLeft="@dimen/dp32"
@@ -71,9 +72,9 @@
                             android:src="@drawable/home_date"/>
 
                         <TextView
+                            android:id="@+id/course_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="date"
                             android:textSize="@dimen/dp25"
                             android:textColor="@color/color_666666"
                             android:layout_marginLeft="@dimen/dp16"/>
@@ -91,9 +92,9 @@
                             android:src="@drawable/home_time"/>
 
                         <TextView
+                            android:id="@+id/course_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="time"
                             android:textSize="@dimen/dp25"
                             android:textColor="@color/color_666666"
                             android:layout_marginLeft="@dimen/dp16"/>
@@ -111,9 +112,9 @@
                             android:src="@drawable/home_course"/>
 
                         <TextView
+                            android:id="@+id/course_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="course"
                             android:textSize="@dimen/dp25"
                             android:textColor="@color/color_666666"
                             android:layout_marginLeft="@dimen/dp16"/>

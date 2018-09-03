@@ -1,6 +1,7 @@
 package com.qbhsnetschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.activity.AllChaptersActivity;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.activity.WebActivity;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.uitls.CCVideoUtil;
 import com.qbhsnetschool.uitls.ConstantUtil;
@@ -57,7 +60,10 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.all_chapter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent = new Intent();
+                        intent.setClass(context, AllChaptersActivity.class);
+                        intent.putExtra("courseBean", courseBean);
+                        context.startActivity(intent);
                     }
                 });
                 viewHolder1.wait_date_txt.setText(courseBean.getCourse_date());
@@ -68,6 +74,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.chapter_detail.setText(chapterLatelyBean.getChapter_date() +
                         chapterLatelyBean.getChapter_time() +
                         chapterLatelyBean.getTeacher() + "老师" +
+                        "剩余" +
                         chapterLatelyBean.getChapter_expire_time() + "天");
                 viewHolder1.go_to_room.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,7 +86,11 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.course_test.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        String testUrl = courseBean.getCourse_test_url();
+                        Intent intent = new Intent();
+                        intent.putExtra("url", testUrl);
+                        intent.setClass(context, WebActivity.class);
+                        context.startActivity(intent);
                     }
                 });
                 String season = courseBean.getSeason();

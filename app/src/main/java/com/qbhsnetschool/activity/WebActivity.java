@@ -47,7 +47,8 @@ public class WebActivity extends BaseActivity{
         mWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
         mWebView.getSettings().setLoadWithOverviewMode(true);
         syncWebViewCookies();
-        mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
+        //mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
+        mWebView.loadUrl(url);
     }
 
     private void initIntent() {
