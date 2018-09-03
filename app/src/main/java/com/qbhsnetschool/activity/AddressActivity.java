@@ -82,6 +82,9 @@ public class AddressActivity extends BaseActivity{
                         break;
                     case 0x11:
                         try{
+                            if (!LoadingDialog.isDissMissLoading()){
+                                LoadingDialog.dismissLoading();
+                            }
                             String result = (String) msg.obj;
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");
@@ -92,12 +95,18 @@ public class AddressActivity extends BaseActivity{
                                 addressActivity.setResult(0x11, intent);
                                 addressActivity.finish();
                             }
+                            if (code.equalsIgnoreCase("1301")){
+                                Toast.makeText(addressActivity, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+                            }
                         }catch (Exception e){
                             e.printStackTrace();
                         }
                         break;
                     case 0x12:
                         try{
+                            if (!LoadingDialog.isDissMissLoading()){
+                                LoadingDialog.dismissLoading();
+                            }
                             String result = (String) msg.obj;
                             JSONObject jsonObject = new JSONObject(result);
                             String code = jsonObject.optString("code");

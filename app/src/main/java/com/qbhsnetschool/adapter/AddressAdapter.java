@@ -67,7 +67,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (addressSelectListener != null){
+                        addressSelectListener.onAddressSelect(position);
+                    }
                 }
             });
         }
@@ -115,7 +117,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     }
 
     public interface AddressSelectListener{
-        void AddressSelect(int position);
+        void onAddressSelect(int position);
     }
 
     private AddressSelectListener addressSelectListener;

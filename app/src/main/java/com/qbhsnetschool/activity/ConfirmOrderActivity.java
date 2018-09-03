@@ -23,6 +23,7 @@ import com.pingplusplus.android.Pingpp;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.MyCouponsAdpter;
 import com.qbhsnetschool.entity.AddressBean;
+import com.qbhsnetschool.entity.ChargeBean;
 import com.qbhsnetschool.entity.CouponBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
@@ -69,6 +70,7 @@ public class ConfirmOrderActivity extends BaseActivity{
     private AddressBean addressBean;
     private TextView no_coupon_txt;
     private RelativeLayout coupon_layout;
+    private ChargeBean chargeBean;
 
     private static class ConfirmOrderHandler extends Handler{
         WeakReference<ConfirmOrderActivity> weakReference;
@@ -88,31 +90,63 @@ public class ConfirmOrderActivity extends BaseActivity{
                         break;
                     case 0x02:
                         String result1 = (String) msg.obj;
-                        try {
-                            JSONObject jsonObject = new JSONObject(result1);
-                            String code = jsonObject.optString("code");
-                            if (code.equalsIgnoreCase("200")){
-                                confirmOrderActivity.no_coupon_txt.setVisibility(View.GONE);
-                                confirmOrderActivity.coupon_layout.setVisibility(View.VISIBLE);
-                                Gson gson = new Gson();
-                                List<CouponBean> couponBeans = new ArrayList<>();
-                                CouponBean couponBean = gson.fromJson(jsonObject.toString(), CouponBean.class);
-                                couponBeans.add(couponBean);
-                                if (confirmOrderActivity.myCouponsAdpter != null){
-                                    confirmOrderActivity.myCouponsAdpter.setData(couponBeans);
-                                    confirmOrderActivity.myCouponsAdpter.notifyDataSetChanged();
-                                }
-                            }
-                            if (code.equalsIgnoreCase("1601")){
-                                confirmOrderActivity.no_coupon_txt.setVisibility(View.VISIBLE);
-                                confirmOrderActivity.coupon_layout.setVisibility(View.GONE);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        confirmOrderActivity.handleConpous(result1);
+                        break;
+                    case 0x03:
+                        String result2 = (String) msg.obj;
+                        confirmOrderActivity.handleCheckOrder(result2);
                         break;
                 }
             }
+        }
+    }
+    private void handleCheckOrder(String result){
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            String code = jsonObject.optString("code");
+            String msg = jsonObject.optString("msg");
+            if (code.equalsIgnoreCase("1507")){
+                if (!LoadingDialog.isDissMissLoading()){
+                    LoadingDialog.dismissLoading();
+                }
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+            }else if (code.equalsIgnoreCase("1505")){
+                checkOrder();
+            }else if (code.equalsIgnoreCase("1500") || code.equalsIgnoreCase("1600")){
+                if (!LoadingDialog.isDissMissLoading()){
+                    LoadingDialog.dismissLoading();
+                }
+                Intent intent = new Intent();
+                intent.setClass(activity, PurchaseSuccessActivity.class);
+                startActivity(intent);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void handleConpous(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            String code = jsonObject.optString("code");
+            if (code.equalsIgnoreCase("200")){
+                no_coupon_txt.setVisibility(View.GONE);
+                coupon_layout.setVisibility(View.VISIBLE);
+                Gson gson = new Gson();
+                List<CouponBean> couponBeans = new ArrayList<>();
+                CouponBean couponBean = gson.fromJson(jsonObject.toString(), CouponBean.class);
+                couponBeans.add(couponBean);
+                if (myCouponsAdpter != null){
+                    myCouponsAdpter.setData(couponBeans);
+                    myCouponsAdpter.notifyDataSetChanged();
+                }
+            }
+            if (code.equalsIgnoreCase("1601")){
+                no_coupon_txt.setVisibility(View.VISIBLE);
+                coupon_layout.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -158,13 +192,13 @@ public class ConfirmOrderActivity extends BaseActivity{
         confirmOrderHandler = new ConfirmOrderHandler(activity);
         initIntent();
         initView();
+        initAddress();
         initCoupons();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initAddress();
     }
 
     private void initCoupons() {
@@ -297,6 +331,8 @@ public class ConfirmOrderActivity extends BaseActivity{
                                 String code = jsonObject.optString("code");
                                 if (code.equalsIgnoreCase("200")){
                                     String chargeString = jsonObject.optString("charge");
+                                    Gson gson = new Gson();
+                                    chargeBean = gson.fromJson(chargeString, ChargeBean.class);
                                     Pingpp.createPayment(activity, chargeString);
                                 }else{
                                     final String msg = jsonObject.optString("msg");
@@ -342,9 +378,15 @@ public class ConfirmOrderActivity extends BaseActivity{
                     break;
                 case "success":
                     //Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
-                    intent.setClass(activity, PurchaseSuccessActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(activity, PurchaseSuccessActivity.class);
+//                    startActivity(intent);
+                    if (!UIUtils.isNetworkAvailable(activity)){
+                        Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    LoadingDialog.loading(activity);
+                    checkOrder();
                     break;
                 case "cancel":
                     Toast.makeText(activity, "取消支付", Toast.LENGTH_SHORT).show();
@@ -380,13 +422,28 @@ public class ConfirmOrderActivity extends BaseActivity{
         }
         if (requestCode == 0x14){
             if (resultCode == 0x15){
-                AddressBean addressBean = (AddressBean) data.getSerializableExtra("address_bean");
+                addressBean = (AddressBean) data.getSerializableExtra("address_bean");
                 add_address.setVisibility(View.GONE);
                 address_layout.setVisibility(View.VISIBLE);
                 user_name.setText(addressBean.getName());
                 user_num.setText(addressBean.getTel());
                 user_address.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
             }
+            if (resultCode == 0x20 || resultCode == 0x21 || resultCode == 0x22){
+                initAddress();
+            }
         }
+    }
+
+    private void checkOrder() {
+        HttpHelper.httpRequest(UrlHelper.checkOrder(chargeBean.getId()), null, "POST", new StandardCallBack(activity) {
+            @Override
+            public void onSuccess(String result) {
+                Message message = Message.obtain();
+                message.obj = result;
+                message.what = 0x03;
+                confirmOrderHandler.sendMessage(message);
+            }
+        });
     }
 }

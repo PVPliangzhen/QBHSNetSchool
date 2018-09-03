@@ -79,6 +79,10 @@ public class AddressManagerActivity extends BaseActivity {
         setBaseContentView(R.layout.activity_address_manage, false, R.color.status_bar_bg_color, false);
         activity = this;
         addressManagerHandler = new AddressManagerHandler(activity);
+        initView();
+    }
+
+    private void initView() {
         address_list = (RecyclerView) findViewById(R.id.address_list);
         addressAdapter = new AddressAdapter(activity);
         address_list.setAdapter(addressAdapter);
@@ -86,7 +90,7 @@ public class AddressManagerActivity extends BaseActivity {
         initAddressEditListener();
         addressAdapter.setOnAddressSelectListener(new AddressAdapter.AddressSelectListener() {
             @Override
-            public void AddressSelect(int position) {
+            public void onAddressSelect(int position) {
                 if (addressBeans != null && addressBeans.size() > 0) {
                     AddressBean addressBean = addressBeans.get(position);
                     Intent intent = new Intent();
@@ -108,12 +112,22 @@ public class AddressManagerActivity extends BaseActivity {
                 finish();
             }
         });
-        initData();
+        TextView add_address_btn = (TextView) findViewById(R.id.add_address_btn);
+        add_address_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(activity, AddressActivity.class);
+                setResult(0x22);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     private void initAddressEditListener() {
@@ -124,6 +138,7 @@ public class AddressManagerActivity extends BaseActivity {
                 intent.setClass(activity, AddressActivity.class);
                 intent.putExtra("is_from_edit", true);
                 intent.putExtra("addressbean", addressBeans.get(position));
+                setResult(0x20);
                 startActivityForResult(intent, 0x12);
             }
         });
@@ -161,6 +176,7 @@ public class AddressManagerActivity extends BaseActivity {
                                             addressBeans.remove(position);
                                             addressAdapter.setDate(addressBeans);
                                             addressAdapter.notifyDataSetChanged();
+                                            setResult(0x21);
                                         } else {
                                             Toast.makeText(activity, "删除失败", Toast.LENGTH_SHORT).show();
                                         }

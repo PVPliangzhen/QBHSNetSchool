@@ -69,6 +69,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
 
                 }
             });
+            ConstantUtil.handleSeason(context, orderBean.getCourse_data().getSeason(), viewHolder.season_img, true);
         }catch (Exception e){
             e.printStackTrace();
         }

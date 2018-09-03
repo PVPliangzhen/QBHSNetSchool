@@ -10,7 +10,18 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/address_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
     </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/add_address_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp100"
+        android:textSize="@dimen/dp30"
+        android:textColor="@color/color_ffffff"
+        android:gravity="center"
+        android:background="@color/color_E20000"
+        android:text="新建地址"/>
 
 </LinearLayout>
