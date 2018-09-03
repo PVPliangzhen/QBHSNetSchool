@@ -83,9 +83,9 @@ public class MineFragment extends Fragment{
 
     private void handlePersonalInfo(String result) {
         try {
-            if (!LoadingDialog.isDissMissLoading()){
-                LoadingDialog.dismissLoading();
-            }
+//            if (!LoadingDialog.isDissMissLoading()){
+//                LoadingDialog.dismissLoading();
+//            }
             JSONObject jsonObject = new JSONObject(result);
             Gson gson = new Gson();
             PersonalInfo personalInfo = gson.fromJson(jsonObject.toString(), PersonalInfo.class);
@@ -103,15 +103,8 @@ public class MineFragment extends Fragment{
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_mine, container, false);
         mineHandler = new MineHandler(this);
         initView(rootView);
+        initData();
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (activity.getCurrentFragment() instanceof MineFragment){
-            initData();
-        }
     }
 
     @Override
@@ -127,7 +120,7 @@ public class MineFragment extends Fragment{
     }
 
     private void initData() {
-        LoadingDialog.loading(activity);
+        //LoadingDialog.loading(activity);
         if (UIUtils.isNetworkAvailable(activity)){
             HttpHelper.httpGetRequest(UrlHelper.getPersonalInfo(), "GET", new StandardCallBack(activity) {
                 @Override
@@ -190,7 +183,7 @@ public class MineFragment extends Fragment{
             switch (view.getId()){
                 case R.id.user_card:
                     Intent intent = new Intent(activity, UserInfoActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, 0X10);
                     break;
                 case R.id.order_layout:
                     Intent intent1 = new Intent(activity, MyOrderActivity.class);
@@ -237,4 +230,14 @@ public class MineFragment extends Fragment{
             }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x10){
+            if (resultCode == 0x11){
+                initData();
+            }
+        }
+    }
 }

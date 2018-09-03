@@ -238,11 +238,18 @@ public class UserInfoActivity extends BaseActivity{
         female_txt.setOnClickListener(clickListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(0x11);
+        super.onBackPressed();
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.page_back:
+                    setResult(0x11);
                     finish();
                     break;
                 case R.id.avatar_layout:
