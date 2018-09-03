@@ -302,6 +302,7 @@ public class CourseSelectionFragment extends Fragment {
                 });
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

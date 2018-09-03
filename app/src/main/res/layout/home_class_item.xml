@@ -29,8 +29,9 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/season_image"
+                        android:layout_width="@dimen/dp45"
+                        android:layout_height="@dimen/dp45"
                         android:src="@mipmap/summer2"/>
 
                     <TextView

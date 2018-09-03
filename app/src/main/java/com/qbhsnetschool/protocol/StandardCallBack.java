@@ -39,7 +39,7 @@ public abstract class StandardCallBack implements Callback{
                         LoadingDialog.dismissLoading();
                     }
                     if ((int)msg.obj == 10000) {
-                        Toast.makeText(context, "网络连接超时, 请重试！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "服务器连接异常, 请重试！", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }

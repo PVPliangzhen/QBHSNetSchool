@@ -153,7 +153,7 @@
                         android:id="@+id/user_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="北京北京北京"
+                        android:text=""
                         android:layout_alignLeft="@+id/user_name"
                         android:layout_below="@+id/user_name"
                         android:textSize="@dimen/dp25"
@@ -206,6 +206,7 @@
                             android:layout_marginTop="@dimen/dp35">
 
                             <ImageView
+                                android:id="@+id/season_img"
                                 android:layout_width="@dimen/dp40"
                                 android:layout_height="@dimen/dp40"
                                 android:src="@mipmap/summer2"/>

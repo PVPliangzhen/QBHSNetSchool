@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/season_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45"
             android:src="@mipmap/summer"
             android:layout_centerVertical="true"/>
         

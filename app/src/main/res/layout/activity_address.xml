@@ -86,7 +86,8 @@
             android:textSize="@dimen/dp25"
             android:layout_toRightOf="@+id/phone_number_txt"
             android:layout_marginLeft="@dimen/dp16"
-            android:background="@color/color_ffffff"/>
+            android:background="@color/color_ffffff"
+            android:inputType="number"/>
 
         <ImageView
             android:id="@+id/phone_number_delete"

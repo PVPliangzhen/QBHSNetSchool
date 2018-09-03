@@ -130,6 +130,9 @@ public class ConfirmOrderActivity extends BaseActivity{
                 if (addressBeans == null || addressBeans.size() <= 0){
                     add_address.setVisibility(View.VISIBLE);
                     address_layout.setVisibility(View.GONE);
+                    user_name.setText("");
+                    user_num.setText("");
+                    user_address.setText("");
                 }else{
                     add_address.setVisibility(View.GONE);
                     address_layout.setVisibility(View.VISIBLE);
@@ -138,6 +141,9 @@ public class ConfirmOrderActivity extends BaseActivity{
                     user_num.setText(addressBean.getTel());
                     user_address.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
                 }
+            }else{
+                String msg = jsonObject.optString("msg");
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -152,8 +158,13 @@ public class ConfirmOrderActivity extends BaseActivity{
         confirmOrderHandler = new ConfirmOrderHandler(activity);
         initIntent();
         initView();
-        initAddress();
         initCoupons();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initAddress();
     }
 
     private void initCoupons() {
@@ -255,6 +266,9 @@ public class ConfirmOrderActivity extends BaseActivity{
         sign_up_btn.setOnClickListener(clickListener);
         no_coupon_txt = (TextView) findViewById(R.id.no_coupon_txt);
         coupon_layout = (RelativeLayout) findViewById(R.id.coupon_layout);
+        ImageView imageView = (ImageView) findViewById(R.id.season_img);
+        String season = homeCourseBean.getSeason();
+        ConstantUtil.handleSeason(activity, season, imageView, true);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

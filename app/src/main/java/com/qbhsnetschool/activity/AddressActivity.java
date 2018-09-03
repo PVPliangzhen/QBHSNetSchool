@@ -314,6 +314,7 @@ public class AddressActivity extends BaseActivity{
     }
 
     private void showPickerView() {// 弹出选择器
+        UIUtils.hideSoftInput(activity, region);
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {

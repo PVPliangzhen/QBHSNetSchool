@@ -69,6 +69,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
         viewHolder.ori_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         int price = hlgBean.getPrice();
         viewHolder.cur_price.setText("￥" + price + "");
+        ConstantUtil.handleSeason(context, hlgBean.getSeason(), viewHolder.season_image, true);
     }
 
     @Override
@@ -87,6 +88,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
         TextView ori_price;
         TextView cur_price;
         ImageView teacher_show;
+        ImageView season_image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +101,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
             ori_price = itemView.findViewById(R.id.ori_price);
             cur_price = itemView.findViewById(R.id.cur_price);
             teacher_show = itemView.findViewById(R.id.teacher_show);
+            season_image = itemView.findViewById(R.id.season_image);
         }
     }
 }

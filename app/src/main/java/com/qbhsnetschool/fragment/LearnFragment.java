@@ -1,6 +1,5 @@
 package com.qbhsnetschool.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,22 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bokecc.sdk.mobile.live.DWLive;
-import com.bokecc.sdk.mobile.live.DWLiveLoginListener;
-import com.bokecc.sdk.mobile.live.Exception.DWLiveException;
-import com.bokecc.sdk.mobile.live.pojo.LiveInfo;
-import com.bokecc.sdk.mobile.live.pojo.LoginInfo;
-import com.bokecc.sdk.mobile.live.pojo.PublishInfo;
-import com.bokecc.sdk.mobile.live.pojo.RoomInfo;
-import com.bokecc.sdk.mobile.live.pojo.TemplateInfo;
-import com.bokecc.sdk.mobile.live.pojo.Viewer;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
-import com.qbhsnetschool.activity.WebActivity;
 import com.qbhsnetschool.widget.TabGroupLayout;
-import com.qbhsnetschool.widget.ccvideo.PcLivePlayActivity;
 
 import java.lang.ref.WeakReference;
 

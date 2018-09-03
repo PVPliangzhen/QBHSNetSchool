@@ -22,9 +22,9 @@ import java.util.concurrent.TimeUnit;
 public class HttpHelper {
 
     private static String appUserAgent;
-    private static final int CONNECT_TIMEOUT = 5;
-    private static final int READ_TIMEOUT = 10;
-    private static final int WRITE_TIMEOUT = 10;
+    private static final int CONNECT_TIMEOUT = 60;
+    private static final int READ_TIMEOUT = 60;
+    private static final int WRITE_TIMEOUT = 60;
 
     public static String getUserAgent(QBHSApplication context) {
         if (TextUtils.isEmpty(appUserAgent)) {

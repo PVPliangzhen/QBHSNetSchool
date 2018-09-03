@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.CourseDetailActivity;
 import com.qbhsnetschool.entity.HomeCourseBean;
@@ -51,6 +53,9 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
                 context.startActivity(intent);
             }
         });
+        String season = cheapieBean.getSeason();
+        //Glide.with(context).load(R.mipmap.summer).into(viewHolder.season_img);
+        ConstantUtil.handleSeason(context, season, viewHolder.season_img, false);
     }
 
     @Override
@@ -63,12 +68,14 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
         TextView discount_title;
         TextView discount_content;
         Button buy_discount;
+        ImageView season_img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             discount_title = itemView.findViewById(R.id.discount_title);
             discount_content = itemView.findViewById(R.id.discount_content);
             buy_discount = itemView.findViewById(R.id.buy_discount);
+            season_img = itemView.findViewById(R.id.season_img);
         }
     }
 }

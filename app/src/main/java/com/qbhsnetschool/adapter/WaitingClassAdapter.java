@@ -6,13 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.uitls.CCVideoUtil;
+import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
 
@@ -79,6 +82,8 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     }
                 });
+                String season = courseBean.getSeason();
+                ConstantUtil.handleSeason(context, season, viewHolder1.season_img, true);
             }
         }
         if (viewHolder instanceof MaskViewHolder) {
@@ -125,6 +130,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView chapter_detail;
         LinearLayout go_to_room;
         TextView course_test;
+        ImageView season_img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,6 +143,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             chapter_detail = itemView.findViewById(R.id.chapter_detail);
             go_to_room = itemView.findViewById(R.id.go_to_room);
             course_test = itemView.findViewById(R.id.course_test);
+            season_img = itemView.findViewById(R.id.season_img);
         }
     }
 

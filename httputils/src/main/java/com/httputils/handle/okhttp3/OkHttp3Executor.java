@@ -263,12 +263,12 @@ public class OkHttp3Executor implements HttpExecutor {
                     final int featureStart = mod;
                     mod = countOfExtraType(extras, featureStart, extraCount, PostBody.FEATURE);
                     final int paramsStart = featureStart + mod;
-                    if (postSize > 0 || mod > 0) {
+                    if (postSize >= 0 || mod >= 0) {
                         /*检查请求“数据打包”特性*/
                         int packet = indexOfExtras(extras, featureStart, paramsStart, HttpContent.F_PACKET);//数据打包
                         MediaType packetType = (packet >= 0 ? checkMediaType((String) extras[packet].value) : null);
                         /*如果post参数不为空或者“packet”特性是空参请求，那么构建HTTP POST 参数*/
-                        if (postSize > 0 || (packetType != null
+                        if (postSize >= 0 || (packetType != null
                                 && packetType.type().equals(EMPTY_PARAMS))) {
                             RequestBody requestBody;
                             int multipart = indexOfExtras(extras, featureStart, paramsStart, HttpContent.F_MULTI);//适用于文件上传

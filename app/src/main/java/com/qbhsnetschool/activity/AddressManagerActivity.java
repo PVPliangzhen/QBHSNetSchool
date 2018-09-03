@@ -111,6 +111,11 @@ public class AddressManagerActivity extends BaseActivity {
         initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void initAddressEditListener() {
         addressAdapter.setOnAddressEditListener(new AddressAdapter.AddressEditListener() {
             @Override
@@ -145,6 +150,9 @@ public class AddressManagerActivity extends BaseActivity {
                                         return;
                                     }
                                     try {
+                                        if (!LoadingDialog.isDissMissLoading()){
+                                            LoadingDialog.dismissLoading();
+                                        }
                                         JSONObject jsonObject = new JSONObject(result);
                                         String code = jsonObject.optString("code");
                                         if (code.equalsIgnoreCase("1300")) {

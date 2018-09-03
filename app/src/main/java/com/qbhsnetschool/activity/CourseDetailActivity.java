@@ -21,6 +21,7 @@ import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.ChapterAdapter;
 import com.qbhsnetschool.entity.ChapterBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
+import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
@@ -213,9 +214,14 @@ public class CourseDetailActivity extends BaseActivity{
                     finish();
                     break;
                 case R.id.sign_up_btn:
-                    Intent intent = new Intent(activity, ConfirmOrderActivity.class);
-                    intent.putExtra("homeCourseBean", homeCourseBean);
-                    startActivity(intent);
+                    if (!UserManager.getInstance().isLogin()) {
+                        Intent intent = new Intent(activity, LoginTrasitActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(activity, ConfirmOrderActivity.class);
+                        intent.putExtra("homeCourseBean", homeCourseBean);
+                        startActivity(intent);
+                    }
                     break;
             }
         }
