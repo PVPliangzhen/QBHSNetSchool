@@ -7,9 +7,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
-        android:background="@color/color_e7e7e7"
         android:layout_marginLeft="@dimen/dp30"
-        android:layout_marginRight="@dimen/dp30"/>
+        android:layout_marginRight="@dimen/dp30"
+        android:background="@color/color_e7e7e7" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,82 +22,85 @@
             android:id="@+id/season_img"
             android:layout_width="@dimen/dp45"
             android:layout_height="@dimen/dp45"
-            android:src="@mipmap/summer"
-            android:layout_centerVertical="true"/>
-        
+            android:layout_centerVertical="true"
+            android:src="@mipmap/summer" />
+
         <TextView
             android:id="@+id/course_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp30"
-            android:textColor="@color/color_333333"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/season_img"
             android:layout_marginLeft="@dimen/dp16"
-            android:text="课程标题"/>
-        
+            android:layout_toRightOf="@id/season_img"
+            android:text="课程标题"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dp30" />
+
         <TextView
             android:id="@+id/all_chapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全部章节>"
-            android:textColor="@color/color_E20000"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/dp25"/>
+            android:text="全部章节>"
+            android:textColor="@color/color_E20000"
+            android:textSize="@dimen/dp25" />
     </RelativeLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp62"
+        android:layout_marginLeft="@dimen/dp30"
         android:layout_marginTop="@dimen/dp40"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dp30">
-        
-        <ImageView
-            android:layout_width="@dimen/dp30"
-            android:layout_height="@dimen/dp30"
-            android:src="@drawable/home_date"
-            android:layout_gravity="center_vertical"/>
-        
-        <TextView
-            android:id="@+id/wait_date_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dp25"
-            android:textColor="@color/color_666666"
-            android:layout_marginLeft="@dimen/dp16"
-            android:layout_gravity="center_vertical"
-            android:text="home_date"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp62"
-        android:layout_marginTop="@dimen/dp40"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dp30">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/dp30"
             android:layout_height="@dimen/dp30"
-            android:src="@drawable/home_time"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/home_date" />
+
+        <TextView
+            android:id="@+id/wait_date_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp16"
+            android:text="home_date"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp25" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp62"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp40"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/home_time" />
 
         <TextView
             android:id="@+id/wait_time_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp25"
-            android:textColor="@color/color_666666"
-            android:layout_marginLeft="@dimen/dp16"
             android:layout_gravity="center_vertical"
-            android:text="home_time"/>
+            android:layout_marginLeft="@dimen/dp16"
+            android:text="home_time"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp25" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp62"
-        android:layout_marginTop="@dimen/dp40"
-        android:layout_marginLeft="@dimen/dp30">
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp40">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -106,84 +109,125 @@
             <ImageView
                 android:layout_width="@dimen/dp30"
                 android:layout_height="@dimen/dp30"
-                android:src="@drawable/home_course"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/home_course" />
 
             <TextView
                 android:id="@+id/wait_course_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dp25"
-                android:textColor="@color/color_666666"
-                android:layout_marginLeft="@dimen/dp16"
                 android:layout_gravity="center_vertical"
-                android:text="home_course"/>
+                android:layout_marginLeft="@dimen/dp16"
+                android:text="home_course"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/dp25" />
         </LinearLayout>
-        
+
         <TextView
             android:id="@+id/course_test"
             android:layout_width="@dimen/dp188"
             android:layout_height="@dimen/dp62"
             android:layout_alignParentEnd="true"
-            android:textSize="@dimen/dp30"
-            android:text="课前测试"
-            android:background="@mipmap/btn_blue"
             android:layout_marginRight="@dimen/dp30"
+            android:background="@mipmap/btn_blue"
             android:gravity="center"
-            android:textColor="@color/color_448CD7"/>
+            android:text="课前测试"
+            android:textColor="@color/color_448CD7"
+            android:textSize="@dimen/dp30" />
     </RelativeLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/course_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp58"
-        android:background="@mipmap/combinedshape">
-    </ImageView>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/chapter_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/dp25"
-        android:textColor="@color/color_333333"
-        android:layout_marginTop="@dimen/dp50"
-        android:text="第三讲"
-        android:layout_gravity="center_horizontal"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp58"
+            android:background="@mipmap/combinedshape">
+        </ImageView>
 
-    <TextView
-        android:id="@+id/chapter_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp40"
-        android:textSize="@dimen/dp25"
-        android:textColor="@color/color_666666"
-        android:text="abcdefghijklmnopqrstuvwxyz"
-        android:layout_gravity="center_horizontal"/>
-
-    <LinearLayout
-        android:id="@+id/go_to_room"
-        android:layout_width="@dimen/dp238"
-        android:layout_height="@dimen/dp62"
-        android:orientation="horizontal"
-        android:background="@mipmap/button_bg"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp48"
-        android:layout_marginBottom="@dimen/dp48">
-        
         <TextView
+            android:id="@+id/chapter_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dp30"
-            android:text="进入教室"/>
-        
-        <ImageView
-            android:layout_width="@dimen/dp42"
-            android:layout_height="@dimen/dp42"
-            android:src="@mipmap/icon_studio_white"
-            android:layout_marginLeft="@dimen/dp16"/>
-        
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp50"
+            android:text="第三讲"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dp25" />
+
+        <TextView
+            android:id="@+id/chapter_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp40"
+            android:text="abcdefghijklmnopqrstuvwxyz"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/dp25" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp48"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/go_to_room_layout"
+                android:layout_width="@dimen/dp238"
+                android:layout_height="@dimen/dp62"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/button_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/go_to_room_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="进入教室"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dp30" />
+
+                <ImageView
+                    android:id="@+id/go_to_room_img"
+                    android:layout_width="@dimen/dp42"
+                    android:layout_height="@dimen/dp42"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:src="@mipmap/icon_studio_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/submit_work"
+                android:layout_width="@dimen/dp238"
+                android:layout_height="@dimen/dp62"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/submit_homework"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dp64">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提交作业"
+                    android:textColor="@color/color_E20000"
+                    android:textSize="@dimen/dp30" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp42"
+                    android:layout_height="@dimen/dp42"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:src="@mipmap/icon_submit" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -71,18 +71,60 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.wait_date_txt.setText(courseBean.getCourse_date());
                 viewHolder1.wait_time_txt.setText(courseBean.getCourse_time());
                 viewHolder1.wait_course_txt.setText(courseBean.getChapter_times());
-                CourseBean.ChapterLatelyBean chapterLatelyBean = courseBean.getChapter_lately();
+                final CourseBean.ChapterLatelyBean chapterLatelyBean = courseBean.getChapter_lately();
                 viewHolder1.chapter_txt.setText(chapterLatelyBean.getChapter_name());
                 viewHolder1.chapter_detail.setText(chapterLatelyBean.getChapter_date() +
                         chapterLatelyBean.getChapter_time() +
                         chapterLatelyBean.getTeacher() + "老师" +
                         "剩余" +
                         chapterLatelyBean.getChapter_expire_time() + "天");
-                viewHolder1.go_to_room.setOnClickListener(new View.OnClickListener() {
+                if (chapterLatelyBean.getChapter_name() == null){
+                    viewHolder1.course_bottom_layout.setVisibility(View.GONE);
+                }else{
+                    viewHolder1.course_bottom_layout.setVisibility(View.VISIBLE);
+                    if (chapterLatelyBean.getState().equalsIgnoreCase("current") || chapterLatelyBean.getState().equalsIgnoreCase("future")){
+                        if (chapterLatelyBean.isIs_live()){
+                            //红底白字 进入教室
+                            viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_hongdibaizi);
+                            viewHolder1.go_to_room_layout.setEnabled(true);
+                            viewHolder1.go_to_room_txt.setText("进入教室");
+                            viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_ffffff));
+                            viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_white);
+                        }else{
+                            //白底灰字 进入教室
+                            viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
+                            viewHolder1.go_to_room_layout.setEnabled(false);
+                            viewHolder1.go_to_room_txt.setText("进入教室");
+                            viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
+                            viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);
+                        }
+                    }else{
+                        //past
+                        if (chapterLatelyBean.getCc_vedio().getRecordId() == null){
+                            //白底灰字 复习课程
+                            viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
+                            viewHolder1.go_to_room_layout.setEnabled(false);
+                            viewHolder1.go_to_room_txt.setText("复习课程");
+                            viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
+                            viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);
+                        }else{
+                            //白底红字 复习课程
+                            viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihongzi);
+                            viewHolder1.go_to_room_layout.setEnabled(true);
+                            viewHolder1.go_to_room_txt.setText("复习课程");
+                            viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_E20000));
+                            viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_red);
+                        }
+                    }
+                }
+                viewHolder1.go_to_room_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        HomeActivity activity = (HomeActivity) context;
-                        CCVideoUtil.getInstance(activity).startCCVideo();
+                        if (chapterLatelyBean.getState().equalsIgnoreCase("current") || chapterLatelyBean.getState().equalsIgnoreCase("future")){
+                            CCVideoUtil.getInstance(context).startCCVideo();
+                        }else{
+                            CCVideoUtil.getInstance(context).startCCPlayBack();
+                        }
                     }
                 });
                 viewHolder1.course_test.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +139,12 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 });
                 String season = courseBean.getSeason();
                 ConstantUtil.handleSeason(context, season, viewHolder1.season_img, true);
+                viewHolder1.submit_work.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
             }
         }
         if (viewHolder instanceof MaskViewHolder) {
@@ -141,9 +189,13 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView wait_course_txt;
         TextView chapter_txt;
         TextView chapter_detail;
-        LinearLayout go_to_room;
+        LinearLayout go_to_room_layout;
+        TextView go_to_room_txt;
+        ImageView go_to_room_img;
         TextView course_test;
         ImageView season_img;
+        LinearLayout submit_work;
+        LinearLayout course_bottom_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -154,9 +206,13 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             wait_course_txt = itemView.findViewById(R.id.wait_course_txt);
             chapter_txt = itemView.findViewById(R.id.chapter_txt);
             chapter_detail = itemView.findViewById(R.id.chapter_detail);
-            go_to_room = itemView.findViewById(R.id.go_to_room);
+            go_to_room_layout = itemView.findViewById(R.id.go_to_room_layout);
+            go_to_room_txt = itemView.findViewById(R.id.go_to_room_txt);
+            go_to_room_img = itemView.findViewById(R.id.go_to_room_img);
             course_test = itemView.findViewById(R.id.course_test);
             season_img = itemView.findViewById(R.id.season_img);
+            submit_work = itemView.findViewById(R.id.submit_work);
+            course_bottom_layout = itemView.findViewById(R.id.course_bottom_layout);
         }
     }
 
@@ -171,4 +227,16 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mask_btn = itemView.findViewById(R.id.mask_btn);
         }
     }
+
+//    View.OnClickListener clickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()){
+//                case R.id.go_to_room_layout:
+//
+//                    CCVideoUtil.getInstance(context).startCCVideo();
+//                    break;
+//            }
+//        }
+//    };
 }

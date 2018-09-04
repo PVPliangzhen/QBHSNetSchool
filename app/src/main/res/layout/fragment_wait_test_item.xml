@@ -31,7 +31,9 @@
                 android:textSize="@dimen/dp30"
                 android:textColor="@color/color_333333"
                 android:text="2018-暑 三年级模拟"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/test_number"

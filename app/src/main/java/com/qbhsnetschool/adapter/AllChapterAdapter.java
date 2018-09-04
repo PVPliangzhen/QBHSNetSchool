@@ -11,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.entity.AllChapterBean;
+import com.qbhsnetschool.uitls.CCVideoUtil;
 
 import java.util.List;
 
-public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.ViewHolder>{
+public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.ViewHolder> {
 
     private Context context;
     private List<AllChapterBean> allChapterBeans;
@@ -24,7 +26,7 @@ public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.Vi
         this.context = context;
     }
 
-    public void setData(List<AllChapterBean> allChapterBeans){
+    public void setData(List<AllChapterBean> allChapterBeans) {
         this.allChapterBeans = allChapterBeans;
     }
 
@@ -36,10 +38,54 @@ public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        if (allChapterBeans != null && allChapterBeans.size() > 0){
-            AllChapterBean allChapterBean = allChapterBeans.get(position);
+        if (allChapterBeans != null && allChapterBeans.size() > 0) {
+            final AllChapterBean allChapterBean = allChapterBeans.get(position);
             viewHolder.course_title.setText(allChapterBean.getChapter_name());
             viewHolder.course_detail.setText(allChapterBean.getChapter_date() + allChapterBean.getChapter_time() + allChapterBean.getTeacher() + "剩余" + allChapterBean.getChapter_expire_time() + "天");
+            if (allChapterBean.getState().equalsIgnoreCase("current") || allChapterBean.getState().equalsIgnoreCase("future")) {
+                if (allChapterBean.isIs_live()) {
+                    //红底白字 进入教室
+                    viewHolder.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_hongdibaizi);
+                    viewHolder.go_to_room_layout.setEnabled(true);
+                    viewHolder.go_to_room_txt.setText("进入教室");
+                    viewHolder.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_ffffff));
+                    viewHolder.go_to_room_img.setImageResource(R.mipmap.icon_studio_white);
+                } else {
+                    //白底灰字 进入教室
+                    viewHolder.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
+                    viewHolder.go_to_room_layout.setEnabled(false);
+                    viewHolder.go_to_room_txt.setText("进入教室");
+                    viewHolder.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
+                    viewHolder.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);
+                }
+            } else {
+                //past
+                if (allChapterBean.getCc_vedio().getRecordId() == null) {
+                    //白底灰字 复习课程
+                    viewHolder.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
+                    viewHolder.go_to_room_layout.setEnabled(false);
+                    viewHolder.go_to_room_txt.setText("复习课程");
+                    viewHolder.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
+                    viewHolder.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);
+                } else {
+                    //白底红字 复习课程
+                    viewHolder.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihongzi);
+                    viewHolder.go_to_room_layout.setEnabled(true);
+                    viewHolder.go_to_room_txt.setText("复习课程");
+                    viewHolder.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_E20000));
+                    viewHolder.go_to_room_img.setImageResource(R.mipmap.icon_studio_red);
+                }
+            }
+            viewHolder.go_to_room_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (allChapterBean.getState().equalsIgnoreCase("current") || allChapterBean.getState().equalsIgnoreCase("future")){
+                        CCVideoUtil.getInstance(context).startCCVideo();
+                    }else{
+                        CCVideoUtil.getInstance(context).startCCPlayBack();
+                    }
+                }
+            });
         }
     }
 
@@ -49,21 +95,32 @@ public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.Vi
         //return 5;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView course_title;
         TextView course_detail;
-        LinearLayout play_layout;
-        TextView play_txt;
-        ImageView play_img;
+        LinearLayout go_to_room_layout;
+        TextView go_to_room_txt;
+        ImageView go_to_room_img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             course_title = itemView.findViewById(R.id.course_title);
             course_detail = itemView.findViewById(R.id.course_detail);
-            play_layout = itemView.findViewById(R.id.play_layout);
-            play_txt = itemView.findViewById(R.id.play_txt);
-            play_img = itemView.findViewById(R.id.play_img);
+            go_to_room_layout = itemView.findViewById(R.id.go_to_room_layout);
+            go_to_room_txt = itemView.findViewById(R.id.go_to_room_txt);
+            go_to_room_img = itemView.findViewById(R.id.go_to_room_img);
         }
     }
+
+//    View.OnClickListener clickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()){
+//                case R.id.go_to_room_layout:
+//                    CCVideoUtil.getInstance(context).startCCVideo();
+//                    break;
+//            }
+//        }
+//    };
 }
