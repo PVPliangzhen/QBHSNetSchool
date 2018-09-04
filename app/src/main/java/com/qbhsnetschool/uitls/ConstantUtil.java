@@ -136,4 +136,19 @@ public class ConstantUtil {
                 break;
         }
     }
+
+    public static Map<String, Integer> handleScore(){
+        Map<String, Integer> scoreMap = new HashMap<>(10);
+        scoreMap.put("0", R.mipmap.g0);
+        scoreMap.put("1", R.mipmap.g1);
+        scoreMap.put("2", R.mipmap.g2);
+        scoreMap.put("3", R.mipmap.g3);
+        scoreMap.put("4", R.mipmap.g4);
+        scoreMap.put("5", R.mipmap.g5);
+        scoreMap.put("6", R.mipmap.g6);
+        scoreMap.put("7", R.mipmap.g7);
+        scoreMap.put("8", R.mipmap.g8);
+        scoreMap.put("9", R.mipmap.g9);
+        return scoreMap;
+    }
 }

@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.AlreadyTestBean;
+import com.qbhsnetschool.uitls.ConstantUtil;
 
 import java.util.List;
 
@@ -64,6 +66,34 @@ public class AlreadyTestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     }
                 });
+                String totalScore = String.valueOf(alreadyTestBean.getTotal_score());
+                if (totalScore.length() == 1){
+                    viewHolder1.hundred_img.setVisibility(View.GONE);
+                    viewHolder1.ten_img.setVisibility(View.GONE);
+                    viewHolder1.per_img.setVisibility(View.VISIBLE);
+                    int imageId = ConstantUtil.handleScore().get(totalScore);
+                    Glide.with(context).load(imageId).into(viewHolder1.per_img);
+                }else if (totalScore.length() == 2){
+                    char c [] = totalScore.toCharArray();
+                    viewHolder1.hundred_img.setVisibility(View.GONE);
+                    viewHolder1.ten_img.setVisibility(View.VISIBLE);
+                    viewHolder1.per_img.setVisibility(View.VISIBLE);
+                    int imageId1 = ConstantUtil.handleScore().get(String.valueOf(c[0]));
+                    int imageId2 = ConstantUtil.handleScore().get(String.valueOf(c[1]));
+                    Glide.with(context).load(imageId1).into(viewHolder1.ten_img);
+                    Glide.with(context).load(imageId2).into(viewHolder1.per_img);
+                }else if (totalScore.length() == 3){
+                    char c [] = totalScore.toCharArray();
+                    viewHolder1.hundred_img.setVisibility(View.VISIBLE);
+                    viewHolder1.ten_img.setVisibility(View.VISIBLE);
+                    viewHolder1.per_img.setVisibility(View.VISIBLE);
+                    int imageId1 = ConstantUtil.handleScore().get(String.valueOf(c[0]));
+                    int imageId2 = ConstantUtil.handleScore().get(String.valueOf(c[1]));
+                    int imageId3 = ConstantUtil.handleScore().get(String.valueOf(c[2]));
+                    Glide.with(context).load(imageId1).into(viewHolder1.hundred_img);
+                    Glide.with(context).load(imageId2).into(viewHolder1.ten_img);
+                    Glide.with(context).load(imageId3).into(viewHolder1.per_img);
+                }
             }else{
                 viewHolder1.wrong_count.setVisibility(View.GONE);
                 viewHolder1.go_to_test.setVisibility(View.GONE);

@@ -106,39 +106,47 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_horizontal">
+                android:gravity="center">
                 
-                <ImageView
-                    android:id="@+id/hundred_img"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/mark_ln_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/g1"
-                    android:layout_centerVertical="true"/>
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/hundred_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp110"
+                        android:src="@mipmap/g1"
+                        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/ten_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/g0"
-                    android:layout_toRightOf="@+id/hundred_img"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp8"/>
+                    <ImageView
+                        android:id="@+id/ten_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp110"
+                        android:src="@mipmap/g0"
+                        android:layout_toRightOf="@+id/hundred_img"
+                        android:layout_marginLeft="@dimen/dp8"
+                        android:visibility="gone"/>
 
-                <ImageView
-                    android:id="@+id/per_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/g8"
-                    android:layout_toRightOf="@id/ten_img"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp8"/>
+                    <ImageView
+                        android:id="@+id/per_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp110"
+                        android:src="@mipmap/g8"
+                        android:layout_toRightOf="@id/ten_img"
+                        android:layout_marginLeft="@dimen/dp8"
+                        android:visibility="gone"/>
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/number_line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/gline"
-                    android:layout_below="@+id/hundred_img"/>
+                    android:layout_below="@+id/mark_ln_layout"
+                    android:layout_centerHorizontal="true"/>
 
             </RelativeLayout>
 
