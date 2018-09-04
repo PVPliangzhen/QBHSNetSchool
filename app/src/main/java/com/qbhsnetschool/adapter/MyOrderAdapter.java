@@ -38,7 +38,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         try {
             OrderBean orderBean = orderBeans.get(position);
             viewHolder.order_id.setText("订单号：" + orderBean.getOrder_no());
@@ -60,13 +60,17 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             viewHolder.order_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (cancelOrderListener != null){
+                        cancelOrderListener.onCancelOrder(position);
+                    }
                 }
             });
             viewHolder.goto_pay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (payOrderListener != null){
+                        payOrderListener.onPayOrder(position);
+                    }
                 }
             });
             ConstantUtil.handleSeason(context, orderBean.getCourse_data().getSeason(), viewHolder.season_img, true);
@@ -110,5 +114,25 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             goto_pay = itemView.findViewById(R.id.goto_pay);
             order_cancel = itemView.findViewById(R.id.order_cancel);
         }
+    }
+
+    public interface CancelOrderListener{
+        void onCancelOrder(int position);
+    }
+
+    private CancelOrderListener cancelOrderListener;
+
+    public void setOnCancelOrderListener(CancelOrderListener cancelOrderListener){
+        this.cancelOrderListener = cancelOrderListener;
+    }
+
+    public interface PayOrderListener{
+        void onPayOrder(int position);
+    }
+
+    private PayOrderListener payOrderListener;
+
+    public void setOnPayOrderListener(PayOrderListener payOrderListener){
+        this.payOrderListener = payOrderListener;
     }
 }

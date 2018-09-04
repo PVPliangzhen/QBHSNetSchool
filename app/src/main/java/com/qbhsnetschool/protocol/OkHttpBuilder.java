@@ -1,9 +1,6 @@
 package com.qbhsnetschool.protocol;
 
-import android.content.Context;
-
 import com.httputils.HttpContent;
-import com.qbhsnetschool.entity.User;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.uitls.StringUtils;
 

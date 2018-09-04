@@ -108,4 +108,8 @@ public class UrlHelper {
     public static String checkOrder(String pingId){
         return BaseUrl.BASE_HTTP_URL + "app/order/" + pingId + "/";
     }
+
+    public static String cancelOrder(String order_no){
+        return BaseUrl.BASE_HTTP_URL + "app/cancle_orders/" + order_no + "/";
+    }
 }

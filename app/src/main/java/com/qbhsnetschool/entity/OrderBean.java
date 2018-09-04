@@ -1,6 +1,8 @@
 package com.qbhsnetschool.entity;
 
-public class OrderBean {
+import java.io.Serializable;
+
+public class OrderBean implements Serializable{
 
 
     /**
@@ -127,7 +129,7 @@ public class OrderBean {
         this.charge = charge;
     }
 
-    public static class CourseDataBean {
+    public static class CourseDataBean implements Serializable{
         /**
          * chapter_times : 9次课18课时
          * items : 4
@@ -243,7 +245,7 @@ public class OrderBean {
         }
     }
 
-    public static class AddressDataBean {
+    public static class AddressDataBean implements Serializable{
         /**
          * address : 北京市 北京市 东城区 Aaa
          * id : 17418
@@ -289,7 +291,7 @@ public class OrderBean {
         }
     }
 
-    public static class ChargeBean {
+    public static class ChargeBean implements Serializable{
         /**
          * created : 1535093496
          * time_expire : 1535100696
@@ -574,7 +576,7 @@ public class OrderBean {
             this.time_settle = time_settle;
         }
 
-        public static class CredentialBean {
+        public static class CredentialBean implements Serializable{
             /**
              * wx : {"nonceStr":"56f3fd09183edcc67bb75e13988154f5","appId":"wxuxz98ojh4kelgar9","packageValue":"Sign=WXPay","sign":"8BE0E213511155881C28D6472D4FB6F7","partnerId":"5982742389","prepayId":"1101000000180824o4smfhxftce5yzn1","timeStamp":1535093496}
              * object : credential
@@ -599,7 +601,7 @@ public class OrderBean {
                 this.object = object;
             }
 
-            public static class WxBean {
+            public static class WxBean implements Serializable{
                 /**
                  * nonceStr : 56f3fd09183edcc67bb75e13988154f5
                  * appId : wxuxz98ojh4kelgar9
@@ -676,13 +678,13 @@ public class OrderBean {
             }
         }
 
-        public static class ExtraBean {
+        public static class ExtraBean implements Serializable{
         }
 
-        public static class RefundsBean {
+        public static class RefundsBean implements Serializable{
         }
 
-        public static class MetadataBean {
+        public static class MetadataBean implements Serializable{
         }
     }
 }

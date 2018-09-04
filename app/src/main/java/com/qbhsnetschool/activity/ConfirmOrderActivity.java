@@ -25,7 +25,9 @@ import com.qbhsnetschool.adapter.MyCouponsAdpter;
 import com.qbhsnetschool.entity.AddressBean;
 import com.qbhsnetschool.entity.ChargeBean;
 import com.qbhsnetschool.entity.CouponBean;
+import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
+import com.qbhsnetschool.entity.OrderBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
@@ -71,6 +73,11 @@ public class ConfirmOrderActivity extends BaseActivity{
     private TextView no_coupon_txt;
     private RelativeLayout coupon_layout;
     private ChargeBean chargeBean;
+    private boolean is_from_order;
+    private OrderBean orderBean;
+    private ImageView season_img;
+    private TextView real_price;
+    private String productId = "";
 
     private static class ConfirmOrderHandler extends Handler{
         WeakReference<ConfirmOrderActivity> weakReference;
@@ -128,6 +135,9 @@ public class ConfirmOrderActivity extends BaseActivity{
 
     private void handleConpous(String result) {
         try {
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
             JSONObject jsonObject = new JSONObject(result);
             String code = jsonObject.optString("code");
             if (code.equalsIgnoreCase("200")){
@@ -193,7 +203,6 @@ public class ConfirmOrderActivity extends BaseActivity{
         confirmOrderHandler = new ConfirmOrderHandler(activity);
         initIntent();
         initView();
-        initAddress();
         initCoupons();
     }
 
@@ -209,7 +218,7 @@ public class ConfirmOrderActivity extends BaseActivity{
         }
         LoadingDialog.loading(activity);
         Map<String, String> params = new HashMap<>();
-        params.put("course_id", homeCourseBean.getProduct_id());
+        params.put("course_id", productId);
         HttpHelper.httpRequest(UrlHelper.getOrderCoupon(), params, "POST", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -241,6 +250,8 @@ public class ConfirmOrderActivity extends BaseActivity{
     private void initIntent() {
         Intent intent = getIntent();
         homeCourseBean = (HomeCourseBean) intent.getSerializableExtra("homeCourseBean");
+        is_from_order = intent.getBooleanExtra("is_from_order", false);
+        orderBean = (OrderBean) intent.getSerializableExtra("order_bean");
     }
 
     private void initView() {
@@ -263,27 +274,14 @@ public class ConfirmOrderActivity extends BaseActivity{
         user_num = (TextView) findViewById(R.id.user_num);
         user_address = (TextView) findViewById(R.id.user_address);
         course_title = (TextView) findViewById(R.id.course_title);
-        course_title.setText(homeCourseBean.getTitle1());
         course_number = (TextView) findViewById(R.id.course_number);
-        course_number.setText(ConstantUtil.getSanqiItems().get(homeCourseBean.getItems()));
         course_date = (TextView) findViewById(R.id.course_date);
-        course_date.setText(homeCourseBean.getCourse_date());
         course_time = (TextView) findViewById(R.id.course_time);
-        course_time.setText(homeCourseBean.getCourse_time());
         course_chapter = (TextView) findViewById(R.id.course_chapter);
-        course_chapter.setText(homeCourseBean.getChapter_times());
         teacher_name_txt = (TextView) findViewById(R.id.teacher_name_txt);
-        teacher_name_txt.setText(homeCourseBean.getTeacher1().getName());
         original_price = (TextView) findViewById(R.id.original_price);
-        original_price.setText("原价" + homeCourseBean.getOriginal_price() + "元");
-        original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         current_price = (TextView) findViewById(R.id.current_price);
-        current_price.setText("￥" + homeCourseBean.getPrice());
         teacher_head_img = (ImageView) findViewById(R.id.teacher_head_img);
-        Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-                .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
-                .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head_img);
         coupon_list = (RecyclerView) findViewById(R.id.coupon_list);
         myCouponsAdpter = new MyCouponsAdpter(activity);
         LinearLayoutManager lm = new LinearLayoutManager(activity){
@@ -295,15 +293,62 @@ public class ConfirmOrderActivity extends BaseActivity{
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         coupon_list.setLayoutManager(lm);
         coupon_list.setAdapter(myCouponsAdpter);
-        TextView real_price = (TextView) findViewById(R.id.real_price);
-        real_price.setText("￥" + homeCourseBean.getPrice());
+        real_price = (TextView) findViewById(R.id.real_price);
         LinearLayout sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);
         no_coupon_txt = (TextView) findViewById(R.id.no_coupon_txt);
         coupon_layout = (RelativeLayout) findViewById(R.id.coupon_layout);
-        ImageView imageView = (ImageView) findViewById(R.id.season_img);
-        String season = homeCourseBean.getSeason();
-        ConstantUtil.handleSeason(activity, season, imageView, true);
+        season_img = (ImageView) findViewById(R.id.season_img);
+        initLocalData();
+    }
+
+    private void initLocalData() {
+        if (!is_from_order) {
+            course_title.setText(homeCourseBean.getTitle1());
+            course_number.setText(ConstantUtil.getSanqiItems().get(homeCourseBean.getItems()));
+            course_date.setText(homeCourseBean.getCourse_date());
+            course_time.setText(homeCourseBean.getCourse_time());
+            course_chapter.setText(homeCourseBean.getChapter_times());
+            teacher_name_txt.setText(homeCourseBean.getTeacher1().getName());
+            original_price.setText("原价" + homeCourseBean.getOriginal_price() + "元");
+            original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            current_price.setText("￥" + homeCourseBean.getPrice());
+            Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                    .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
+                    .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head_img);
+            real_price.setText("￥" + homeCourseBean.getPrice());
+            String season = homeCourseBean.getSeason();
+            ConstantUtil.handleSeason(activity, season, season_img, true);
+            productId = homeCourseBean.getProduct_id();
+            initAddress();
+        }else{
+            OrderBean.AddressDataBean addressDataBean = orderBean.getAddress_data();
+            add_address.setVisibility(View.GONE);
+            address_layout.setVisibility(View.VISIBLE);
+            address_layout.setEnabled(false);
+            user_name.setText(addressDataBean.getName());
+            user_num.setText(addressDataBean.getTel());
+            user_address.setText(addressDataBean.getAddress());
+            OrderBean.CourseDataBean courseDataBean = orderBean.getCourse_data();
+            course_title.setText(courseDataBean.getDetail_title());
+            course_number.setText(ConstantUtil.getSanqiItems().get(courseDataBean.getItems()));
+            course_date.setText(courseDataBean.getCourse_date());
+            course_time.setText(courseDataBean.getCourse_time());
+            course_chapter.setText(courseDataBean.getChapter_times());
+            teacher_name_txt.setText(courseDataBean.getTeacher());
+            original_price.setText("原价" + courseDataBean.getOriginal_price() + "元");
+            original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            current_price.setText("￥" + courseDataBean.getPrice());
+            Glide.with(activity).load(courseDataBean.getTeacher_headpic_small()).asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                    .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
+                    .transform(new GlideCircleTransform(activity, courseDataBean.getTeacher_headpic_small())).into(teacher_head_img);
+            real_price.setText("￥" + courseDataBean.getPrice());
+            String season = courseDataBean.getSeason();
+            ConstantUtil.handleSeason(activity, season, season_img, true);
+            productId = courseDataBean.getProduct_id();
+        }
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -311,47 +356,53 @@ public class ConfirmOrderActivity extends BaseActivity{
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.sign_up_btn:
-                    if (!UIUtils.isNetworkAvailable(activity)){
-                        Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (StringUtils.isEmpty(user_address.getText().toString().trim())){
-                        Toast.makeText(activity, "请添加收货地址", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    LoadingDialog.loading(activity);
-                    Map<String, String> params = new HashMap<>();
-                    params.put("course_id", homeCourseBean.getProduct_id());
-                    params.put("address_id", addressBean.getId() + "");
-                    params.put("study_course", "1");
-                    HttpHelper.httpRequest(UrlHelper.createOrder(), params, "POST", new StandardCallBack(activity) {
-                        @Override
-                        public void onSuccess(String result) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(result);
-                                String code = jsonObject.optString("code");
-                                if (code.equalsIgnoreCase("200")){
-                                    String chargeString = jsonObject.optString("charge");
-                                    Gson gson = new Gson();
-                                    chargeBean = gson.fromJson(chargeString, ChargeBean.class);
-                                    Pingpp.createPayment(activity, chargeString);
-                                }else{
-                                    final String msg = jsonObject.optString("msg");
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (!LoadingDialog.isDissMissLoading()){
-                                                LoadingDialog.dismissLoading();
-                                            }
-                                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
+                    if (!is_from_order){
+                        if (!UIUtils.isNetworkAvailable(activity)){
+                            Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                    });
+                        if (StringUtils.isEmpty(user_address.getText().toString().trim())){
+                            Toast.makeText(activity, "请添加收货地址", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        LoadingDialog.loading(activity);
+                        Map<String, String> params = new HashMap<>();
+                        params.put("course_id", productId);
+                        params.put("address_id", addressBean.getId() + "");
+                        params.put("study_course", "1");
+                        HttpHelper.httpRequest(UrlHelper.createOrder(), params, "POST", new StandardCallBack(activity) {
+                            @Override
+                            public void onSuccess(String result) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    String code = jsonObject.optString("code");
+                                    if (code.equalsIgnoreCase("200")){
+                                        String chargeString = jsonObject.optString("charge");
+                                        Gson gson = new Gson();
+                                        chargeBean = gson.fromJson(chargeString, ChargeBean.class);
+                                        Pingpp.createPayment(activity, chargeString);
+                                    }else{
+                                        final String msg = jsonObject.optString("msg");
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (!LoadingDialog.isDissMissLoading()){
+                                                    LoadingDialog.dismissLoading();
+                                                }
+                                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }else{
+                        Gson gson = new Gson();
+                        chargeBean = gson.fromJson(orderBean.getCharge_json(), ChargeBean.class);
+                        Pingpp.createPayment(activity, orderBean.getCharge_json());
+                    }
                     break;
                 case R.id.add_address:
                     Intent intent = new Intent(activity, AddressActivity.class);
@@ -413,7 +464,7 @@ public class ConfirmOrderActivity extends BaseActivity{
             if (resultCode == 0x11){
                 String result = data.getStringExtra("result");
                 Gson gson = new Gson();
-                AddressBean addressBean = gson.fromJson(result, AddressBean.class);
+                addressBean = gson.fromJson(result, AddressBean.class);
                 add_address.setVisibility(View.GONE);
                 address_layout.setVisibility(View.VISIBLE);
                 user_name.setText(addressBean.getName());

@@ -1,5 +1,6 @@
 package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -98,7 +100,61 @@ public class MyOrderActivity extends BaseActivity{
         });
         myOrderAdapter = new MyOrderAdapter(activity);
         order_list.setAdapter(myOrderAdapter);
+        initCancelOrder();
+        myOrderAdapter.setOnPayOrderListener(new MyOrderAdapter.PayOrderListener() {
+            @Override
+            public void onPayOrder(int position) {
+                Intent intent = new Intent();
+                intent.putExtra("is_from_order", true);
+                intent.putExtra("order_bean", orderBeans.get(position));
+                intent.setClass(activity, ConfirmOrderActivity.class);
+                startActivity(intent);
+            }
+        });
         initData();
+    }
+
+    private void initCancelOrder() {
+        myOrderAdapter.setOnCancelOrderListener(new MyOrderAdapter.CancelOrderListener() {
+            @Override
+            public void onCancelOrder(final int position) {
+                if (!UIUtils.isNetworkAvailable(activity)){
+                    Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                LoadingDialog.loading(activity);
+                OrderBean orderBean = orderBeans.get(position);
+                HttpHelper.httpRequest(UrlHelper.cancelOrder(orderBean.getOrder_no()), null, "DELETE", new StandardCallBack(activity) {
+                    @Override
+                    public void onSuccess(final String result) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!LoadingDialog.isDissMissLoading()){
+                                    LoadingDialog.dismissLoading();
+                                }
+                                try {
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    String code = jsonObject.optString("code");
+                                    String msg = jsonObject.optString("msg");
+                                    if (code.equalsIgnoreCase("1506")){
+                                        orderBeans.remove(position);
+                                        if (myOrderAdapter != null){
+                                            myOrderAdapter.setData(orderBeans);
+                                            myOrderAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
     private void initData() {
