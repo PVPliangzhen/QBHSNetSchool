@@ -67,24 +67,7 @@ public class BannerPagerAdapter extends PagerAdapter{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                WXWebpageObject webpage = new WXWebpageObject();
-//                webpage.webpageUrl = "http://www.tiantiandongnao.com";
-//                WXMediaMessage msg = new WXMediaMessage(webpage);
-//                msg.title = "清北华数邀您装B";
-//                msg.description = "清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B清北华数邀您装B";
-//                Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_app);
-//                Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
-//                bmp.recycle();
-//                msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
-//
-//                SendMessageToWX.Req req = new SendMessageToWX.Req();
-//                req.transaction = buildTransaction("webpage");
-//                req.message = msg;
-//                req.scene = mTargetScene;
-//                QBHSApplication application = (QBHSApplication) context.getApplicationContext();
-//                application.iwxapi.sendReq(req);
-//                HomeActivity activity = (HomeActivity) context;
-//                Pingpp.createPayment(activity, ConstantUtil.data);
+
             }
         });
         if (bannerUrls != null && bannerUrls.size() > 0) {
@@ -94,9 +77,5 @@ public class BannerPagerAdapter extends PagerAdapter{
         }
         container.addView(view);
         return view;
-    }
-    private int mTargetScene = SendMessageToWX.Req.WXSceneSession;
-    private String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 }
