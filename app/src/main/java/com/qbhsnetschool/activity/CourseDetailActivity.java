@@ -135,7 +135,7 @@ public class CourseDetailActivity extends BaseActivity{
     private void initView() {
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("课程详情");
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);

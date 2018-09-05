@@ -17,6 +17,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.qbhsnetschool.R;
 
@@ -30,7 +31,7 @@ public class WebActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_web, false, R.color.status_bar_bg_color, false);
         initIntent();
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

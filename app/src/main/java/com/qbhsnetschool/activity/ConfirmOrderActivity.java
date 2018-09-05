@@ -257,7 +257,7 @@ public class ConfirmOrderActivity extends BaseActivity{
     private void initView() {
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("确认订单");
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -247,7 +247,7 @@ public class CourseSelectionFragment extends Fragment {
         jianzi_list.setLayoutManager(jianzi_list_lm);
         TextView page_title = rootView.findViewById(R.id.page_title);
         page_title.setText("选课");
-        ImageView page_back = rootView.findViewById(R.id.page_back);
+        LinearLayout page_back = rootView.findViewById(R.id.page_back);
         page_back.setVisibility(View.INVISIBLE);
         LinearLayout grade_select_layout = rootView.findViewById(R.id.grade_select_layout);
         grade_select_layout.setOnClickListener(clickListener);

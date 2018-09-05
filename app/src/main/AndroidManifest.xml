@@ -164,6 +164,12 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <activity
+            android:name=".activity.ShareForComeActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
+        <activity
             android:name=".activity.AllChaptersActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
             android:screenOrientation="nosensor"

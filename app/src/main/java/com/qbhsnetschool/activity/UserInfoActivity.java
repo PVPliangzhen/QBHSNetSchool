@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -77,7 +78,7 @@ import okhttp3.Response;
 
 public class UserInfoActivity extends BaseActivity{
 
-    private ImageView page_back;
+    private LinearLayout page_back;
     private RelativeLayout avatar_layout;
     private UserInfoActivity activity;
     public static final int NONE = 0;
@@ -196,7 +197,7 @@ public class UserInfoActivity extends BaseActivity{
     private void initView() {
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("基本信息");
-        page_back = (ImageView) findViewById(R.id.page_back);
+        page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         avatar_layout = (RelativeLayout) findViewById(R.id.avatar_layout);
         avatar_layout.setOnClickListener(clickListener);

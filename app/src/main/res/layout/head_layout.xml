@@ -19,17 +19,18 @@
         android:layout_height="@dimen/dp120"
         android:layout_below="@+id/status_bar_mask">
         <LinearLayout
-            android:id="@+id/page_back_layout"
-            android:layout_width="@dimen/dp30"
-            android:layout_height="@dimen/dp30"
-            android:layout_marginLeft="@dimen/dp30"
+            android:id="@+id/page_back"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp120"
             android:gravity="center"
             android:layout_centerVertical="true">
 
             <ImageView
-                android:id="@+id/page_back"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/page_back_img"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_marginRight="@dimen/dp30"
                 android:src="@mipmap/back"/>
         </LinearLayout>
 
@@ -39,8 +40,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dp40"
             android:textColor="@color/color_ffffff"
-            android:layout_marginLeft="@dimen/dp30"
-            android:layout_toRightOf="@+id/page_back_layout"
+            android:layout_toRightOf="@+id/page_back"
             android:layout_centerVertical="true"/>
 
         <TextView

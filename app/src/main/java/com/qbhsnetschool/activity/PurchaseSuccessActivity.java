@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
@@ -19,7 +20,7 @@ public class PurchaseSuccessActivity extends BaseActivity{
         order_number.setText("订单号:" + order_no);
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("购买成功");
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

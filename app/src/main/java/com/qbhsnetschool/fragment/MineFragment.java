@@ -25,6 +25,7 @@ import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.activity.MyCouponActivity;
 import com.qbhsnetschool.activity.MyOrderActivity;
+import com.qbhsnetschool.activity.ShareForComeActivity;
 import com.qbhsnetschool.activity.UserInfoActivity;
 import com.qbhsnetschool.entity.PersonalInfo;
 import com.qbhsnetschool.entity.UserManager;
@@ -145,6 +146,8 @@ public class MineFragment extends Fragment{
         coupon_layout.setOnClickListener(clickListener);
         RelativeLayout service_layout = rootView.findViewById(R.id.service_layout);
         service_layout.setOnClickListener(clickListener);
+        RelativeLayout share_layout = rootView.findViewById(R.id.share_layout);
+        share_layout.setOnClickListener(clickListener);
         login_out = rootView.findViewById(R.id.login_out);
         login_out.setOnClickListener(clickListener);
         ViewPagerSwipeRefreshLayout mine_swipe_layout = rootView.findViewById(R.id.mine_swipe_layout);
@@ -226,6 +229,10 @@ public class MineFragment extends Fragment{
                 case R.id.login_out:
                     UserManager.getInstance().clearUser();
                     activity.clickCourseTab();
+                    break;
+                case R.id.share_layout:
+                    Intent intent3 = new Intent(activity, ShareForComeActivity.class);
+                    startActivity(intent3);
                     break;
             }
         }

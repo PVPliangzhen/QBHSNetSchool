@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class VerifyCodeAtivity extends BaseActivity {
     private TextView phone_number;
     private TextView count_timer_txt;
     private Button login_btn;
-    private ImageView page_back;
+    private LinearLayout page_back;
     private EditText verify_code_edit;
     private TextView txt1;
     private TextView txt2;
@@ -189,7 +190,7 @@ public class VerifyCodeAtivity extends BaseActivity {
         login_btn.setOnClickListener(clickListener);
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("获取验证码");
-        page_back = (ImageView) findViewById(R.id.page_back);
+        page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         verify_code_edit = (EditText) findViewById(R.id.verify_code_edit);
         pwd_show_img = (ImageView) findViewById(R.id.pwd_show_img);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class LoginActivity extends BaseActivity {
     private TextView forget_pwd;
     private String phonenNumber;
     private LoginActivity activity;
-    private ImageView page_back;
+    private LinearLayout page_back;
     private LoginHandler loginHandler;
 
     private static class LoginHandler extends Handler {
@@ -137,7 +138,7 @@ public class LoginActivity extends BaseActivity {
         forget_pwd.setOnClickListener(clickListener);
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("登录");
-        page_back = (ImageView) findViewById(R.id.page_back);
+        page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         loginHandler = new LoginHandler(activity);
         account_number_input.addTextChangedListener(new TextWatcher() {

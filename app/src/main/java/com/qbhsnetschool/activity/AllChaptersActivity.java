@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,7 +108,7 @@ public class AllChaptersActivity extends BaseActivity{
     private void initView() {
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("全部章节");
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         allChapterAdapter = new AllChapterAdapter(activity);
         RecyclerView all_chapter_list = (RecyclerView) findViewById(R.id.all_chapter_list);

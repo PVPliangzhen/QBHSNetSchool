@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,7 @@ public class LearnFragment extends Fragment{
         status_bar_mask.setVisibility(View.VISIBLE);
         TextView page_title = rootView.findViewById(R.id.page_title);
         page_title.setText("上课");
-        ImageView page_back = rootView.findViewById(R.id.page_back);
+        LinearLayout page_back = rootView.findViewById(R.id.page_back);
         page_back.setVisibility(View.INVISIBLE);
         TabGroupLayout tabGroupLayout = rootView.findViewById(R.id.tab_layout);
         ViewPager course_viewpager = rootView.findViewById(R.id.course_viewpager);

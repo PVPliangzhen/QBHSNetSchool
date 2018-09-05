@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,7 +106,7 @@ public class AddressManagerActivity extends BaseActivity {
         address_list.setLayoutManager(lm);
         TextView page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText("地址管理");
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

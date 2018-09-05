@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class ChangeNickNameActivity extends BaseActivity {
         page_title.setText("修改昵称");
         title_right_txt.setText("保存");
         title_right_txt.setVisibility(View.VISIBLE);
-        ImageView page_back = (ImageView) findViewById(R.id.page_back);
+        LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
