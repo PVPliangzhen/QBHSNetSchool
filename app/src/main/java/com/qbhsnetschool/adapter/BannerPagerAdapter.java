@@ -33,6 +33,7 @@ public class BannerPagerAdapter extends PagerAdapter{
 
     public void setBanner(BannerBean bannerBean){
         this.bannerBean = bannerBean;
+        bannerUrls.clear();
         bannerUrls.add(bannerBean.getPic1());
         bannerUrls.add(bannerBean.getPic2());
         bannerUrls.add(bannerBean.getPic3());

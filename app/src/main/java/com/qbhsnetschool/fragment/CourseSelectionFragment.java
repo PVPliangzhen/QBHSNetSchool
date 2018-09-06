@@ -83,6 +83,8 @@ public class CourseSelectionFragment extends Fragment {
     private LinearLayout jianzi_list_layout;
     private LinearLayout hlg_list_layout;
     private BannerPagerAdapter bannerPagerAdapter;
+    private static final int REFRESH_BANNER = 0;
+    private static final int NO_REFRESH_BANNER = 1;
 
     private static class CourseSelectionHandler extends Handler {
 
@@ -114,7 +116,8 @@ public class CourseSelectionFragment extends Fragment {
                         break;
                     case 0x03:
                         String bannerInfo = (String) msg.obj;
-                        courseSelectionFragment.handleHomeBanner(bannerInfo);
+                        int isRefresh = msg.arg1;
+                        courseSelectionFragment.handleHomeBanner(bannerInfo, isRefresh);
                         break;
                 }
             }
@@ -128,11 +131,11 @@ public class CourseSelectionFragment extends Fragment {
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_course_selection, container, false);
         initView(rootView);
         initData(currentGradeIndex, false);
-        initBannerPic();
+        initBannerPic(NO_REFRESH_BANNER);
         return rootView;
     }
 
-    private void initBannerPic() {
+    private void initBannerPic(final int isRefresh) {
         if (UIUtils.isNetworkAvailable(activity)) {
             HttpHelper.httpGetRequest(UrlHelper.homeBanner(), "GET", new StandardCallBack(activity) {
                 @Override
@@ -140,6 +143,7 @@ public class CourseSelectionFragment extends Fragment {
                     try {
                         Message message = Message.obtain();
                         message.what = 0x03;
+                        message.arg1 = isRefresh;
                         message.obj = response;
                         courseSelectionHandler.sendMessage(message);
                     } catch (Exception e) {
@@ -201,6 +205,7 @@ public class CourseSelectionFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                initBannerPic(REFRESH_BANNER);
                 initData(currentGradeIndex, true);
             }
         });
@@ -413,7 +418,7 @@ public class CourseSelectionFragment extends Fragment {
         }
     }
 
-    private void handleHomeBanner(String result) {
+    private void handleHomeBanner(String result, int isRefresh) {
         try {
             if (!StringUtils.isEmpty(result)) {
                 JSONObject jsonObject = new JSONObject(result);
@@ -423,11 +428,13 @@ public class CourseSelectionFragment extends Fragment {
                     JSONObject bannerJson = (JSONObject) carousel.get(0);
                     Gson gson = new Gson();
                     bannerBean = gson.fromJson(bannerJson.toString(), BannerBean.class);
-                    if (bannerPagerAdapter != null){
+                    if (bannerPagerAdapter != null) {
                         bannerPagerAdapter.setBanner(bannerBean);
                         bannerPagerAdapter.notifyDataSetChanged();
                     }
-                    courseSelectionHandler.sendEmptyMessageDelayed(0x01, 3000);
+                    if (isRefresh == 1) {
+                        courseSelectionHandler.sendEmptyMessageDelayed(0x01, 3000);
+                    }
                 }
             }
         } catch (Exception e) {
