@@ -5,11 +5,11 @@ import com.qbhsnetschool.BuildConfig;
 public class UrlHelper {
 
     public static final class BaseUrl {
-        public static String BASE_HTTP_URL = "http://192.168.1.165:8888/";
+        public static String BASE_HTTP_URL = "http://b.hualuogengshuxue.com/";
 
         static {
             if (BuildConfig.DEBUG) {
-                BASE_HTTP_URL = "http://192.168.1.165:8888/";
+                BASE_HTTP_URL = "http://192.168.1.172:8888/";
             }
         }
     }

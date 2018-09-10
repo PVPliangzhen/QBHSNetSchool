@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.AllChaptersActivity;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.activity.SubmitHomeWorkActivity;
 import com.qbhsnetschool.activity.WebActivity;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.uitls.CCVideoUtil;
@@ -142,7 +143,9 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.submit_work.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent = new Intent();
+                        intent.setClass(context, SubmitHomeWorkActivity.class);
+                        context.startActivity(intent);
                     }
                 });
             }

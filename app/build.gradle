@@ -69,6 +69,7 @@ dependencies {
     // (Ping++ 标准版 SDK) 必须添加
     //implementation 'com.pingxx:pingpp-ui:2.1.18'
     // (Ping++ UI 控件) 使用 Ping++ UI 时添加
-//    implementation project(':pingpp')
-   // implementation project(':pingpp_ui')
+    //    implementation project(':pingpp')
+    // implementation project(':pingpp_ui')
+    implementation project(':picture_library')
 }

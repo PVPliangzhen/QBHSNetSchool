@@ -1,2 +1,2 @@
-include ':app', ':DimenLibrary', ':httputils', ':xiaonengChatUI' , ':pingpp'
+include ':app', ':DimenLibrary', ':httputils', ':xiaonengChatUI' , ':pingpp', ':ucrop', ':picture_library'
 //, 'pingpp_ui'
