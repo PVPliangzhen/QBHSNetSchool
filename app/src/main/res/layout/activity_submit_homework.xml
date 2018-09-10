@@ -1,41 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    
+    <ImageView
+        android:id="@+id/camera_close"
+        android:layout_width="@dimen/dp25"
+        android:layout_height="@dimen/dp25"
+        android:src="@mipmap/close_black"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp30"/>
+    
+    <RelativeLayout
+        android:id="@+id/camera_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp694"
+        android:background="@mipmap/camera_bg"
+        android:layout_below="@+id/camera_close"
+        android:layout_marginTop="@dimen/dp30">
+        
+        <ImageView
+            android:id="@+id/take_pic_img"
+            android:layout_width="@dimen/dp300"
+            android:layout_height="@dimen/dp300"
+            android:src="@mipmap/camera_red"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp135"/>
+        
+        <ImageView
+            android:id="@+id/commit_img"
+            android:layout_width="@dimen/dp145"
+            android:layout_height="@dimen/dp145"
+            android:src="@mipmap/commit_gray"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp80"
+            android:layout_marginBottom="@dimen/dp90"/>
 
-    <Button
-        android:id="@+id/take_pic_to_upload"
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/preview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="拍照"/>
+        android:textSize="@dimen/dp30"
+        android:textColor="@color/color_333333"
+        android:layout_marginTop="@dimen/dp50"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_below="@+id/camera_layout"
+        android:text="编辑预览"/>
 
-    <Button
-        android:id="@+id/take_pic_from_album"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="从相册中选择"/>
-
-    <Button
-        android:id="@+id/submit_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="提交" />
+    <ImageView
+        android:layout_width="@dimen/dp321"
+        android:layout_height="@dimen/dp321"
+        android:layout_marginTop="@dimen/dp60"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/preview"
+        android:src="@mipmap/homework_area"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:clipChildren="false">
+        android:layout_height="@dimen/dp321"
+        android:layout_marginTop="@dimen/dp60"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp30"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/preview"
+        android:clipChildren="false"
+        android:visibility="visible">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/scan_pic_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp">
+            android:layout_marginLeft="@dimen/dp150"
+            android:layout_marginRight="@dimen/dp150">
         </android.support.v4.view.ViewPager>
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
