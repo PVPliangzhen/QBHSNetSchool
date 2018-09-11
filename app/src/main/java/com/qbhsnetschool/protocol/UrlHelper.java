@@ -116,4 +116,12 @@ public class UrlHelper {
     public static String submitHomework(){
         return BaseUrl.BASE_HTTP_URL + "app/homeworks/";
     }
+
+    public static String zhuanjieshao(){
+        return BaseUrl.BASE_HTTP_URL + "app/coupon34/";
+    }
+
+    public static String jianglijindu(){
+        return BaseUrl.BASE_HTTP_URL + "app/recommends/";
+    }
 }

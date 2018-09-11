@@ -52,9 +52,9 @@
                     android:layout_marginTop="@dimen/dp32"/>
 
                 <TextView
+                    android:id="@+id/yilingqujine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥100"
                     android:textSize="@dimen/dp70"
                     android:textColor="@color/color_333333"
                     android:layout_marginTop="@dimen/dp32"/>
@@ -83,9 +83,9 @@
                     android:layout_marginTop="@dimen/dp32"/>
 
                 <TextView
+                    android:id="@+id/yilingquyouhuiquan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥200"
                     android:textSize="@dimen/dp70"
                     android:textColor="@color/color_333333"
                     android:layout_marginTop="@dimen/dp32"/>
@@ -117,6 +117,7 @@
         android:background="@color/color_ffffff">
 
         <TextView
+            android:id="@+id/yiyaoqing"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -126,6 +127,7 @@
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/yiwancheng"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
