@@ -472,19 +472,19 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
         }
 
         if (id == R.id.picture_id_preview) {
-            List<LocalMedia> selectedImages = adapter.getSelectedImages();
-
-            List<LocalMedia> medias = new ArrayList<>();
-            for (LocalMedia media : selectedImages) {
-                medias.add(media);
-            }
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(PictureConfig.EXTRA_PREVIEW_SELECT_LIST, (Serializable) medias);
-            bundle.putSerializable(PictureConfig.EXTRA_SELECT_LIST, (Serializable) selectedImages);
-            bundle.putBoolean(PictureConfig.EXTRA_BOTTOM_PREVIEW, true);
-            startActivity(PicturePreviewActivity.class, bundle,
-                    config.selectionMode == PictureConfig.SINGLE ? UCrop.REQUEST_CROP : UCropMulti.REQUEST_MULTI_CROP);
-            overridePendingTransition(R.anim.a5, 0);
+//            List<LocalMedia> selectedImages = adapter.getSelectedImages();
+//
+//            List<LocalMedia> medias = new ArrayList<>();
+//            for (LocalMedia media : selectedImages) {
+//                medias.add(media);
+//            }
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable(PictureConfig.EXTRA_PREVIEW_SELECT_LIST, (Serializable) medias);
+//            bundle.putSerializable(PictureConfig.EXTRA_SELECT_LIST, (Serializable) selectedImages);
+//            bundle.putBoolean(PictureConfig.EXTRA_BOTTOM_PREVIEW, true);
+//            startActivity(PicturePreviewActivity.class, bundle,
+//                    config.selectionMode == PictureConfig.SINGLE ? UCrop.REQUEST_CROP : UCropMulti.REQUEST_MULTI_CROP);
+//            overridePendingTransition(R.anim.a5, 0);
         }
 
         if (id == R.id.id_ll_ok) {
@@ -778,8 +778,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
 
     @Override
     public void onPictureClick(LocalMedia media, int position) {
-        List<LocalMedia> images = adapter.getImages();
-        startPreview(images, position);
+        //List<LocalMedia> images = adapter.getImages();
+        //startPreview(images, position);
     }
 
     /**

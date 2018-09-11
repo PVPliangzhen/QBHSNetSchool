@@ -144,6 +144,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
+                        intent.putExtra("courseBean", courseBean);
                         intent.setClass(context, SubmitHomeWorkActivity.class);
                         context.startActivity(intent);
                     }

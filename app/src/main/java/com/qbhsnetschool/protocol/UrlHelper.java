@@ -112,4 +112,8 @@ public class UrlHelper {
     public static String cancelOrder(String order_no){
         return BaseUrl.BASE_HTTP_URL + "app/cancle_orders/" + order_no + "/";
     }
+
+    public static String submitHomework(){
+        return BaseUrl.BASE_HTTP_URL + "app/homeworks/";
+    }
 }

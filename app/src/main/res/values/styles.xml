@@ -429,11 +429,11 @@
         <!--预览界面已完成文字颜色-->
         <item name="picture.ac_preview.complete.textColor">@color/picture_preview_text_color</item>
         <!--预览界面标题栏背景色-->
-        <item name="picture.ac_preview.title.bg">@color/bar_grey</item>
+        <item name="picture.ac_preview.title.bg">@color/white</item>
         <!--预览界面底部背景色-->
-        <item name="picture.ac_preview.bottom.bg">@color/bar_grey_90</item>
+        <item name="picture.ac_preview.bottom.bg">@color/white</item>
         <!--预览界面返回箭头-->
-        <item name="picture.preview.leftBack.icon">@drawable/picture_back</item>
+        <item name="picture.preview.leftBack.icon">@mipmap/rectangle3</item>
         <!--裁剪页面标题背景色-->
         <item name="picture.crop.toolbar.bg">@color/bar_grey</item>
         <!--裁剪页面状态栏颜色-->

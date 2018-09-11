@@ -30,9 +30,10 @@
             android:enabled="false"
             android:gravity="left|center"
             android:padding="12dp"
-            android:text="@string/picture_preview"
+            android:text=""
             android:textColor="?attr/picture.preview.textColor"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/id_ll_ok"

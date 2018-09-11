@@ -5,22 +5,23 @@ import java.io.Serializable;
 public class CourseBean implements Serializable{
 
     /**
-     * product_id : 2n3n4n3n2n3n4nrnend3
-     * detail_title : 二升三年级直播尖子班(全国适用)
-     * course_date : 8月21日-8月28日
-     * chapter_times : 9次课18课时
-     * chapter_lately : {"chapter_name":"除法竖式","chapter_expire_time":0,"chapter_date":"2018.8.23 (周四)","chapter_time":"19:30－21:30","cc_vedio":{"recordId":null,"viewerName":"18352860820","roomId":null,"token":"298665","userId":"AA31D2BB588429C7"},"state":"future","is_live":false,"measure":3,"teacher":"彭薏霖"}
-     * course_test_url : http://www.hualuogengshuxue.com/exam/m_begin_exam?exam=21&grade=3
-     * couese_info : 共九讲/已上2讲
-     * teacher1 : {"name":"彭薏霖"}
-     * season : x
-     * items : 4
-     * title1 : 直播尖子班(全国适用)
-     * title3 : 尖子班2班
-     * course_sdate : 2018-08-21
-     * course_edate : 2018-08-28
-     * course_time : 每天19:30 - 21:30上课
-     * exam_id : 21
+     * product_id : egzva390rnbepiw4f88x
+     * detail_title : 初二年级直播培优班（人教版）
+     * course_date : 9月9日-1月6日
+     * chapter_times : 17次课34课时
+     * chapter_lately : {"chapter_date":"2018.9.16 (周日)","chapter_time":"10:00－12:00","teacher":"李会平","chapter_name":"三角形的边和\u201c内部\u201d线段","chapter_expire_time":4,"is_live":false,"id":383,"measure":2,"has_upload_homework":false,"state":"future","cc_vedio":{"userId":"AA31D2BB588429C7","roomId":null,"viewerName":"18701073115","token":"939627","recordId":null}}
+     * course_test_url : http://www.hualuogengshuxue.com/exam/m_begin_exam?exam=None&grade=8
+     * couese_info : 共十七讲/已上1讲
+     * teacher1 : {}
+     * teacher2 : null
+     * season : q
+     * items : 13
+     * title1 : 直播培优班（人教版）
+     * title3 : 培优班2班（人教版）
+     * course_sdate : 2018-09-09
+     * course_edate : 2019-01-06
+     * course_time : 周日10：00-12：00
+     * exam_id : null
      */
 
     private String product_id;
@@ -31,6 +32,7 @@ public class CourseBean implements Serializable{
     private String course_test_url;
     private String couese_info;
     private Teacher1Bean teacher1;
+    private Object teacher2;
     private String season;
     private int items;
     private String title1;
@@ -38,7 +40,7 @@ public class CourseBean implements Serializable{
     private String course_sdate;
     private String course_edate;
     private String course_time;
-    private int exam_id;
+    private Object exam_id;
 
     public String getProduct_id() {
         return product_id;
@@ -104,6 +106,14 @@ public class CourseBean implements Serializable{
         this.teacher1 = teacher1;
     }
 
+    public Object getTeacher2() {
+        return teacher2;
+    }
+
+    public void setTeacher2(Object teacher2) {
+        this.teacher2 = teacher2;
+    }
+
     public String getSeason() {
         return season;
     }
@@ -160,52 +170,40 @@ public class CourseBean implements Serializable{
         this.course_time = course_time;
     }
 
-    public int getExam_id() {
+    public Object getExam_id() {
         return exam_id;
     }
 
-    public void setExam_id(int exam_id) {
+    public void setExam_id(Object exam_id) {
         this.exam_id = exam_id;
     }
 
     public static class ChapterLatelyBean implements Serializable{
         /**
-         * chapter_name : 除法竖式
-         * chapter_expire_time : 0
-         * chapter_date : 2018.8.23 (周四)
-         * chapter_time : 19:30－21:30
-         * cc_vedio : {"recordId":null,"viewerName":"18352860820","roomId":null,"token":"298665","userId":"AA31D2BB588429C7"}
-         * state : future
+         * chapter_date : 2018.9.16 (周日)
+         * chapter_time : 10:00－12:00
+         * teacher : 李会平
+         * chapter_name : 三角形的边和“内部”线段
+         * chapter_expire_time : 4
          * is_live : false
-         * measure : 3
-         * teacher : 彭薏霖
+         * id : 383
+         * measure : 2
+         * has_upload_homework : false
+         * state : future
+         * cc_vedio : {"userId":"AA31D2BB588429C7","roomId":null,"viewerName":"18701073115","token":"939627","recordId":null}
          */
 
-        private String chapter_name;
-        private int chapter_expire_time;
         private String chapter_date;
         private String chapter_time;
-        private CcVedioBean cc_vedio;
-        private String state;
-        private boolean is_live;
-        private int measure;
         private String teacher;
-
-        public String getChapter_name() {
-            return chapter_name;
-        }
-
-        public void setChapter_name(String chapter_name) {
-            this.chapter_name = chapter_name;
-        }
-
-        public int getChapter_expire_time() {
-            return chapter_expire_time;
-        }
-
-        public void setChapter_expire_time(int chapter_expire_time) {
-            this.chapter_expire_time = chapter_expire_time;
-        }
+        private String chapter_name;
+        private int chapter_expire_time;
+        private boolean is_live;
+        private int id;
+        private int measure;
+        private boolean has_upload_homework;
+        private String state;
+        private CcVedioBean cc_vedio;
 
         public String getChapter_date() {
             return chapter_date;
@@ -223,20 +221,28 @@ public class CourseBean implements Serializable{
             this.chapter_time = chapter_time;
         }
 
-        public CcVedioBean getCc_vedio() {
-            return cc_vedio;
+        public String getTeacher() {
+            return teacher;
         }
 
-        public void setCc_vedio(CcVedioBean cc_vedio) {
-            this.cc_vedio = cc_vedio;
+        public void setTeacher(String teacher) {
+            this.teacher = teacher;
         }
 
-        public String getState() {
-            return state;
+        public String getChapter_name() {
+            return chapter_name;
         }
 
-        public void setState(String state) {
-            this.state = state;
+        public void setChapter_name(String chapter_name) {
+            this.chapter_name = chapter_name;
+        }
+
+        public int getChapter_expire_time() {
+            return chapter_expire_time;
+        }
+
+        public void setChapter_expire_time(int chapter_expire_time) {
+            this.chapter_expire_time = chapter_expire_time;
         }
 
         public boolean isIs_live() {
@@ -247,6 +253,14 @@ public class CourseBean implements Serializable{
             this.is_live = is_live;
         }
 
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
         public int getMeasure() {
             return measure;
         }
@@ -255,43 +269,51 @@ public class CourseBean implements Serializable{
             this.measure = measure;
         }
 
-        public String getTeacher() {
-            return teacher;
+        public boolean isHas_upload_homework() {
+            return has_upload_homework;
         }
 
-        public void setTeacher(String teacher) {
-            this.teacher = teacher;
+        public void setHas_upload_homework(boolean has_upload_homework) {
+            this.has_upload_homework = has_upload_homework;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public CcVedioBean getCc_vedio() {
+            return cc_vedio;
+        }
+
+        public void setCc_vedio(CcVedioBean cc_vedio) {
+            this.cc_vedio = cc_vedio;
         }
 
         public static class CcVedioBean implements Serializable{
             /**
-             * recordId : null
-             * viewerName : 18352860820
-             * roomId : null
-             * token : 298665
              * userId : AA31D2BB588429C7
+             * roomId : null
+             * viewerName : 18701073115
+             * token : 939627
+             * recordId : null
              */
 
-            private Object recordId;
-            private String viewerName;
-            private Object roomId;
-            private String token;
             private String userId;
+            private Object roomId;
+            private String viewerName;
+            private String token;
+            private Object recordId;
 
-            public Object getRecordId() {
-                return recordId;
+            public String getUserId() {
+                return userId;
             }
 
-            public void setRecordId(Object recordId) {
-                this.recordId = recordId;
-            }
-
-            public String getViewerName() {
-                return viewerName;
-            }
-
-            public void setViewerName(String viewerName) {
-                this.viewerName = viewerName;
+            public void setUserId(String userId) {
+                this.userId = userId;
             }
 
             public Object getRoomId() {
@@ -302,6 +324,14 @@ public class CourseBean implements Serializable{
                 this.roomId = roomId;
             }
 
+            public String getViewerName() {
+                return viewerName;
+            }
+
+            public void setViewerName(String viewerName) {
+                this.viewerName = viewerName;
+            }
+
             public String getToken() {
                 return token;
             }
@@ -310,29 +340,16 @@ public class CourseBean implements Serializable{
                 this.token = token;
             }
 
-            public String getUserId() {
-                return userId;
+            public Object getRecordId() {
+                return recordId;
             }
 
-            public void setUserId(String userId) {
-                this.userId = userId;
+            public void setRecordId(Object recordId) {
+                this.recordId = recordId;
             }
         }
     }
 
     public static class Teacher1Bean implements Serializable{
-        /**
-         * name : 彭薏霖
-         */
-
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
     }
 }

@@ -44,11 +44,19 @@ public class HomeworkPicsAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = LayoutInflater.from(context).inflate(R.layout.homework_item, null);
         ImageView imageView = view.findViewById(R.id.homework_img);
         Glide.with(context).load(localMediaList.get(position).getCompressPath()).into(imageView);
         container.addView(view);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (homeworkClickListener != null){
+                    homeworkClickListener.onHomeworkClick(position);
+                }
+            }
+        });
         return view;
     }
 
@@ -60,5 +68,15 @@ public class HomeworkPicsAdapter extends PagerAdapter {
     @Override
     public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
+    }
+
+    public interface HomeworkClickListener{
+        void onHomeworkClick(int position);
+    }
+
+    private HomeworkClickListener homeworkClickListener;
+
+    public void setOnHomeworkClickListener(HomeworkClickListener homeworkClickListener){
+        this.homeworkClickListener = homeworkClickListener;
     }
 }

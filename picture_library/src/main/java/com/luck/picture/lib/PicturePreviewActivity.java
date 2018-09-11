@@ -1,8 +1,10 @@
 package com.luck.picture.lib;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -51,7 +53,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
     private LinearLayout ll_check;
     private List<LocalMedia> images = new ArrayList<>();
     private List<LocalMedia> selectImages = new ArrayList<>();
-    private TextView check;
+    //private TextView check;
     private SimpleFragmentAdapter adapter;
     private Animation animation;
     private boolean refresh;
@@ -95,7 +97,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
         viewPager = (PreviewViewPager) findViewById(R.id.preview_pager);
         ll_check = (LinearLayout) findViewById(R.id.ll_check);
         id_ll_ok = (LinearLayout) findViewById(R.id.id_ll_ok);
-        check = (TextView) findViewById(R.id.check);
+        //check = (TextView) findViewById(R.id.check);
         picture_left_back.setOnClickListener(this);
         tv_ok = (TextView) findViewById(R.id.tv_ok);
         id_ll_ok.setOnClickListener(this);
@@ -136,20 +138,20 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                         }
                     }
                     // 刷新图片列表中图片状态
-                    boolean isChecked;
-                    if (!check.isSelected()) {
-                        isChecked = true;
-                        check.setSelected(true);
-                        check.startAnimation(animation);
-                    } else {
-                        isChecked = false;
-                        check.setSelected(false);
-                    }
-                    if (selectImages.size() >= config.maxSelectNum && isChecked) {
-                        ToastManage.s(mContext, getString(R.string.picture_message_max_num, config.maxSelectNum));
-                        check.setSelected(false);
-                        return;
-                    }
+                    boolean isChecked = false;
+//                    if (!check.isSelected()) {
+//                        isChecked = true;
+//                        check.setSelected(true);
+//                        check.startAnimation(animation);
+//                    } else {
+//                        isChecked = false;
+//                        check.setSelected(false);
+//                    }
+//                    if (selectImages.size() >= config.maxSelectNum && isChecked) {
+//                        ToastManage.s(mContext, getString(R.string.picture_message_max_num, config.maxSelectNum));
+//                        check.setSelected(false);
+//                        return;
+//                    }
                     if (isChecked) {
                         VoiceUtils.playVoice(mContext, config.openClickSound);
                         // 如果是单选，则清空已选中的并刷新列表(作单一选择)
@@ -159,7 +161,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                         selectImages.add(image);
                         image.setNum(selectImages.size());
                         if (config.checkNumMode) {
-                            check.setText(String.valueOf(image.getNum()));
+                            //check.setText(String.valueOf(image.getNum()));
                         }
                     } else {
                         for (LocalMedia media : selectImages) {
@@ -189,7 +191,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                 index = media.getPosition();
                 if (!config.previewEggs) {
                     if (config.checkNumMode) {
-                        check.setText(media.getNum() + "");
+                        //check.setText(media.getNum() + "");
                         notifyCheckChanged(media);
                     }
                     onImageChecked(position);
@@ -209,31 +211,31 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
      * @param positionOffsetPixels 滑动偏移量
      */
     private void isPreviewEggs(boolean previewEggs, int position, int positionOffsetPixels) {
-        if (previewEggs) {
-            if (images.size() > 0 && images != null) {
-                LocalMedia media;
-                int num;
-                if (positionOffsetPixels < screenWidth / 2) {
-                    media = images.get(position);
-                    check.setSelected(isSelected(media));
-                    if (config.checkNumMode) {
-                        num = media.getNum();
-                        check.setText(num + "");
-                        notifyCheckChanged(media);
-                        onImageChecked(position);
-                    }
-                } else {
-                    media = images.get(position + 1);
-                    check.setSelected(isSelected(media));
-                    if (config.checkNumMode) {
-                        num = media.getNum();
-                        check.setText(num + "");
-                        notifyCheckChanged(media);
-                        onImageChecked(position + 1);
-                    }
-                }
-            }
-        }
+//        if (previewEggs) {
+//            if (images.size() > 0 && images != null) {
+//                LocalMedia media;
+//                int num;
+//                if (positionOffsetPixels < screenWidth / 2) {
+//                    media = images.get(position);
+//                    check.setSelected(isSelected(media));
+//                    if (config.checkNumMode) {
+//                        num = media.getNum();
+//                        check.setText(num + "");
+//                        notifyCheckChanged(media);
+//                        onImageChecked(position);
+//                    }
+//                } else {
+//                    media = images.get(position + 1);
+//                    check.setSelected(isSelected(media));
+//                    if (config.checkNumMode) {
+//                        num = media.getNum();
+//                        check.setText(num + "");
+//                        notifyCheckChanged(media);
+//                        onImageChecked(position + 1);
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
@@ -265,7 +267,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
             index = media.getPosition();
             if (config.checkNumMode) {
                 tv_img_num.setSelected(true);
-                check.setText(media.getNum() + "");
+                //check.setText(media.getNum() + "");
                 notifyCheckChanged(media);
             }
         }
@@ -276,11 +278,11 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
      */
     private void notifyCheckChanged(LocalMedia imageBean) {
         if (config.checkNumMode) {
-            check.setText("");
+            //check.setText("");
             for (LocalMedia media : selectImages) {
                 if (media.getPath().equals(imageBean.getPath())) {
                     imageBean.setNum(media.getNum());
-                    check.setText(String.valueOf(imageBean.getNum()));
+                    //check.setText(String.valueOf(imageBean.getNum()));
                 }
             }
         }
@@ -304,9 +306,9 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
     public void onImageChecked(int position) {
         if (images != null && images.size() > 0) {
             LocalMedia media = images.get(position);
-            check.setSelected(isSelected(media));
+            //check.setSelected(isSelected(media));
         } else {
-            check.setSelected(false);
+            //check.setSelected(false);
         }
     }
 
@@ -461,6 +463,9 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra(PictureConfig.EXTRA_RESULT_SELECTION, (ArrayList<? extends Parcelable>) images);
+        setResult(Activity.RESULT_OK, intent);
         closeActivity();
     }
 
