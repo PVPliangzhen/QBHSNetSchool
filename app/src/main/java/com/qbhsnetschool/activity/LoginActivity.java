@@ -59,6 +59,7 @@ public class LoginActivity extends BaseActivity {
     private LoginActivity activity;
     private LinearLayout page_back;
     private LoginHandler loginHandler;
+    boolean go_to_main = false;
 
     private static class LoginHandler extends Handler {
 
@@ -103,9 +104,13 @@ public class LoginActivity extends BaseActivity {
                 user.setUserTel(tel);
                 user.setUserToken(token);
                 UserManager.getInstance().setUser(user);
-                Intent intent = new Intent(activity, HomeActivity.class);
-                intent.putExtra("home_tab", "2");
-                startActivity(intent);
+                if (go_to_main){
+                    Intent intent = new Intent(activity, HomeActivity.class);
+                    intent.putExtra("home_tab", "2");
+                    startActivity(intent);
+                }else{
+                    finish();
+                }
             }else{
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }
@@ -119,6 +124,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_login, true, R.color.status_bar_bg_color, false);
         activity = this;
+        go_to_main = getIntent().getBooleanExtra("go_to_main", false);
         initView();
     }
 

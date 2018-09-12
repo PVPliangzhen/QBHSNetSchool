@@ -216,6 +216,7 @@ public class CourseDetailActivity extends BaseActivity{
                 case R.id.sign_up_btn:
                     if (!UserManager.getInstance().isLogin()) {
                         Intent intent = new Intent(activity, LoginTrasitActivity.class);
+                        intent.putExtra("go_to_main", false);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(activity, ConfirmOrderActivity.class);

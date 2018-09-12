@@ -16,12 +16,14 @@ public class LoginTrasitActivity extends BaseActivity{
     private ImageView login_transit_close;
     private Button to_register;
     private Button to_login;
+    private boolean go_to_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_login_transit, true, false);
         activity = this;
+        go_to_main = getIntent().getBooleanExtra("go_to_main", false);
         RelativeLayout activity_login_transit_root = (RelativeLayout) findViewById(R.id.activity_login_transit_root);
         activity_login_transit_root.setPadding(0, UIUtils.getStatusBarHeight(activity), 0, 0);
         login_transit_close = (ImageView) findViewById(R.id.login_transit_close);
@@ -42,10 +44,13 @@ public class LoginTrasitActivity extends BaseActivity{
                 case R.id.to_register:
                     Intent intent = new Intent(activity, RegisterActivity.class);
                     startActivity(intent);
+                    finish();
                     break;
                 case R.id.to_login:
                     Intent intent1 = new Intent(activity, LoginActivity.class);
+                    intent1.putExtra("go_to_main", go_to_main);
                     startActivity(intent1);
+                    finish();
                     break;
             }
         }
