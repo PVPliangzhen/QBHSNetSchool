@@ -53,7 +53,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         if (viewHolder instanceof ViewHolder) {
             ViewHolder viewHolder1 = (ViewHolder) viewHolder;
             if (wait_class_list != null && wait_class_list.size() > 0) {
@@ -143,10 +143,9 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.submit_work.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra("courseBean", courseBean);
-                        intent.setClass(context, SubmitHomeWorkActivity.class);
-                        context.startActivity(intent);
+                        if (submitHomeworkClickListener != null){
+                            submitHomeworkClickListener.submitHomework(position);
+                        }
                     }
                 });
             }
@@ -230,6 +229,16 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mask_title = itemView.findViewById(R.id.mask_title);
             mask_btn = itemView.findViewById(R.id.mask_btn);
         }
+    }
+
+    public interface SubmitHomeworkClickListener{
+        void submitHomework(int position);
+    }
+
+    private SubmitHomeworkClickListener submitHomeworkClickListener;
+
+    public void setOnSubmitHomeworkClickListener(SubmitHomeworkClickListener submitHomeworkClickListener){
+        this.submitHomeworkClickListener = submitHomeworkClickListener;
     }
 
 //    View.OnClickListener clickListener = new View.OnClickListener() {

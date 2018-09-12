@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,12 +48,21 @@ public class SimpleFragmentAdapter extends PagerAdapter {
         void onActivityBackPressed();
     }
 
+    public void setData(List<LocalMedia> images){
+        this.images = images;
+    }
+
     public SimpleFragmentAdapter(List<LocalMedia> images, Context context,
                                  OnCallBackActivity onBackPressed) {
         super();
         this.images = images;
         this.mContext = context;
         this.onBackPressed = onBackPressed;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override

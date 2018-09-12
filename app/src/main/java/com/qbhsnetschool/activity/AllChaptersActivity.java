@@ -1,8 +1,10 @@
 package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.ConstantUtil;
+import com.qbhsnetschool.uitls.CourseUtil;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.UIUtils;
 
@@ -133,6 +136,25 @@ public class AllChaptersActivity extends BaseActivity{
         course_time.setText(courseBean.getCourse_time());
         TextView course_txt = (TextView) findViewById(R.id.course_txt);
         course_txt.setText(courseBean.getChapter_times());
+        allChapterAdapter.setOnSubmitClickListener(new AllChapterAdapter.SubmitClickListener() {
+            @Override
+            public void submitHomework(int position) {
+                if (allChapterBeans.get(position).isHas_upload_homework()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("from_lately_chapter", false);
+                    intent.putExtra("all_chapter_bean", allChapterBeans.get(position));
+                    intent.setClass(activity, ShowSubmittedHomeworkActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("from_lately_chapter", false);
+                    intent.putExtra("courseBean", courseBean);
+                    intent.putExtra("all_chapter_bean", allChapterBeans.get(position));
+                    intent.setClass(activity, SubmitHomeWorkActivity.class);
+                    startActivityForResult(intent, 0x10);
+                }
+            }
+        });
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -145,4 +167,14 @@ public class AllChaptersActivity extends BaseActivity{
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x10){
+            if (resultCode == 0x11){
+                initData();
+            }
+        }
+    }
 }

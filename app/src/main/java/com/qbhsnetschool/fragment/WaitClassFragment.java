@@ -22,11 +22,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.activity.ShowSubmittedHomeworkActivity;
+import com.qbhsnetschool.activity.SubmitHomeWorkActivity;
 import com.qbhsnetschool.adapter.WaitingClassAdapter;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
+import com.qbhsnetschool.uitls.ConstantUtil;
 import com.qbhsnetschool.uitls.CourseUtil;
 import com.qbhsnetschool.uitls.LoadingDialog;
 import com.qbhsnetschool.uitls.StringUtils;
@@ -39,7 +42,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class WaitClassFragment extends Fragment{
+public class WaitClassFragment extends Fragment {
 
     private HomeActivity activity;
     private View rootView;
@@ -48,11 +51,11 @@ public class WaitClassFragment extends Fragment{
     private WaitingClassAdapter waitingClassAdapter;
     private ViewPagerSwipeRefreshLayout wait_class_refresh;
 
-    private static class WaitClassHandler extends Handler{
+    private static class WaitClassHandler extends Handler {
 
         WeakReference<WaitClassFragment> weakReference;
 
-        public WaitClassHandler (WaitClassFragment fragment){
+        public WaitClassHandler(WaitClassFragment fragment) {
             weakReference = new WeakReference<>(fragment);
         }
 
@@ -76,7 +79,6 @@ public class WaitClassFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_wait_class, container, false);
         initView(rootView);
-        initData();
         initReceiver();
         return rootView;
     }
@@ -88,7 +90,7 @@ public class WaitClassFragment extends Fragment{
     }
 
     private void initData() {
-        if (!UIUtils.isNetworkAvailable(activity)){
+        if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -105,7 +107,7 @@ public class WaitClassFragment extends Fragment{
             @Override
             public void onFailure(int code) {
                 super.onFailure(code);
-                if (wait_class_refresh.isRefreshing()){
+                if (wait_class_refresh.isRefreshing()) {
                     wait_class_refresh.setRefreshing(false);
                 }
             }
@@ -113,7 +115,7 @@ public class WaitClassFragment extends Fragment{
             @Override
             public void onError(Exception e) {
                 super.onError(e);
-                if (wait_class_refresh.isRefreshing()){
+                if (wait_class_refresh.isRefreshing()) {
                     wait_class_refresh.setRefreshing(false);
                 }
             }
@@ -135,40 +137,60 @@ public class WaitClassFragment extends Fragment{
             }
         });
         waitClassHandler = new WaitClassHandler(this);
+        waitingClassAdapter.setOnSubmitHomeworkClickListener(new WaitingClassAdapter.SubmitHomeworkClickListener() {
+            @Override
+            public void submitHomework(int position) {
+                if (CourseUtil.getFutureCourse().get(position).getChapter_lately().isHas_upload_homework()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("from_lately_chapter", true);
+                    intent.putExtra("courseBean", CourseUtil.getFutureCourse().get(position));
+                    intent.setClass(activity, ShowSubmittedHomeworkActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("from_lately_chapter", true);
+                    intent.putExtra("courseBean", CourseUtil.getFutureCourse().get(position));
+                    intent.setClass(activity, SubmitHomeWorkActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void handleWaitCourse(String result) {
-        try{
-            if (!LoadingDialog.isDissMissLoading()){
+        try {
+            if (!LoadingDialog.isDissMissLoading()) {
                 LoadingDialog.dismissLoading();
             }
-            if (wait_class_refresh.isRefreshing()){
+            if (wait_class_refresh.isRefreshing()) {
                 wait_class_refresh.setRefreshing(false);
             }
-            if (!StringUtils.isEmpty(result)){
+            if (!StringUtils.isEmpty(result)) {
                 JSONObject jsonObject = new JSONObject(result);
                 String code = jsonObject.optString("code");
-                if (code.equalsIgnoreCase("200")){
+                if (code.equalsIgnoreCase("200")) {
                     JSONArray past_courses = jsonObject.optJSONArray("past_courses");
                     Gson gson = new Gson();
-                    List<CourseBean> past_courses_list = gson.fromJson(past_courses.toString(), new TypeToken<List<CourseBean>>() {}.getType());
+                    List<CourseBean> past_courses_list = gson.fromJson(past_courses.toString(), new TypeToken<List<CourseBean>>() {
+                    }.getType());
                     JSONArray future_courses = jsonObject.optJSONArray("future_courses");
-                    List<CourseBean> future_courses_list = gson.fromJson(future_courses.toString(), new TypeToken<List<CourseBean>>() {}.getType());
+                    List<CourseBean> future_courses_list = gson.fromJson(future_courses.toString(), new TypeToken<List<CourseBean>>() {
+                    }.getType());
                     CourseUtil.setPastCourse(past_courses_list);
                     CourseUtil.setFutureCourse(future_courses_list);
-                    if (waitingClassAdapter != null){
+                    if (waitingClassAdapter != null) {
                         waitingClassAdapter.setData(future_courses_list);
                         waitingClassAdapter.notifyDataSetChanged();
                     }
                     Intent intent = new Intent();
                     intent.setAction("load_already_class_data");
                     activity.sendBroadcast(intent);
-                }else{
+                } else {
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -185,16 +207,27 @@ public class WaitClassFragment extends Fragment{
         System.out.println("------v" + isVisibleToUser);
     }
 
-    public class LoadWaitClassReceiver extends BroadcastReceiver{
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    public class LoadWaitClassReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (CourseUtil.getFutureCourse() != null){
-                if (waitingClassAdapter != null){
+            if (CourseUtil.getFutureCourse() != null) {
+                if (waitingClassAdapter != null) {
                     waitingClassAdapter.setData(CourseUtil.getFutureCourse());
                     waitingClassAdapter.notifyDataSetChanged();
                 }
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -72,8 +72,13 @@ public class WaitTestFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_wait_test, container, false);
         initView(rootView);
-        initData();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void initData() {

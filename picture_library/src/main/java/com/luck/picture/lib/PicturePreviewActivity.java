@@ -133,7 +133,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                         boolean toEqual = PictureMimeType.
                                 mimeToEqual(pictureType, image.getPictureType());
                         if (!toEqual) {
-                            ToastManage.s(mContext,getString(R.string.picture_rule));
+                            ToastManage.s(mContext, getString(R.string.picture_rule));
                             return;
                         }
                     }
@@ -200,6 +200,31 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
             @Override
             public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+        ImageView delete_btn = findViewById(R.id.delete_btn);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (images != null && images.size() > 0) {
+                    LocalMedia image = images.get(viewPager.getCurrentItem());
+                    images.remove(image);
+                    adapter.setData(images);
+                    adapter.notifyDataSetChanged();
+                    if (images.size() <= 0){
+                        onBackPressed();
+                    }
+//                    for (LocalMedia media : selectImages) {
+//                        if (media.getPath().equals(image.getPath())) {
+//                            selectImages.remove(media);
+//                            //subSelectPosition();
+//                            //notifyCheckChanged(media);
+//                            break;
+//                        }
+//                    }
+                    //onSelectNumChange(true);
+                }
             }
         });
     }
@@ -404,7 +429,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                     boolean eqImg = pictureType.startsWith(PictureConfig.IMAGE);
                     String str = eqImg ? getString(R.string.picture_min_img_num, config.minSelectNum)
                             : getString(R.string.picture_min_video_num, config.minSelectNum);
-                    ToastManage.s(mContext,str);
+                    ToastManage.s(mContext, str);
                     return;
                 }
             }
@@ -456,7 +481,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Throwable throwable = (Throwable) data.getSerializableExtra(UCrop.EXTRA_ERROR);
-            ToastManage.s(mContext,throwable.getMessage());
+            ToastManage.s(mContext, throwable.getMessage());
         }
     }
 

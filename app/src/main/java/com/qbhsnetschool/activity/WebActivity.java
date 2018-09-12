@@ -58,7 +58,8 @@ public class WebActivity extends BaseActivity{
         mWebView.getSettings().setLoadWithOverviewMode(true);
         syncWebViewCookies();
         //mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
-        mWebView.loadUrl(url);
+        //mWebView.loadUrl(url);
+        mWebView.loadUrl("http://b.hualuogengshuxue.com/app/sessions/?user_id=300&grade=4&exam_id=22");
     }
 
     private void initIntent() {

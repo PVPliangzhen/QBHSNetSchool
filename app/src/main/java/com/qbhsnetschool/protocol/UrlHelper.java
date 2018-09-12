@@ -124,4 +124,8 @@ public class UrlHelper {
     public static String jianglijindu(){
         return BaseUrl.BASE_HTTP_URL + "app/recommends/";
     }
+
+    public static String showHomeworks(int chapterId){
+        return BaseUrl.BASE_HTTP_URL + "app/homework/" + chapterId + "/";
+    }
 }

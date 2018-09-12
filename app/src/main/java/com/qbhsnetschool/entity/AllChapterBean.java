@@ -1,21 +1,27 @@
 package com.qbhsnetschool.entity;
 
-public class AllChapterBean {
+import java.io.Serializable;
+
+public class AllChapterBean implements Serializable{
 
     /**
-     * measure : 1
-     * chapter_name : 三角形的角
-     * chapter_start_time : 2018-09-09T18:00:00+08:00
-     * chapter_end_time : 2018-09-09T20:00:00+08:00
-     * chapter_date : 2018.9.9 (周日)
+     * id : 381
+     * measure : 4
+     * chapter_name : 全等三角形经典模型（1）
+     * chapter_start_time : 2018-09-30T18:00:00+08:00
+     * chapter_end_time : 2018-09-30T20:00:00+08:00
+     * chapter_date : 2018.9.30 (周日)
      * chapter_time : 10:00－12:00
-     * chapter_expire_time : 5
+     * chapter_expire_time : 17
      * state : future
-     * cc_vedio : {"userId":"AA31D2BB588429C7","roomId":null,"viewerName":"18701073115","token":"794353","recordId":null}
+     * cc_vedio : {"userId":"AA31D2BB588429C7","roomId":null,"viewerName":"18701073115","token":"058129","recordId":null}
      * teacher : 李会平
      * is_live : false
+     * user_id : 23443
+     * has_upload_homework : false
      */
 
+    private int id;
     private int measure;
     private String chapter_name;
     private String chapter_start_time;
@@ -27,6 +33,16 @@ public class AllChapterBean {
     private CcVedioBean cc_vedio;
     private String teacher;
     private boolean is_live;
+    private int user_id;
+    private boolean has_upload_homework;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getMeasure() {
         return measure;
@@ -116,12 +132,28 @@ public class AllChapterBean {
         this.is_live = is_live;
     }
 
-    public static class CcVedioBean {
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public boolean isHas_upload_homework() {
+        return has_upload_homework;
+    }
+
+    public void setHas_upload_homework(boolean has_upload_homework) {
+        this.has_upload_homework = has_upload_homework;
+    }
+
+    public static class CcVedioBean implements Serializable{
         /**
          * userId : AA31D2BB588429C7
          * roomId : null
          * viewerName : 18701073115
-         * token : 794353
+         * token : 058129
          * recordId : null
          */
 

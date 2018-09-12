@@ -21,6 +21,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.HomeworkPicsAdapter;
+import com.qbhsnetschool.entity.AllChapterBean;
 import com.qbhsnetschool.entity.CourseBean;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
@@ -61,14 +62,28 @@ public class SubmitHomeWorkActivity extends BaseActivity {
     private int currentPosition = 0;
     private ImageView no_data_img;
     private RelativeLayout list_layout;
-    private CourseBean courseBean;
+    private String productId;
+    private int chapterId;
+    private int measure;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_submit_homework, false, R.color.color_1AE200000, false);
         activity = this;
-        courseBean = (CourseBean) getIntent().getSerializableExtra("courseBean");
+        boolean from_lately_chapter = getIntent().getBooleanExtra("from_lately_chapter", true);
+        if (from_lately_chapter) {
+            CourseBean courseBean = (CourseBean) getIntent().getSerializableExtra("courseBean");
+            productId = courseBean.getProduct_id();
+            chapterId = courseBean.getChapter_lately().getId();
+            measure = courseBean.getChapter_lately().getMeasure();
+        } else {
+            AllChapterBean allChapterBean = (AllChapterBean) getIntent().getSerializableExtra("all_chapter_bean");
+            CourseBean courseBean = (CourseBean) getIntent().getSerializableExtra("courseBean");
+            productId = courseBean.getProduct_id();
+            chapterId = allChapterBean.getId();
+            measure = allChapterBean.getMeasure();
+        }
         ImageView camera_close = (ImageView) findViewById(R.id.camera_close);
         camera_close.setOnClickListener(clickListener);
         themeId = R.style.picture_hlg_style;
@@ -106,7 +121,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.camera_close:
-                    finish();
+                    onBackPressed();
                     break;
                 case R.id.take_pic_img:
                     takePicImg();
@@ -120,9 +135,9 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                     OkHttpClient okHttpClient = new OkHttpClient();
                     MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     multipartBuilder.addFormDataPart("user_id", UserManager.getInstance().getUser().getUserId() + "");
-                    multipartBuilder.addFormDataPart("course_id", courseBean.getProduct_id());
-                    multipartBuilder.addFormDataPart("chapter_id", courseBean.getChapter_lately().getId() + "");
-                    multipartBuilder.addFormDataPart("measure", courseBean.getChapter_lately().getMeasure() + "");
+                    multipartBuilder.addFormDataPart("course_id", productId);
+                    multipartBuilder.addFormDataPart("chapter_id", chapterId + "");
+                    multipartBuilder.addFormDataPart("measure", measure + "");
 
                     for (int i = 0; i < selectList.size(); i++) {
                         multipartBuilder.addFormDataPart("homework" + i, selectList.get(i).getPath(), RequestBody.create(MediaType.parse("image/jpg"), new File(selectList.get(i).getPath())));
@@ -135,6 +150,9 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                         okHttpClient.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
+                                if (!LoadingDialog.isDissMissLoading()) {
+                                    LoadingDialog.dismissLoading();
+                                }
                                 Toast.makeText(activity, "作业上传失败", Toast.LENGTH_SHORT).show();
                             }
 
@@ -148,7 +166,13 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            if (!LoadingDialog.isDissMissLoading()) {
+                                                LoadingDialog.dismissLoading();
+                                            }
                                             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                            if (code.equalsIgnoreCase("200")){
+                                                onBackPressed();
+                                            }
                                         }
                                     });
                                 } catch (JSONException e) {
@@ -228,6 +252,12 @@ public class SubmitHomeWorkActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        setResult(0x11);
+        super.onBackPressed();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

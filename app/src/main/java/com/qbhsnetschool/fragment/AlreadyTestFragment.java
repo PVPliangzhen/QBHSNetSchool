@@ -98,8 +98,13 @@ public class AlreadyTestFragment extends Fragment{
         View rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_already_test, container, false);
         alreadyTestHandler = new AlreadyTestHandler(this);
         initView(rootView);
-        initData();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void initView(View rootView) {

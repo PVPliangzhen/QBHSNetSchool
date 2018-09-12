@@ -76,11 +76,16 @@ public class AlreadyClassFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_already_class, container, false);
         initView(rootView);
-        initData();
         IntentFilter intentFilter = new IntentFilter("load_already_class_data");
         LoadAlreadyClassReceiver loadAlreadyClassReceiver = new LoadAlreadyClassReceiver();
         activity.registerReceiver(loadAlreadyClassReceiver, intentFilter);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void initData() {
