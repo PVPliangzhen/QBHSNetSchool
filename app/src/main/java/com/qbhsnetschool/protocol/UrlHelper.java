@@ -9,7 +9,8 @@ public class UrlHelper {
 
         static {
             if (BuildConfig.DEBUG) {
-                BASE_HTTP_URL = "http://192.168.1.172:8888/";
+                //BASE_HTTP_URL = "http://192.168.1.172:8888/";
+                BASE_HTTP_URL = "http://b.hualuogengshuxue.com/";
             }
         }
     }

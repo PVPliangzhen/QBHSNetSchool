@@ -78,13 +78,18 @@ public class CCVideoUtil {
         }
     };
 
-    public void startCCVideo() {
+    public void startCCVideo(String roomId, String userId, String viewerName, String token) {
         isSuccessed = false;
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
-        loginInfo.setUserId("AA31D2BB588429C7");
-        loginInfo.setViewerName("pvplz");
-        loginInfo.setViewerToken("123456");
+        loginInfo.setRoomId(roomId);
+        loginInfo.setUserId(userId);
+        loginInfo.setViewerName(viewerName);
+        loginInfo.setViewerToken(token);
+
+//        loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
+//        loginInfo.setUserId("AA31D2BB588429C7");
+//        loginInfo.setViewerName("pvplz");
+//        loginInfo.setViewerToken("123456");
 
         DWLive.getInstance().setDWLiveLoginParams(new DWLiveLoginListener() {
             @Override
@@ -104,15 +109,22 @@ public class CCVideoUtil {
         DWLive.getInstance().startLogin();
     }
 
-    public void startCCPlayBack(){
+    public void startCCPlayBack(String roomId, String userId, String viewerName, String token, String recordId){
         // 创建登录信息
         ReplayLoginInfo replayLoginInfo = new ReplayLoginInfo();
-        replayLoginInfo.setUserId("B27039502337407C");
-        replayLoginInfo.setRoomId("080D04CB846F0FB29C33DC5901307461");
-        replayLoginInfo.setLiveId("50743DD69A9B2C60");
-        replayLoginInfo.setRecordId("3804F642D564BE78");
-        replayLoginInfo.setViewerName("111");
-        replayLoginInfo.setViewerToken("111");
+        replayLoginInfo.setUserId(userId);
+        replayLoginInfo.setRoomId(roomId);
+        //replayLoginInfo.setLiveId(liveId);
+        replayLoginInfo.setRecordId(recordId);
+        replayLoginInfo.setViewerName(viewerName);
+        replayLoginInfo.setViewerToken(token);
+
+//        replayLoginInfo.setUserId("B27039502337407C");
+//        replayLoginInfo.setRoomId("080D04CB846F0FB29C33DC5901307461");
+//        replayLoginInfo.setLiveId("50743DD69A9B2C60");
+//        replayLoginInfo.setRecordId("3804F642D564BE78");
+//        replayLoginInfo.setViewerName("111");
+//        replayLoginInfo.setViewerToken("111");
 
         // 设置登录参数
         DWLiveReplay.getInstance().setLoginParams(new DWLiveReplayLoginListener() {

@@ -158,10 +158,10 @@ public class AllChapterBean implements Serializable{
          */
 
         private String userId;
-        private Object roomId;
+        private String roomId;
         private String viewerName;
         private String token;
-        private Object recordId;
+        private String recordId;
 
         public String getUserId() {
             return userId;
@@ -171,11 +171,11 @@ public class AllChapterBean implements Serializable{
             this.userId = userId;
         }
 
-        public Object getRoomId() {
+        public String getRoomId() {
             return roomId;
         }
 
-        public void setRoomId(Object roomId) {
+        public void setRoomId(String roomId) {
             this.roomId = roomId;
         }
 
@@ -195,11 +195,11 @@ public class AllChapterBean implements Serializable{
             this.token = token;
         }
 
-        public Object getRecordId() {
+        public String getRecordId() {
             return recordId;
         }
 
-        public void setRecordId(Object recordId) {
+        public void setRecordId(String recordId) {
             this.recordId = recordId;
         }
     }

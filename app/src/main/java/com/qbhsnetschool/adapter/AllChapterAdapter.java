@@ -83,10 +83,11 @@ public class AllChapterAdapter extends RecyclerView.Adapter<AllChapterAdapter.Vi
             viewHolder.go_to_room_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    AllChapterBean.CcVedioBean ccVedioBean = allChapterBean.getCc_vedio();
                     if (allChapterBean.getState().equalsIgnoreCase("current") || allChapterBean.getState().equalsIgnoreCase("future")){
-                        CCVideoUtil.getInstance(context).startCCVideo();
+                        CCVideoUtil.getInstance(context).startCCVideo(ccVedioBean.getRoomId(), ccVedioBean.getUserId(), ccVedioBean.getViewerName(), ccVedioBean.getToken());
                     }else{
-                        CCVideoUtil.getInstance(context).startCCPlayBack();
+                        CCVideoUtil.getInstance(context).startCCPlayBack(ccVedioBean.getRoomId(), ccVedioBean.getUserId(), ccVedioBean.getViewerName(), ccVedioBean.getToken(), ccVedioBean.getRecordId());
                     }
                 }
             });

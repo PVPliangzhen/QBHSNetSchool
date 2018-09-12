@@ -121,10 +121,11 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.go_to_room_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        CourseBean.ChapterLatelyBean.CcVedioBean ccVedioBean = chapterLatelyBean.getCc_vedio();
                         if (chapterLatelyBean.getState().equalsIgnoreCase("current") || chapterLatelyBean.getState().equalsIgnoreCase("future")){
-                            CCVideoUtil.getInstance(context).startCCVideo();
+                            CCVideoUtil.getInstance(context).startCCVideo(ccVedioBean.getRoomId(), ccVedioBean.getUserId(), ccVedioBean.getViewerName(), ccVedioBean.getToken());
                         }else{
-                            CCVideoUtil.getInstance(context).startCCPlayBack();
+                            CCVideoUtil.getInstance(context).startCCPlayBack(ccVedioBean.getRoomId(), ccVedioBean.getUserId(), ccVedioBean.getViewerName(), ccVedioBean.getToken(), ccVedioBean.getRecordId());
                         }
                     }
                 });
