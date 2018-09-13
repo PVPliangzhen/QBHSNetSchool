@@ -604,9 +604,14 @@ public class UserInfoActivity extends BaseActivity{
 
                 try {
                     Response response = okHttpClient.newCall(request).execute();
-                    String result = response.body().string();
+                    final String result = response.body().string();
                     System.out.println(result);
-
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
