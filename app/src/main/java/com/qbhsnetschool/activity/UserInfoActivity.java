@@ -605,14 +605,19 @@ public class UserInfoActivity extends BaseActivity{
                 try {
                     Response response = okHttpClient.newCall(request).execute();
                     final String result = response.body().string();
+                    JSONObject jsonObject = new JSONObject(result);
+                    String code = jsonObject.optString("code");
+                    final String msg = jsonObject.optString("msg");
                     System.out.println(result);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
