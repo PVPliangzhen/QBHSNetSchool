@@ -163,6 +163,9 @@ public class VerifyCodeAtivity extends BaseActivity {
                 Intent intent = new Intent(activity, HomeActivity.class);
                 intent.putExtra("home_tab", "2");
                 startActivity(intent);
+                Intent intent1 = new Intent();
+                intent1.setAction("fresh_user_after_login");
+                sendBroadcast(intent1);
             } else {
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }

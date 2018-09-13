@@ -104,7 +104,9 @@ public class AlreadyTestFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        if (activity.getCurrentFragment() instanceof TestFragment) {
+            initData();
+        }
     }
 
     private void initView(View rootView) {

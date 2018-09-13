@@ -210,7 +210,9 @@ public class WaitClassFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        if (activity.getCurrentFragment() instanceof LearnFragment) {
+            initData();
+        }
     }
 
     public class LoadWaitClassReceiver extends BroadcastReceiver {

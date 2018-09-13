@@ -65,6 +65,8 @@ public class SubmitHomeWorkActivity extends BaseActivity {
     private String productId;
     private int chapterId;
     private int measure;
+    private ImageView commit_img;
+    private ImageView take_pic_img;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,10 +89,11 @@ public class SubmitHomeWorkActivity extends BaseActivity {
         ImageView camera_close = (ImageView) findViewById(R.id.camera_close);
         camera_close.setOnClickListener(clickListener);
         themeId = R.style.picture_hlg_style;
-        ImageView take_pic_img = (ImageView) findViewById(R.id.take_pic_img);
+        take_pic_img = (ImageView) findViewById(R.id.take_pic_img);
         take_pic_img.setOnClickListener(clickListener);
-        ImageView commit_img = (ImageView) findViewById(R.id.commit_img);
+        commit_img = (ImageView) findViewById(R.id.commit_img);
         commit_img.setOnClickListener(clickListener);
+        commit_img.setEnabled(false);
         scan_pic_pager = (ViewPager) findViewById(R.id.scan_pic_pager);
         scan_pic_pager.setPageMargin((int) getResources().getDimension(R.dimen.dp30));
         scan_pic_pager.setOffscreenPageLimit(5);
@@ -268,6 +271,15 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                     // 图片选择结果回调
                     selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList != null && selectList.size() > 0) {
+                        if (selectList.size() >= 6){
+                            take_pic_img.setImageResource(R.mipmap.camera_gray);
+                            take_pic_img.setEnabled(false);
+                        }else{
+                            take_pic_img.setImageResource(R.mipmap.camera_red);
+                            take_pic_img.setEnabled(true);
+                        }
+                        commit_img.setImageResource(R.mipmap.commit_red);
+                        commit_img.setEnabled(true);
                         no_data_img.setVisibility(View.GONE);
                         list_layout.setVisibility(View.VISIBLE);
                         homeworkPicsAdapter = new HomeworkPicsAdapter(SubmitHomeWorkActivity.this, selectList);
@@ -307,8 +319,12 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                             Log.i("图片-----》", media.getPath());
                         }
                     } else {
+                        commit_img.setImageResource(R.mipmap.commit_gray);
+                        commit_img.setEnabled(false);
                         no_data_img.setVisibility(View.VISIBLE);
                         list_layout.setVisibility(View.GONE);
+                        take_pic_img.setImageResource(R.mipmap.camera_red);
+                        take_pic_img.setEnabled(true);
                     }
                     break;
             }

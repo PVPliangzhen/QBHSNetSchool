@@ -78,7 +78,9 @@ public class WaitTestFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        if (activity.getCurrentFragment() instanceof TestFragment) {
+            initData();
+        }
     }
 
     private void initData() {

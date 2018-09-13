@@ -9,6 +9,16 @@ public class User {
     private String responseMsg;
     private String nickname;
 
+    public String getHeadpic() {
+        return headpic;
+    }
+
+    public void setHeadpic(String headpic) {
+        this.headpic = headpic;
+    }
+
+    private String headpic;
+
     public int getUserId() {
         return userId;
     }

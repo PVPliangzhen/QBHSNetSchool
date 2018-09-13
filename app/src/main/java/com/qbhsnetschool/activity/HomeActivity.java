@@ -188,6 +188,7 @@ public class HomeActivity extends BaseActivity {
                 case R.id.txt_tab_learn:
                     if (!UserManager.getInstance().isLogin()) {
                         Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        intent.putExtra("go_to_main", true);
                         startActivity(intent);
                     } else {
                         clickLearnTab();
@@ -198,6 +199,7 @@ public class HomeActivity extends BaseActivity {
                 case R.id.txt_tab_test:
                     if (!UserManager.getInstance().isLogin()) {
                         Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        intent.putExtra("go_to_main", true);
                         startActivity(intent);
                     } else {
                         clickTestTab();
@@ -206,6 +208,7 @@ public class HomeActivity extends BaseActivity {
                 case R.id.lne_tab_mine:
                     if (!UserManager.getInstance().isLogin()) {
                         Intent intent = new Intent(HomeActivity.this, LoginTrasitActivity.class);
+                        intent.putExtra("go_to_main", true);
                         startActivity(intent);
                     } else {
                         clickMineTab();

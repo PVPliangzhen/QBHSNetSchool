@@ -81,15 +81,15 @@ public class CCVideoUtil {
     public void startCCVideo(String roomId, String userId, String viewerName, String token) {
         isSuccessed = false;
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setRoomId(roomId);
-        loginInfo.setUserId(userId);
-        loginInfo.setViewerName(viewerName);
-        loginInfo.setViewerToken(token);
+//        loginInfo.setRoomId(roomId);
+//        loginInfo.setUserId(userId);
+//        loginInfo.setViewerName(viewerName);
+//        loginInfo.setViewerToken(token);
 
-//        loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
-//        loginInfo.setUserId("AA31D2BB588429C7");
-//        loginInfo.setViewerName("pvplz");
-//        loginInfo.setViewerToken("123456");
+        loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
+        loginInfo.setUserId("AA31D2BB588429C7");
+        loginInfo.setViewerName("pvplz");
+        loginInfo.setViewerToken("123456");
 
         DWLive.getInstance().setDWLiveLoginParams(new DWLiveLoginListener() {
             @Override

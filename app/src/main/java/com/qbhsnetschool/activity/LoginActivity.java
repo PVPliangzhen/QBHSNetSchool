@@ -96,6 +96,7 @@ public class LoginActivity extends BaseActivity {
                 String nickName = jsonObject.optString("nickname");
                 String tel = jsonObject.optString("tel");
                 String token = jsonObject.optString("token");
+                String headpic = jsonObject.optString("headpic");
                 User user = new User();
                 user.setUserId(userId);
                 user.setNickname(nickName);
@@ -103,6 +104,7 @@ public class LoginActivity extends BaseActivity {
                 user.setResponseMsg(responseMsg);
                 user.setUserTel(tel);
                 user.setUserToken(token);
+                user.setHeadpic(headpic);
                 UserManager.getInstance().setUser(user);
                 if (go_to_main){
                     Intent intent = new Intent(activity, HomeActivity.class);
@@ -111,6 +113,9 @@ public class LoginActivity extends BaseActivity {
                 }else{
                     finish();
                 }
+                Intent intent1 = new Intent();
+                intent1.setAction("fresh_user_after_login");
+                sendBroadcast(intent1);
             }else{
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }

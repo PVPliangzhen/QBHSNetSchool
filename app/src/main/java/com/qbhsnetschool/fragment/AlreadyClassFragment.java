@@ -85,7 +85,9 @@ public class AlreadyClassFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        if (activity.getCurrentFragment() instanceof LearnFragment) {
+            initData();
+        }
     }
 
     private void initData() {

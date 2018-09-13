@@ -41,6 +41,7 @@ public class UserManager {
             spUtils.put("msg", user.getResponseMsg());
             spUtils.put("tel", user.getUserTel());
             spUtils.put("token", user.getUserToken());
+            spUtils.put("headpic", user.getHeadpic());
         }
     }
 
@@ -56,6 +57,7 @@ public class UserManager {
                 user.setResponseMsg(spUtils.get("msg", ""));
                 user.setUserTel(spUtils.get("tel", ""));
                 user.setUserToken(spUtils.get("token", ""));
+                user.setHeadpic(spUtils.get("headpic", ""));
                 this.user = user;
             }
         }
@@ -79,6 +81,7 @@ public class UserManager {
         spUtils.put("msg", "");
         spUtils.put("tel", "");
         spUtils.put("token", "");
+        spUtils.put("headpic", "");
     }
 
     public boolean isLogin(){

@@ -1,6 +1,9 @@
 package com.qbhsnetschool.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,9 +87,9 @@ public class MineFragment extends Fragment{
 
     private void handlePersonalInfo(String result) {
         try {
-//            if (!LoadingDialog.isDissMissLoading()){
-//                LoadingDialog.dismissLoading();
-//            }
+            if (!LoadingDialog.isDissMissLoading()){
+                LoadingDialog.dismissLoading();
+            }
             JSONObject jsonObject = new JSONObject(result);
             Gson gson = new Gson();
             PersonalInfo personalInfo = gson.fromJson(jsonObject.toString(), PersonalInfo.class);
@@ -103,9 +106,17 @@ public class MineFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_mine, container, false);
         mineHandler = new MineHandler(this);
+        IntentFilter intentFilter = new IntentFilter("fresh_user_after_login");
+        RefreshUserBroadcast refreshUserBroadcast = new RefreshUserBroadcast();
+        activity.registerReceiver(refreshUserBroadcast, intentFilter);
         initView(rootView);
         initData();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -121,7 +132,7 @@ public class MineFragment extends Fragment{
     }
 
     private void initData() {
-        //LoadingDialog.loading(activity);
+        LoadingDialog.loading(activity);
         if (UIUtils.isNetworkAvailable(activity)){
             HttpHelper.httpGetRequest(UrlHelper.getPersonalInfo(), "GET", new StandardCallBack(activity) {
                 @Override
@@ -245,6 +256,14 @@ public class MineFragment extends Fragment{
             if (resultCode == 0x11){
                 initData();
             }
+        }
+    }
+
+    public class RefreshUserBroadcast extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            initData();
         }
     }
 }
