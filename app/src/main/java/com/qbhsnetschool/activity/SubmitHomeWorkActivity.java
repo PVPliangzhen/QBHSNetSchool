@@ -173,7 +173,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                                 LoadingDialog.dismissLoading();
                                             }
                                             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
-                                            if (code.equalsIgnoreCase("200")){
+                                            if (code.equalsIgnoreCase("1900")){
                                                 onBackPressed();
                                             }
                                         }
