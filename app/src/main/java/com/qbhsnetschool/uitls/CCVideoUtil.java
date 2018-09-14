@@ -62,7 +62,7 @@ public class CCVideoUtil {
                     }
                     break;
                 case 0x02:
-                    Toast.makeText(context, "exception", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "初始化失败，请重试或联系客服", Toast.LENGTH_SHORT).show();
                     break;
                 case 0x03:
                     // 回放的直播开始时间和结束时间必须在登录成功后再获取，否则为空

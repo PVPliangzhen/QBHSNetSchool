@@ -147,14 +147,17 @@ public class AddressActivity extends BaseActivity{
         receive_goods = (EditText) findViewById(R.id.receive_goods);
         receive_goods.setOnFocusChangeListener(focusChangeListener);
         receive_goods_delete = (ImageView) findViewById(R.id.receive_goods_delete);
+        receive_goods_delete.setOnClickListener(clickListener);
         phone_number = (EditText) findViewById(R.id.phone_number);
         phone_number_delete = (ImageView) findViewById(R.id.phone_number_delete);
+        phone_number_delete.setOnClickListener(clickListener);
         phone_number.setOnFocusChangeListener(focusChangeListener);
         region = (TextView) findViewById(R.id.region);
         region.setOnClickListener(clickListener);
         address_detail = (EditText) findViewById(R.id.address_detail);
         address_detail.setOnFocusChangeListener(focusChangeListener);
         address_detail_delete = (ImageView) findViewById(R.id.address_detail_delete);
+        address_detail_delete.setOnClickListener(clickListener);
         save_address = (TextView) findViewById(R.id.save_address);
         save_address.setOnClickListener(clickListener);
         if (addressBean != null){

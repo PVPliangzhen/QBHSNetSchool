@@ -94,7 +94,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }else{
                             //白底灰字 进入教室
                             viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
-                            //viewHolder1.go_to_room_layout.setEnabled(false);
+                            viewHolder1.go_to_room_layout.setEnabled(false);
                             viewHolder1.go_to_room_txt.setText("进入教室");
                             viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
                             viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);
@@ -104,7 +104,7 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         if (chapterLatelyBean.getCc_vedio().getRecordId() == null){
                             //白底灰字 复习课程
                             viewHolder1.go_to_room_layout.setBackgroundResource(R.drawable.goto_room_baidihuizi);
-                            //viewHolder1.go_to_room_layout.setEnabled(false);
+                            viewHolder1.go_to_room_layout.setEnabled(false);
                             viewHolder1.go_to_room_txt.setText("复习课程");
                             viewHolder1.go_to_room_txt.setTextColor(context.getResources().getColor(R.color.color_999999));
                             viewHolder1.go_to_room_img.setImageResource(R.mipmap.icon_studio_gray);

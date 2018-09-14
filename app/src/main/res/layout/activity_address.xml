@@ -160,15 +160,6 @@
             android:textColor="@color/color_666666"
             android:gravity="center"/>
 
-        <EditText
-            android:id="@+id/address_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/dp25"
-            android:layout_toRightOf="@+id/address_detail_txt"
-            android:layout_marginLeft="@dimen/dp16"
-            android:background="@color/color_ffffff"/>
-
         <ImageView
             android:id="@+id/address_detail_delete"
             android:layout_width="wrap_content"
@@ -178,6 +169,16 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp32"
             android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/address_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/dp25"
+            android:layout_toLeftOf="@+id/address_detail_delete"
+            android:layout_toRightOf="@+id/address_detail_txt"
+            android:layout_marginLeft="@dimen/dp10"
+            android:background="@color/color_ffffff"/>
     </RelativeLayout>
 
     <View
