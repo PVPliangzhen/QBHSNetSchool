@@ -17,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.app.QBHSApplication;
@@ -50,6 +53,8 @@ public class ShareForComeActivity extends BaseActivity {
     private ZhuanjieshaoBean zhuanjieshaoBean;
     private TextView referal_txt1;
     private TextView referal_txt2;
+    private EasyPopup erweimaPopup;
+    private ImageView erweima_img;
 
     private static class ShareForComeHandler extends Handler {
         WeakReference<ShareForComeActivity> weakReference;
@@ -84,6 +89,12 @@ public class ShareForComeActivity extends BaseActivity {
                 zhuanjieshaoBean = gson.fromJson(jsonObject.toString(), ZhuanjieshaoBean.class);
                 referal_txt1.setText(Html.fromHtml("邀请新学员，新学员可享" + zhuanjieshaoBean.getCoupon3().getType() + "<font color =" + getResources().getColor(R.color.color_E20000) + ">" + zhuanjieshaoBean.getCoupon3().getAmount() + "</font>立减"));
                 referal_txt2.setText(Html.fromHtml("您可获得<font color =" + getResources().getColor(R.color.color_E20000) + "><big>" + zhuanjieshaoBean.getCash().getAmount() + "</big></font>现金或<font color =" + getResources().getColor(R.color.color_E20000) + "><big>" + zhuanjieshaoBean.getCoupon4().getAmount() + "</big></font>优惠券"));
+                Glide.with(activity).load(zhuanjieshaoBean.getImage()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        erweima_img.setImageBitmap(resource);
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,6 +135,7 @@ public class ShareForComeActivity extends BaseActivity {
         LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(clickListener);
         initPopup();
+        initErweimaPopup();
         referal_txt1 = (TextView) findViewById(R.id.referal_txt1);
         //referal_txt1.setText(Html.fromHtml("邀请新学员，新学员可享秋季班<font color =" + getResources().getColor(R.color.color_E20000) + ">500元</font>立减"));
         referal_txt2 = (TextView) findViewById(R.id.referal_txt2);
@@ -154,6 +166,18 @@ public class ShareForComeActivity extends BaseActivity {
         share_weixin_layout.setOnClickListener(clickListener);
     }
 
+    private void initErweimaPopup() {
+        WindowManager manager = activity.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int screenWith = outMetrics.widthPixels;
+        erweimaPopup = EasyPopup.create().setContentView(activity, R.layout.erweima_layout).
+                setFocusAndOutsideEnable(true).setBackgroundDimEnable(true).
+                setDimValue(0.4f).setWidth((int) (screenWith - getResources().getDimension(R.dimen.dp150)))
+                .setHeight((int) (screenWith - getResources().getDimension(R.dimen.dp150))).apply();
+        erweima_img = erweimaPopup.findViewById(R.id.erweima_img);
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -168,6 +192,8 @@ public class ShareForComeActivity extends BaseActivity {
                     sharePopup.dismiss();
                     break;
                 case R.id.share_erweima_layout:
+                    sharePopup.dismiss();
+                    erweimaPopup.showAtLocation(view, Gravity.CENTER, 0, 0);
                     break;
                 case R.id.share_pengyouquan_layout:
                     share(wxSceneTimeline);
