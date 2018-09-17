@@ -32,13 +32,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlreadyTestFragment extends Fragment{
 
     private HomeActivity activity;
     private AlreadyTestHandler alreadyTestHandler;
-    private List<AlreadyTestBean> alreadyTestBeans;
+    private List<AlreadyTestBean> alreadyTestBeans = new ArrayList<>();
     private AlreadyTestAdapter alreadyTestAdapter;
     private ViewPagerSwipeRefreshLayout already_test_refresh;
 
@@ -78,13 +79,13 @@ public class AlreadyTestFragment extends Fragment{
                 JSONArray msg = jsonObject.optJSONArray("msg");
                 Gson gson = new Gson();
                 alreadyTestBeans = gson.fromJson(msg.toString(), new TypeToken<List<AlreadyTestBean>>(){}.getType());
-                if (alreadyTestAdapter != null){
-                    alreadyTestAdapter.setData(alreadyTestBeans);
-                    alreadyTestAdapter.notifyDataSetChanged();
-                }
             }else{
                 String msg = jsonObject.optString("msg");
                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+            }
+            if (alreadyTestAdapter != null){
+                alreadyTestAdapter.setData(alreadyTestBeans);
+                alreadyTestAdapter.notifyDataSetChanged();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -125,12 +126,13 @@ public class AlreadyTestFragment extends Fragment{
         });
     }
 
-    private void initData() {
+    public void initData() {
         if (!UIUtils.isNetworkAvailable(activity)){
             Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
             return;
         }
         LoadingDialog.loading(activity);
+        alreadyTestBeans.clear();
         HttpHelper.httpGetRequest(UrlHelper.getAlreadyExam(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {

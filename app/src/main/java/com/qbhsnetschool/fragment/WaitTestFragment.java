@@ -32,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WaitTestFragment extends Fragment{
@@ -42,7 +43,7 @@ public class WaitTestFragment extends Fragment{
     private WaitTestHandler waitTestHandler;
     private WaitingTestAdapter waitingTestAdapter;
     private ViewPagerSwipeRefreshLayout wait_test_refresh;
-    private List<TestBean> testBeans;
+    private List<TestBean> testBeans = new ArrayList<>();
 
     private static class WaitTestHandler extends Handler {
 
@@ -83,12 +84,13 @@ public class WaitTestFragment extends Fragment{
         }
     }
 
-    private void initData() {
+    public void initData() {
         if (!UIUtils.isNetworkAvailable(activity)){
             Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
         LoadingDialog.loading(activity);
+        testBeans.clear();
         HttpHelper.httpGetRequest(UrlHelper.getWaitExam(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -148,13 +150,13 @@ public class WaitTestFragment extends Fragment{
                     JSONArray msg = jsonObject.optJSONArray("msg");
                     Gson gson = new Gson();
                     testBeans = gson.fromJson(msg.toString(), new TypeToken<List<TestBean>>(){}.getType());
-                    if (waitingTestAdapter != null){
-                        waitingTestAdapter.setData(testBeans);
-                        waitingTestAdapter.notifyDataSetChanged();
-                    }
                 }else{
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                }
+                if (waitingTestAdapter != null){
+                    waitingTestAdapter.setData(testBeans);
+                    waitingTestAdapter.notifyDataSetChanged();
                 }
             }
         }catch (Exception e){

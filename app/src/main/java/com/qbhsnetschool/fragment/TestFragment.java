@@ -1,5 +1,9 @@
 package com.qbhsnetschool.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,15 +22,21 @@ import android.widget.TextView;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.activity.HomeActivity;
+import com.qbhsnetschool.uitls.CourseUtil;
 import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.TabGroupLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestFragment extends Fragment{
     
     private HomeActivity activity;
     private View rootView;
+    private List<Fragment> testFragments = new ArrayList<>();
+    private WaitTestFragment waitTestFragment;
+    private AlreadyTestFragment alreadyTestFragment;
 
     private static class TestHandler extends Handler {
 
@@ -53,7 +63,26 @@ public class TestFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_test, container, false);
         initView(rootView);
+        initReceiver();
         return rootView;
+    }
+
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter("refresh_test_fragment_data");
+        RefreshTestFragmentData refreshTestFragmentData = new RefreshTestFragmentData();
+        activity.registerReceiver(refreshTestFragmentData, intentFilter);
+    }
+
+    public class RefreshTestFragmentData extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (waitTestFragment != null){
+                waitTestFragment.initData();
+            }
+            if (alreadyTestFragment != null){
+                alreadyTestFragment.initData();
+            }
+        }
     }
 
     private void initView(View rootView) {
@@ -69,19 +98,17 @@ public class TestFragment extends Fragment{
         page_back.setVisibility(View.INVISIBLE);
         TabGroupLayout tabGroupLayout = rootView.findViewById(R.id.test_tab_layout);
         ViewPager test_viewpager = rootView.findViewById(R.id.test_viewpager);
+        waitTestFragment = new WaitTestFragment();
+        alreadyTestFragment = new AlreadyTestFragment();
+        testFragments.add(waitTestFragment);
+        testFragments.add(alreadyTestFragment);
         test_viewpager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                Fragment fragment = null;
-                switch (position){
-                    case 0:
-                        fragment = new WaitTestFragment();
-                        break;
-                    case 1:
-                        fragment = new AlreadyTestFragment();
-                        break;
+                if (testFragments != null){
+                    return testFragments.get(position);
                 }
-                return fragment;
+                return null;
             }
 
             @Override

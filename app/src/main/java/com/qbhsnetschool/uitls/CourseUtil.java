@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CourseUtil {
 
-    public static List<CourseBean> futureCourse;
-    public static List<CourseBean> pastCourse;
+    public static List<CourseBean> futureCourse = new ArrayList<>();
+    public static List<CourseBean> pastCourse = new ArrayList<>();
 
     public static List<CourseBean> getFutureCourse() {
         return futureCourse;
@@ -24,5 +24,14 @@ public class CourseUtil {
 
     public static void setPastCourse(List<CourseBean> pastCourse) {
         CourseUtil.pastCourse = pastCourse;
+    }
+
+    public static void clearData(){
+        if (futureCourse != null) {
+            futureCourse.clear();
+        }
+        if (pastCourse != null) {
+            pastCourse.clear();
+        }
     }
 }

@@ -1,5 +1,9 @@
 package com.qbhsnetschool.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,11 +26,16 @@ import com.qbhsnetschool.uitls.UIUtils;
 import com.qbhsnetschool.widget.TabGroupLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LearnFragment extends Fragment{
 
     private HomeActivity activity;
     private View rootView;
+    private List<Fragment> learnFragments = new ArrayList<>();
+    private WaitClassFragment waitClassFragment;
+    private AlreadyClassFragment alreadyClassFragment;
 
     private static class LearnHandler extends Handler{
 
@@ -53,7 +62,23 @@ public class LearnFragment extends Fragment{
         activity = (HomeActivity) getActivity();
         rootView = LayoutInflater.from(activity).inflate(R.layout.fragment_learn, container, false);
         initView(rootView);
+        initReceiver();
         return rootView;
+    }
+
+    private void initReceiver() {
+        IntentFilter intentFilter = new IntentFilter("refresh_learn_fragment_data");
+        RefreshLearnFragmentData refreshTestFragmentData = new RefreshLearnFragmentData();
+        activity.registerReceiver(refreshTestFragmentData, intentFilter);
+    }
+
+    public class RefreshLearnFragmentData extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (waitClassFragment != null){
+                waitClassFragment.initData();
+            }
+        }
     }
 
     private void initView(View rootView) {
@@ -69,19 +94,17 @@ public class LearnFragment extends Fragment{
         page_back.setVisibility(View.INVISIBLE);
         TabGroupLayout tabGroupLayout = rootView.findViewById(R.id.tab_layout);
         ViewPager course_viewpager = rootView.findViewById(R.id.course_viewpager);
+        waitClassFragment = new WaitClassFragment();
+        alreadyClassFragment = new AlreadyClassFragment();
+        learnFragments.add(waitClassFragment);
+        learnFragments.add(alreadyClassFragment);
         course_viewpager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                Fragment fragment = null;
-                switch (position){
-                    case 0:
-                        fragment = new WaitClassFragment();
-                        break;
-                    case 1:
-                        fragment = new AlreadyClassFragment();
-                        break;
+                if (learnFragments != null){
+                    return learnFragments.get(position);
                 }
-                return fragment;
+                return null;
             }
 
             @Override
@@ -91,59 +114,4 @@ public class LearnFragment extends Fragment{
         });
         tabGroupLayout.setupViewPager(course_viewpager);
     }
-
-//    boolean isSuccessed = false;
-//    private void test(View rootView) {
-//        rootView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(activity, WebActivity.class);
-//                startActivity(intent);
-//                Toast.makeText(activity, "123", Toast.LENGTH_SHORT).show();
-//                isSuccessed = false;
-//
-//                LoginInfo loginInfo = new LoginInfo();
-//                loginInfo.setRoomId("49866F9D3D04F76E9C33DC5901307461");
-//                loginInfo.setUserId("AA31D2BB588429C7");
-//                loginInfo.setViewerName("pvplz");
-//                loginInfo.setViewerToken("123");
-//
-//                DWLive.getInstance().setDWLiveLoginParams(new DWLiveLoginListener() {
-//                    @Override
-//                    public void onLogin(TemplateInfo templateInfo, Viewer viewer, RoomInfo roomInfo, PublishInfo publishInfo) {
-//                        isSuccessed = true;
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                // 获取直播信息必须在登录成功之后再获取，否则为空
-//                                LiveInfo liveInfo = DWLive.getInstance().getLiveInfo();
-//                                if (liveInfo != null) {
-//                                    Toast.makeText(activity, "直播开始时间：" + liveInfo.getLiveStartTime() + "\n"
-//                                            + "直播持续时间：" +  liveInfo.getLiveDuration(), Toast.LENGTH_LONG).show();
-//                                    Intent intent = new Intent(activity, PcLivePlayActivity.class);
-//                                    startActivity(intent);
-//                                }
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onException(DWLiveException e) {
-//                        isSuccessed = false;
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(activity, "exception", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                }, loginInfo);
-//
-//                DWLive.getInstance().setSecure(true);
-//                DWLive.getInstance().startLogin();
-//            }
-//        });
-//    }
-
-
 }

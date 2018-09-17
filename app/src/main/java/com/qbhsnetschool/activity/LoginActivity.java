@@ -25,6 +25,7 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.LoginUtils;
 import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
@@ -113,9 +114,9 @@ public class LoginActivity extends BaseActivity {
                 }else{
                     finish();
                 }
-                Intent intent1 = new Intent();
-                intent1.setAction("fresh_user_after_login");
-                sendBroadcast(intent1);
+                LoginUtils.getInstance(activity).refreshUserInfo();
+                LoginUtils.getInstance(activity).refreshTestFragmentData();
+                LoginUtils.getInstance(activity).refreshLearnFragmentData();
             }else{
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }

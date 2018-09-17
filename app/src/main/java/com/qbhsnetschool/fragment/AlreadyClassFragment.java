@@ -90,12 +90,13 @@ public class AlreadyClassFragment extends Fragment{
         }
     }
 
-    private void initData() {
+    public void initData() {
         if (!UIUtils.isNetworkAvailable(activity)){
             Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
         LoadingDialog.loading(activity);
+        CourseUtil.clearData();
         HttpHelper.httpGetRequest(UrlHelper.myCourses(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -159,17 +160,17 @@ public class AlreadyClassFragment extends Fragment{
                     List<CourseBean> future_courses_list = gson.fromJson(future_courses.toString(), new TypeToken<List<CourseBean>>() {}.getType());
                     CourseUtil.setPastCourse(past_courses_list);
                     CourseUtil.setFutureCourse(future_courses_list);
-                    if (alreadyClassAdapter != null){
-                        alreadyClassAdapter.setData(past_courses_list);
-                        alreadyClassAdapter.notifyDataSetChanged();
-                    }
-                    Intent intent = new Intent();
-                    intent.setAction("load_wait_class_data");
-                    activity.sendBroadcast(intent);
                 }else{
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
+                if (alreadyClassAdapter != null){
+                    alreadyClassAdapter.setData(CourseUtil.getPastCourse());
+                    alreadyClassAdapter.notifyDataSetChanged();
+                }
+                Intent intent = new Intent();
+                intent.setAction("load_wait_class_data");
+                activity.sendBroadcast(intent);
             }
         }catch (Exception e){
             e.printStackTrace();

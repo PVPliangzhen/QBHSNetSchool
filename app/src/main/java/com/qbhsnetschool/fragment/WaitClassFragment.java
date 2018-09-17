@@ -89,12 +89,13 @@ public class WaitClassFragment extends Fragment {
         activity.registerReceiver(loadWaitClassReceiver, intentFilter);
     }
 
-    private void initData() {
+    public void initData() {
         if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
         LoadingDialog.loading(activity);
+        CourseUtil.clearData();
         HttpHelper.httpGetRequest(UrlHelper.myCourses(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -178,17 +179,17 @@ public class WaitClassFragment extends Fragment {
                     }.getType());
                     CourseUtil.setPastCourse(past_courses_list);
                     CourseUtil.setFutureCourse(future_courses_list);
-                    if (waitingClassAdapter != null) {
-                        waitingClassAdapter.setData(future_courses_list);
-                        waitingClassAdapter.notifyDataSetChanged();
-                    }
-                    Intent intent = new Intent();
-                    intent.setAction("load_already_class_data");
-                    activity.sendBroadcast(intent);
                 } else {
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
+                if (waitingClassAdapter != null) {
+                    waitingClassAdapter.setData(CourseUtil.getFutureCourse());
+                    waitingClassAdapter.notifyDataSetChanged();
+                }
+                Intent intent = new Intent();
+                intent.setAction("load_already_class_data");
+                activity.sendBroadcast(intent);
             }
         } catch (Exception e) {
             e.printStackTrace();

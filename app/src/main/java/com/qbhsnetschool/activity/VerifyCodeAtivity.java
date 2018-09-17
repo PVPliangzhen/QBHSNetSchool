@@ -25,6 +25,7 @@ import com.qbhsnetschool.protocol.ProtocolCode;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.LoginUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONException;
@@ -163,9 +164,9 @@ public class VerifyCodeAtivity extends BaseActivity {
                 Intent intent = new Intent(activity, HomeActivity.class);
                 intent.putExtra("home_tab", "2");
                 startActivity(intent);
-                Intent intent1 = new Intent();
-                intent1.setAction("fresh_user_after_login");
-                sendBroadcast(intent1);
+                LoginUtils.getInstance(activity).refreshUserInfo();
+                LoginUtils.getInstance(activity).refreshTestFragmentData();
+                LoginUtils.getInstance(activity).refreshLearnFragmentData();
             } else {
                 Toast.makeText(activity, responseMsg, Toast.LENGTH_SHORT).show();
             }
