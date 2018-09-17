@@ -90,7 +90,6 @@ public class WaitTestFragment extends Fragment{
             return;
         }
         LoadingDialog.loading(activity);
-        testBeans.clear();
         HttpHelper.httpGetRequest(UrlHelper.getWaitExam(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -151,6 +150,7 @@ public class WaitTestFragment extends Fragment{
                     Gson gson = new Gson();
                     testBeans = gson.fromJson(msg.toString(), new TypeToken<List<TestBean>>(){}.getType());
                 }else{
+                    testBeans.clear();
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
