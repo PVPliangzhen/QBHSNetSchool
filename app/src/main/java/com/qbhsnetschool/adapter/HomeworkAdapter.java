@@ -35,11 +35,19 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         HomeworkImgBean homeworkImgBean = homeworkImgBeans.get(position);
         Glide.with(context).load(homeworkImgBean.getHomework_img()).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.mipmap.banner_placeholder).error(R.mipmap.banner_placeholder)
                 .into(viewHolder.homework_img);
+        viewHolder.homework_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showSingleHomeworkClickListener != null){
+                    showSingleHomeworkClickListener.singleHomeworkClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -55,5 +63,15 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
             super(itemView);
             homework_img = itemView.findViewById(R.id.homework_img);
         }
+    }
+
+    public interface ShowSingleHomeworkClickListener{
+        void singleHomeworkClick(int position);
+    }
+
+    private ShowSingleHomeworkClickListener showSingleHomeworkClickListener;
+
+    public void setShowSingleHomeworkClickListener(ShowSingleHomeworkClickListener showSingleHomeworkClickListener){
+        this.showSingleHomeworkClickListener = showSingleHomeworkClickListener;
     }
 }

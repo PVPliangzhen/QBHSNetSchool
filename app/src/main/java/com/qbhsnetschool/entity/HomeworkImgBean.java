@@ -1,6 +1,8 @@
 package com.qbhsnetschool.entity;
 
-public class HomeworkImgBean {
+import java.io.Serializable;
+
+public class HomeworkImgBean implements Serializable{
 
     /**
      * homework_img : http://192.168.1.172:8888/media/homework_pics/23/23443/18701073115_egzva390rnbepiw4f88x_2_1_bifnjgkd.jpg

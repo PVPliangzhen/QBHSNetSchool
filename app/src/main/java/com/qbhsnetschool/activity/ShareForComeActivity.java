@@ -206,6 +206,10 @@ public class ShareForComeActivity extends BaseActivity {
                     startActivity(intent);
                     break;
                 case R.id.reward_rule:
+                    Intent intent1 = new Intent(activity, WebActivity.class);
+                    intent1.putExtra("title", "转介绍活动");
+                    intent1.putExtra("url", "http://www.hualuogengshuxue.com/recommend/recommend_intro");
+                    startActivity(intent1);
                     break;
             }
         }

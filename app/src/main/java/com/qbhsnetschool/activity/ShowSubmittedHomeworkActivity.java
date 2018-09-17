@@ -1,8 +1,10 @@
 package com.qbhsnetschool.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,14 +30,16 @@ import com.qbhsnetschool.uitls.UIUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowSubmittedHomeworkActivity extends BaseActivity{
 
     private ShowSubmittedHomeworkActivity activity;
     private ShowSubmittedHomeworkHandler showSubmittedHomeworkHandler;
-    private List<HomeworkImgBean> homeworkImgBeans;
+    public List<HomeworkImgBean> homeworkImgBeans;
     private HomeworkAdapter homeworkAdapter;
     private boolean from_lately_chapter;
     private int chapterId;
@@ -110,6 +114,16 @@ public class ShowSubmittedHomeworkActivity extends BaseActivity{
         homework_list.setLayoutManager(lm);
         homeworkAdapter = new HomeworkAdapter(activity);
         homework_list.setAdapter(homeworkAdapter);
+        homeworkAdapter.setShowSingleHomeworkClickListener(new HomeworkAdapter.ShowSingleHomeworkClickListener() {
+            @Override
+            public void singleHomeworkClick(int position) {
+                Intent intent = new Intent();
+                intent.setClass(activity, ShowSingleHomeworkActivity.class);
+                intent.putExtra("homeworkImgBeans", (Serializable) homeworkImgBeans);
+                intent.putExtra("select_position", position);
+                startActivity(intent);
+            }
+        });
         initData();
     }
 

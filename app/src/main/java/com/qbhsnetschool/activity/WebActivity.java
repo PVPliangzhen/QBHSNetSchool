@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.qbhsnetschool.R;
 
@@ -25,12 +26,15 @@ public class WebActivity extends BaseActivity{
 
     private WebView mWebView;
     private String url;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_web, false, R.color.status_bar_bg_color, false);
         initIntent();
+        TextView page_title = (TextView) findViewById(R.id.page_title);
+        page_title.setText(title);
         LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +69,7 @@ public class WebActivity extends BaseActivity{
     private void initIntent() {
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
     }
 
     public void syncWebViewCookies() {
