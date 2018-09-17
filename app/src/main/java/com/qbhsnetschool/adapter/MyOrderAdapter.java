@@ -1,6 +1,7 @@
 package com.qbhsnetschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.activity.ConfirmOrderActivity;
 import com.qbhsnetschool.entity.CouponBean;
 import com.qbhsnetschool.entity.OrderBean;
 import com.qbhsnetschool.uitls.ConstantUtil;
@@ -40,14 +42,18 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         try {
-            OrderBean orderBean = orderBeans.get(position);
+            final OrderBean orderBean = orderBeans.get(position);
             viewHolder.order_id.setText("订单号：" + orderBean.getOrder_no());
             if (orderBean.getStatus() == 0){
                 viewHolder.pay_status.setText("未支付");
                 viewHolder.order_cancel.setVisibility(View.VISIBLE);
                 viewHolder.goto_pay.setVisibility(View.VISIBLE);
-            }else{
+            }else if (orderBean.getStatus() == 1){
                 viewHolder.pay_status.setText("已支付");
+                viewHolder.order_cancel.setVisibility(View.GONE);
+                viewHolder.goto_pay.setVisibility(View.GONE);
+            }else if (orderBean.getStatus() == 2){
+                viewHolder.pay_status.setText("已过期");
                 viewHolder.order_cancel.setVisibility(View.GONE);
                 viewHolder.goto_pay.setVisibility(View.GONE);
             }
@@ -66,6 +72,14 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 }
             });
             viewHolder.goto_pay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    if (payOrderListener != null){
+//                        payOrderListener.onPayOrder(position);
+//                    }
+                }
+            });
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (payOrderListener != null){

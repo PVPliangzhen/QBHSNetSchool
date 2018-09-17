@@ -78,6 +78,7 @@ public class ConfirmOrderActivity extends BaseActivity{
     private ImageView season_img;
     private TextView real_price;
     private String productId = "";
+    private LinearLayout commit_order_layout;
 
     private static class ConfirmOrderHandler extends Handler{
         WeakReference<ConfirmOrderActivity> weakReference;
@@ -299,6 +300,7 @@ public class ConfirmOrderActivity extends BaseActivity{
         no_coupon_txt = (TextView) findViewById(R.id.no_coupon_txt);
         coupon_layout = (RelativeLayout) findViewById(R.id.coupon_layout);
         season_img = (ImageView) findViewById(R.id.season_img);
+        commit_order_layout = (LinearLayout) findViewById(R.id.commit_order_layout);
         initLocalData();
     }
 
@@ -348,6 +350,11 @@ public class ConfirmOrderActivity extends BaseActivity{
             String season = courseDataBean.getSeason();
             ConstantUtil.handleSeason(activity, season, season_img, true);
             productId = courseDataBean.getProduct_id();
+            if (orderBean.getStatus() == 0){
+                commit_order_layout.setVisibility(View.VISIBLE);
+            }else{
+                commit_order_layout.setVisibility(View.GONE);
+            }
         }
     }
 
