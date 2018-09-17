@@ -56,6 +56,14 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
                 viewHolder.pay_status.setText("已过期");
                 viewHolder.order_cancel.setVisibility(View.GONE);
                 viewHolder.goto_pay.setVisibility(View.GONE);
+            }else if (orderBean.getStatus() == 3){
+                viewHolder.pay_status.setText("正在退款");
+                viewHolder.order_cancel.setVisibility(View.GONE);
+                viewHolder.goto_pay.setVisibility(View.GONE);
+            }else if (orderBean.getStatus() == 4){
+                viewHolder.pay_status.setText("已退款");
+                viewHolder.order_cancel.setVisibility(View.GONE);
+                viewHolder.goto_pay.setVisibility(View.GONE);
             }
             viewHolder.order_title.setText(orderBean.getDetail_title());
             viewHolder.course_season.setText(ConstantUtil.getSanqiItems().get(orderBean.getCourse_data().getItems()));

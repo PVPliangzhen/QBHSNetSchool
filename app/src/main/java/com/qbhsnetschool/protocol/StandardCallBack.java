@@ -16,17 +16,17 @@ import org.json.JSONObject;
 
 import okhttp3.internal.http.RealResponseBody;
 
-public abstract class StandardCallBack implements Callback{
+public abstract class StandardCallBack implements Callback {
 
     private Context context;
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0x01:
-                    if (!LoadingDialog.isDissMissLoading()){
+                    if (!LoadingDialog.isDissMissLoading()) {
                         LoadingDialog.dismissLoading();
                     }
                     String message = (String) msg.obj;
@@ -35,12 +35,10 @@ public abstract class StandardCallBack implements Callback{
                     context.startActivity(intent);
                     break;
                 case 0x02:
-                    if (!LoadingDialog.isDissMissLoading()){
+                    if (!LoadingDialog.isDissMissLoading()) {
                         LoadingDialog.dismissLoading();
                     }
-                    //if ((int)msg.obj == 10000) {
-                        //Toast.makeText(context, "请求错误，请重试", Toast.LENGTH_SHORT).show();
-                    //}
+                    Toast.makeText(context, "请求错误，请重试", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -68,7 +66,7 @@ public abstract class StandardCallBack implements Callback{
                 } else {
                     onSuccess(result);
                 }
-            }else{
+            } else {
                 onFailure(response.code());
             }
         } catch (Exception e) {
@@ -78,13 +76,15 @@ public abstract class StandardCallBack implements Callback{
     }
 
     public abstract void onSuccess(String result);
-    public void onFailure(int code){
+
+    public void onFailure(int code) {
         Message message = Message.obtain();
         message.what = 0x02;
         message.obj = code;
         handler.sendMessage(message);
     }
-    public void onError(Exception e){
+
+    public void onError(Exception e) {
         handler.sendEmptyMessage(0x02);
     }
 }
