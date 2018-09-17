@@ -96,6 +96,7 @@ public class AlreadyClassFragment extends Fragment{
             return;
         }
         LoadingDialog.loading(activity);
+        CourseUtil.clearData();
         HttpHelper.httpGetRequest(UrlHelper.myCourses(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
@@ -160,7 +161,6 @@ public class AlreadyClassFragment extends Fragment{
                     CourseUtil.setPastCourse(past_courses_list);
                     CourseUtil.setFutureCourse(future_courses_list);
                 }else{
-                    CourseUtil.clearData();
                     String msg = jsonObject.optString("msg");
                     Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
