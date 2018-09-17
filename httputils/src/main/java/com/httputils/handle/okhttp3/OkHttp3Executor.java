@@ -179,8 +179,6 @@ public class OkHttp3Executor implements HttpExecutor {
                 }
             }
         }
-
-
     }
 
     @Override
