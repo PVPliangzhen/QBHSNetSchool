@@ -80,6 +80,7 @@ public class AlreadyTestFragment extends Fragment{
                 Gson gson = new Gson();
                 alreadyTestBeans = gson.fromJson(msg.toString(), new TypeToken<List<AlreadyTestBean>>(){}.getType());
             }else{
+                alreadyTestBeans.clear();
                 String msg = jsonObject.optString("msg");
                 Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
             }
@@ -132,7 +133,6 @@ public class AlreadyTestFragment extends Fragment{
             return;
         }
         LoadingDialog.loading(activity);
-        alreadyTestBeans.clear();
         HttpHelper.httpGetRequest(UrlHelper.getAlreadyExam(), "GET", new StandardCallBack(activity) {
             @Override
             public void onSuccess(String result) {
