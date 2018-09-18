@@ -58,6 +58,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("homeCourseBean", hlgBean);
+                intent.putExtra("isHLG", true);
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }
