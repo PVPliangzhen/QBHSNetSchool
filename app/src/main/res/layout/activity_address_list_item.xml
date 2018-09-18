@@ -11,10 +11,19 @@
         android:layout_marginTop="@dimen/dp40"
         android:layout_marginBottom="@dimen/dp10">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            
+            <ImageView
+                android:id="@+id/default_address"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:src="@mipmap/group"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/address_user"
@@ -34,21 +43,25 @@
                 android:layout_marginTop="@dimen/dp32"
                 android:layout_marginLeft="@dimen/dp32"
                 android:textSize="@dimen/dp25"
-                android:textColor="@color/color_666666"/>
+                android:textColor="@color/color_666666"
+                android:layout_below="@+id/address_user"/>
 
             <View
+                android:id="@+id/divide_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/dp28"
                 android:layout_marginLeft="@dimen/dp32"
                 android:layout_marginRight="@dimen/dp32"
-                android:background="@color/color_e7e7e7"/>
+                android:background="@color/color_e7e7e7"
+                android:layout_below="@+id/address_detail"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp32"
-                android:paddingBottom="@dimen/dp32">
+                android:paddingBottom="@dimen/dp32"
+                android:layout_below="@+id/divide_view">
 
                 <Button
                     android:id="@+id/address_delete"
@@ -78,6 +91,6 @@
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

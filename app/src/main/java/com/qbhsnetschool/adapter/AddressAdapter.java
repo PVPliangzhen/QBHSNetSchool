@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,11 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             final AddressBean addressBean = addressBeans.get(position);
             viewHolder.address_user.setText(addressBean.getName() + "  " + addressBean.getTel());
             viewHolder.address_detail.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
+            if (addressBean.isDefault_flag()){
+                viewHolder.default_address.setVisibility(View.GONE);
+            }else{
+                viewHolder.default_address.setVisibility(View.GONE);
+            }
             viewHolder.address_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -86,6 +92,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         TextView address_detail;
         Button address_delete;
         Button address_edit;
+        ImageView default_address;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,6 +100,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             address_detail = itemView.findViewById(R.id.address_detail);
             address_delete = itemView.findViewById(R.id.address_delete);
             address_edit = itemView.findViewById(R.id.address_edit);
+            default_address = itemView.findViewById(R.id.default_address);
         }
     }
 

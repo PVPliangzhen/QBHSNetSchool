@@ -182,7 +182,12 @@ public class ConfirmOrderActivity extends BaseActivity{
                 }else{
                     add_address.setVisibility(View.GONE);
                     address_layout.setVisibility(View.VISIBLE);
-                    addressBean = addressBeans.get(0);
+                    for (AddressBean addressBean : addressBeans){
+                        if (addressBean.isDefault_flag()){
+                            this.addressBean = addressBean;
+                            break;
+                        }
+                    }
                     user_name.setText(addressBean.getName());
                     user_num.setText(addressBean.getTel());
                     user_address.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
