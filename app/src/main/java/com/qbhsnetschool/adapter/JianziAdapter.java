@@ -41,7 +41,7 @@ public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder
         final HomeCourseBean jianziBean = jianziBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(jianziBean.getItems());
         String title1 = jianziBean.getTitle1();
-        viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
+        viewHolder.home_class_title_txt.setText(gradeItem);
         String detail_title = jianziBean.getDetail_title();
         viewHolder.home_class_content.setText(detail_title);
         String course_date = jianziBean.getCourse_date();

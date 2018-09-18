@@ -41,7 +41,7 @@ public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
         final HomeCourseBean peiuBean = peiuBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(peiuBean.getItems());
         String title1 = peiuBean.getTitle1();
-        viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
+        viewHolder.home_class_title_txt.setText(gradeItem);
         String detail_title = peiuBean.getDetail_title();
         viewHolder.home_class_content.setText(detail_title);
         String course_date = peiuBean.getCourse_date();

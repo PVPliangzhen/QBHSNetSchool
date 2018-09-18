@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,10 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         final HomeCourseBean cheapieBean = cheapieBeans.get(position);
-        String gradeItem = ConstantUtil.getGradeItems().get(cheapieBean.getItems());
+        String gradeItem = ConstantUtil.getSanqiItems().get(cheapieBean.getItems());
         String title1 = cheapieBean.getTitle1();
-        viewHolder.discount_title.setText("【"+ gradeItem + "】 " + title1);
+        viewHolder.discount_title.setText(Html.fromHtml("【" + gradeItem + "】 <font color =" + context.getResources().getColor(R.color.color_E20000) + ">" + cheapieBean.getPrice() + "元</font>" + title1));
+        //viewHolder.discount_title.setText("【"+ gradeItem + "】 " + title1);
         String course_date = cheapieBean.getCourse_date();
         String chapter_times = cheapieBean.getChapter_times();
         viewHolder.discount_content.setText(course_date + "|" +chapter_times);

@@ -215,6 +215,10 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(activity, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (login_password.getText().toString().trim().length() < 6){
+            Toast.makeText(activity, "密码长度不小于6位", Toast.LENGTH_SHORT).show();
+            return;
+        }
         LoadingDialog.loading(activity);
         Map<String, String> params = new HashMap<>();
         params.put("username", phonenNumber);
