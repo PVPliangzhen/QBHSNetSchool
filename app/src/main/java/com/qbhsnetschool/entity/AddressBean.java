@@ -5,24 +5,26 @@ import java.io.Serializable;
 public class AddressBean implements Serializable{
 
     /**
-     * id : 4
-     * name : will
-     * tel : 18352860815
+     * id : 18646
+     * uid : 300
+     * name : 这么大
+     * tel : 15131138388
      * province : 北京市
      * city : 北京市
-     * county : 昌平区
-     * address : 鼎好大厦
-     * uid : 10
+     * county : 东城区
+     * address : 这么多
+     * default_flag : false
      */
 
     private int id;
+    private int uid;
     private String name;
     private String tel;
     private String province;
     private String city;
     private String county;
     private String address;
-    private int uid;
+    private boolean default_flag;
 
     public int getId() {
         return id;
@@ -30,6 +32,14 @@ public class AddressBean implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -80,11 +90,11 @@ public class AddressBean implements Serializable{
         this.address = address;
     }
 
-    public int getUid() {
-        return uid;
+    public boolean isDefault_flag() {
+        return default_flag;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setDefault_flag(boolean default_flag) {
+        this.default_flag = default_flag;
     }
 }
