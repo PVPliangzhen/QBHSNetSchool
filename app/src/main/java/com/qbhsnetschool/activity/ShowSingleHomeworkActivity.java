@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.widget.PreviewViewPager;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.SingleHomeworkAdapter;
 import com.qbhsnetschool.entity.HomeworkImgBean;
@@ -22,7 +23,7 @@ public class ShowSingleHomeworkActivity extends BaseActivity{
     private List<HomeworkImgBean> homeworkImgBeans;
     private int select_position;
     private int position;
-    private ViewPager single_img_vp;
+    private PreviewViewPager single_img_vp;
     private SingleHomeworkAdapter singleHomeworkAdapter;
 
     @Override
@@ -39,7 +40,7 @@ public class ShowSingleHomeworkActivity extends BaseActivity{
         intent = getIntent();
         homeworkImgBeans = (List<HomeworkImgBean>) intent.getSerializableExtra("homeworkImgBeans");
         position = intent.getIntExtra("select_position", 0);
-        single_img_vp = (ViewPager) findViewById(R.id.single_img_vp);
+        single_img_vp = (PreviewViewPager) findViewById(R.id.single_img_vp);
         single_img_vp.setOffscreenPageLimit(3);
         singleHomeworkAdapter = new SingleHomeworkAdapter(ShowSingleHomeworkActivity.this);
         singleHomeworkAdapter.setData(homeworkImgBeans);

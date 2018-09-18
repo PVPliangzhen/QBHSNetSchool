@@ -31,6 +31,7 @@ import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -53,6 +54,7 @@ public class CourseDetailActivity extends BaseActivity{
     private RecyclerView chapter_list;
     private ChapterAdapter chapterAdapter;
     private List<ChapterBean> chapterBeans;
+    private boolean isHLG;
 
     private static class CourseDetailHandler extends Handler{
 
@@ -130,6 +132,7 @@ public class CourseDetailActivity extends BaseActivity{
     private void initIntent() {
         Intent intent = getIntent();
         homeCourseBean = (HomeCourseBean) intent.getSerializableExtra("homeCourseBean");
+        isHLG = intent.getBooleanExtra("isHLG", false);
     }
 
     private void initView() {
@@ -181,6 +184,16 @@ public class CourseDetailActivity extends BaseActivity{
         original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         TextView currenr_price = (TextView) findViewById(R.id.current_price);
         currenr_price.setText("￥" + homeCourseBean.getPrice());
+        TextView hlg_bottom_txt = (TextView) findViewById(R.id.hlg_bottom_txt);
+        hlg_bottom_txt.setOnClickListener(clickListener);
+        LinearLayout hlg_bottom_layout = (LinearLayout) findViewById(R.id.hlg_bottom_layout);
+        if (isHLG){
+            hlg_bottom_txt.setVisibility(View.VISIBLE);
+            hlg_bottom_layout.setVisibility(View.GONE);
+        }else{
+            hlg_bottom_txt.setVisibility(View.GONE);
+            hlg_bottom_layout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initDifficulty(int stars){
@@ -223,6 +236,11 @@ public class CourseDetailActivity extends BaseActivity{
                         intent.putExtra("homeCourseBean", homeCourseBean);
                         startActivity(intent);
                     }
+                    break;
+                case R.id.hlg_bottom_txt:
+                    Intent intent = new Intent();
+                    intent.setClass(activity, WebActivity.class);
+                    startActivity(intent);
                     break;
             }
         }

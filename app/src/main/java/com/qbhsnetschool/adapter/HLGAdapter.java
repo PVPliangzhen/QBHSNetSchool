@@ -41,7 +41,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
         final HomeCourseBean hlgBean = hlgBeans.get(position);
         String gradeItem = ConstantUtil.getSanqiItems().get(hlgBean.getItems());
         String title1 = hlgBean.getTitle1();
-        viewHolder.home_class_title_txt.setText("【"+ gradeItem + "】" + title1);
+        viewHolder.home_class_title_txt.setText(gradeItem);
         String detail_title = hlgBean.getDetail_title();
         viewHolder.home_class_content.setText(detail_title);
         String course_date = hlgBean.getCourse_date();
@@ -58,6 +58,7 @@ public class HLGAdapter extends RecyclerView.Adapter<HLGAdapter.ViewHolder>{
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("homeCourseBean", hlgBean);
+                intent.putExtra("isHLG", true);
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }
