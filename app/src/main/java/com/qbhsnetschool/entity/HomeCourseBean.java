@@ -4,38 +4,38 @@ import java.io.Serializable;
 
 public class HomeCourseBean implements Serializable{
 
-
     /**
-     * product_id : cwddfxmr09vhogrfwvhv
-     * course_id : 11
-     * teacher1 : {"id":1,"name":"张永福","app_head_pic":"http://192.168.1.9:8888/media/teachers/teacher_%E5%BC%A03x.png","intro1":"清华数学系基科班毕业","intro2":"高考福建省第八名，数学149分","intro3":"9年教学经验，30万人次高考直播教学经验","school":"清华","app_head_pic_small":"http://192.168.1.9:8888/media/teachers/teacher_Oval_%E5%BC%A03x.png"}
+     * product_id : 3t5le3zo8hf934m4fkdy
+     * teacher1 : {"id":1,"name":"张永福","app_head_pic":"http://www.hualuogengshuxue.com/media/teachers/teacher_zhang3x.png","intro1":"清华数学系基科班毕业","intro2":"高考福建省第八名，数学149分","intro3":"9年教学经验，30万人次高考直播教学经验","school":"清华","app_head_pic_small":"http://www.hualuogengshuxue.com/media/teachers/teacher_Oval_zhang3x.png"}
      * teacher2 : null
-     * course_type : 1
+     * course_type : 2
      * grade : 3
      * season : q
-     * items : 12
-     * title1 : 直播尖子班(全国适用)
-     * title3 : 尖子班1班
-     * course_sdate : 2018-09-08
-     * course_edate : 2019-01-05
-     * course_time : 周六10：00-12：00
-     * stars : 4
+     * items : 13
+     * title1 : 华罗庚领航班
+     * title3 : 三年级华罗庚领航班
+     * course_sdate : 2018-09-09
+     * course_edate : 2019-01-06
+     * course_time : 周日10：00-12：00
+     * stars : 5
      * original_price : 1699
      * price : 1699
-     * limit_numbers : 1000
-     * sign_numbers : 327
+     * limit_numbers : 2000
+     * sign_numbers : 537
      * course_status : 1
      * fill_numbers : 25
      * course_outline : null
-     * room_id : 1
-     * detail_title : 三年级直播尖子班(全国适用)
-     * course_date : 9月8日-1月5日
+     * room_id : 7CA806C9BDDB399D9C33DC5901307461
+     * exam_id : 5
+     * isspecial : 0
+     * detail_title : 三年级华罗庚领航班
+     * course_date : 9月9日-1月6日
      * chapter_times : 17次课34课时
      */
 
     private String product_id;
-    private int course_id;
-    private HomeCourseBean.Teacher1Bean teacher1;
+    private Teacher1Bean teacher1;
+    private Object teacher2;
     private int course_type;
     private int grade;
     private String season;
@@ -54,6 +54,8 @@ public class HomeCourseBean implements Serializable{
     private int fill_numbers;
     private Object course_outline;
     private String room_id;
+    private int exam_id;
+    private int isspecial;
     private String detail_title;
     private String course_date;
     private String chapter_times;
@@ -66,20 +68,20 @@ public class HomeCourseBean implements Serializable{
         this.product_id = product_id;
     }
 
-    public int getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
-    }
-
-    public HomeCourseBean.Teacher1Bean getTeacher1() {
+    public Teacher1Bean getTeacher1() {
         return teacher1;
     }
 
-    public void setTeacher1(HomeCourseBean.Teacher1Bean teacher1) {
+    public void setTeacher1(Teacher1Bean teacher1) {
         this.teacher1 = teacher1;
+    }
+
+    public Object getTeacher2() {
+        return teacher2;
+    }
+
+    public void setTeacher2(Object teacher2) {
+        this.teacher2 = teacher2;
     }
 
     public int getCourse_type() {
@@ -226,6 +228,22 @@ public class HomeCourseBean implements Serializable{
         this.room_id = room_id;
     }
 
+    public int getExam_id() {
+        return exam_id;
+    }
+
+    public void setExam_id(int exam_id) {
+        this.exam_id = exam_id;
+    }
+
+    public int getIsspecial() {
+        return isspecial;
+    }
+
+    public void setIsspecial(int isspecial) {
+        this.isspecial = isspecial;
+    }
+
     public String getDetail_title() {
         return detail_title;
     }
@@ -250,16 +268,16 @@ public class HomeCourseBean implements Serializable{
         this.chapter_times = chapter_times;
     }
 
-    public static class Teacher1Bean implements Serializable{
+    public static class Teacher1Bean {
         /**
          * id : 1
          * name : 张永福
-         * app_head_pic : http://192.168.1.9:8888/media/teachers/teacher_%E5%BC%A03x.png
+         * app_head_pic : http://www.hualuogengshuxue.com/media/teachers/teacher_zhang3x.png
          * intro1 : 清华数学系基科班毕业
          * intro2 : 高考福建省第八名，数学149分
          * intro3 : 9年教学经验，30万人次高考直播教学经验
          * school : 清华
-         * app_head_pic_small : http://192.168.1.9:8888/media/teachers/teacher_Oval_%E5%BC%A03x.png
+         * app_head_pic_small : http://www.hualuogengshuxue.com/media/teachers/teacher_Oval_zhang3x.png
          */
 
         private int id;
