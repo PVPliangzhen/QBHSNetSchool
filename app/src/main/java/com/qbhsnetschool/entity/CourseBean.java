@@ -316,7 +316,7 @@ public class CourseBean implements Serializable{
             private String roomId;
             private String viewerName;
             private String token;
-            private Object recordId;
+            private String recordId;
 
             public String getUserId() {
                 return userId;
@@ -350,11 +350,11 @@ public class CourseBean implements Serializable{
                 this.token = token;
             }
 
-            public Object getRecordId() {
+            public String getRecordId() {
                 return recordId;
             }
 
-            public void setRecordId(Object recordId) {
+            public void setRecordId(String recordId) {
                 this.recordId = recordId;
             }
         }

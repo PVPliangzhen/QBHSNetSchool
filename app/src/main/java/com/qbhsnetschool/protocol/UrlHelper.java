@@ -129,4 +129,8 @@ public class UrlHelper {
     public static String showHomeworks(int chapterId){
         return BaseUrl.BASE_HTTP_URL + "app/homework/" + chapterId + "/";
     }
+
+    public static String testUrl(String userId, String grade, String examId){
+        return "http://www.hualuogengshuxue.com/" + "app/sessions/?user_id=" + userId + "&grade=" + grade + "&exam_id=" + examId;
+    }
 }

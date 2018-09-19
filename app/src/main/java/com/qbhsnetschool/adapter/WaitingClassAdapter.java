@@ -19,6 +19,8 @@ import com.qbhsnetschool.activity.HomeActivity;
 import com.qbhsnetschool.activity.SubmitHomeWorkActivity;
 import com.qbhsnetschool.activity.WebActivity;
 import com.qbhsnetschool.entity.CourseBean;
+import com.qbhsnetschool.entity.UserManager;
+import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.CCVideoUtil;
 import com.qbhsnetschool.uitls.ConstantUtil;
 
@@ -132,8 +134,8 @@ public class WaitingClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder1.course_test.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String testUrl = courseBean.getCourse_test_url();
                         Intent intent = new Intent();
+                        String testUrl = UrlHelper.testUrl(UserManager.getInstance().getUser().getUserId() + "", courseBean.getGrade() + "", courseBean.getExam_id() + "");
                         intent.putExtra("url", testUrl);
                         intent.setClass(context, WebActivity.class);
                         context.startActivity(intent);
