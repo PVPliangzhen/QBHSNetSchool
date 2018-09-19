@@ -53,7 +53,7 @@ public class AlreadyTestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             int examType = alreadyTestBean.getExam_type();
             if (examType == 1){
                 viewHolder1.wrong_count.setVisibility(View.VISIBLE);
-                viewHolder1.go_to_test.setVisibility(View.VISIBLE);
+                viewHolder1.go_to_test.setVisibility(View.GONE);
                 viewHolder1.mark_layout.setVisibility(View.VISIBLE);
                 viewHolder1.complete_layout.setVisibility(View.GONE);
                 viewHolder1.course_title.setText(alreadyTestBean.getBefore_title() + "  " + alreadyTestBean.getTitle());
