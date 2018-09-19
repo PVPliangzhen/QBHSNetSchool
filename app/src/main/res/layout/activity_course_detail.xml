@@ -107,6 +107,7 @@
                         android:layout_marginLeft="@dimen/dp32" />
 
                     <TextView
+                        android:id="@+id/course_title"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp40"
                         android:text="直播目标班（人教版）"

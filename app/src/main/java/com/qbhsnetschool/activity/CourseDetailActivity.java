@@ -55,6 +55,7 @@ public class CourseDetailActivity extends BaseActivity {
     private ChapterAdapter chapterAdapter;
     private List<ChapterBean> chapterBeans;
     private boolean isHLG;
+    private TextView course_title;
 
     private static class CourseDetailHandler extends Handler {
 
@@ -218,6 +219,7 @@ public class CourseDetailActivity extends BaseActivity {
             hlg_bottom_txt.setVisibility(View.GONE);
             hlg_bottom_layout.setVisibility(View.VISIBLE);
         }
+        course_title = (TextView) findViewById(R.id.course_title);
     }
 
     private void initDifficulty(int stars) {
