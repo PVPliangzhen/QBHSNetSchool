@@ -268,7 +268,7 @@ public class HomeCourseBean implements Serializable{
         this.chapter_times = chapter_times;
     }
 
-    public static class Teacher1Bean {
+    public static class Teacher1Bean implements Serializable{
         /**
          * id : 1
          * name : 张永福

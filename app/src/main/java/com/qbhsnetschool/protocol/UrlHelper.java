@@ -5,12 +5,12 @@ import com.qbhsnetschool.BuildConfig;
 public class UrlHelper {
 
     public static final class BaseUrl {
-        public static String BASE_HTTP_URL = "http://b.hualuogengshuxue.com/";
+        public static String BASE_HTTP_URL = "http://www.hualuogengshuxue.com/";
 
         static {
             if (BuildConfig.DEBUG) {
                 //BASE_HTTP_URL = "http://192.168.1.172:8888/";
-                BASE_HTTP_URL = "http://b.hualuogengshuxue.com/";
+                BASE_HTTP_URL = "http://www.hualuogengshuxue.com/";
             }
         }
     }
@@ -131,6 +131,10 @@ public class UrlHelper {
     }
 
     public static String testUrl(String userId, String grade, String examId){
-        return "http://www.hualuogengshuxue.com/" + "app/sessions/?user_id=" + userId + "&grade=" + grade + "&exam_id=" + examId;
+        return BaseUrl.BASE_HTTP_URL + "app/sessions/?user_id=" + userId + "&grade=" + grade + "&exam_id=" + examId;
+    }
+
+    public static String agreementUrl(){
+        return BaseUrl.BASE_HTTP_URL + "html/agreement.html";
     }
 }

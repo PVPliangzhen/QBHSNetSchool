@@ -246,6 +246,8 @@ public class VerifyCodeAtivity extends BaseActivity {
             }
         });
         countDownTimer.start();
+        LinearLayout agreement_layout = (LinearLayout) findViewById(R.id.agreement_layout);
+        agreement_layout.setOnClickListener(clickListener);
     }
 
     CountDownTimer countDownTimer = new CountDownTimer(60 * 1000, 1000) {
@@ -276,6 +278,12 @@ public class VerifyCodeAtivity extends BaseActivity {
                     break;
                 case R.id.pwd_show_img:
                     UIUtils.showPasswordExpress(pwd_content, pwd_show_img);
+                    break;
+                case R.id.agreement_layout:
+                    Intent intent = new Intent();
+                    intent.setClass(activity, WebActivity.class);
+                    intent.putExtra("url", UrlHelper.agreementUrl());
+                    startActivity(intent);
                     break;
             }
         }

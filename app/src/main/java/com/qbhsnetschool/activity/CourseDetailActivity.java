@@ -40,7 +40,7 @@ import java.util.List;
  * Created by liangzhen on 2018/8/23.
  */
 
-public class CourseDetailActivity extends BaseActivity{
+public class CourseDetailActivity extends BaseActivity {
 
     private CourseDetailActivity activity;
     private LinearLayout sign_up_btn;
@@ -56,19 +56,19 @@ public class CourseDetailActivity extends BaseActivity{
     private List<ChapterBean> chapterBeans;
     private boolean isHLG;
 
-    private static class CourseDetailHandler extends Handler{
+    private static class CourseDetailHandler extends Handler {
 
         WeakReference<CourseDetailActivity> weakReference;
 
-        public CourseDetailHandler(CourseDetailActivity activity){
+        public CourseDetailHandler(CourseDetailActivity activity) {
             weakReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             CourseDetailActivity courseDetailActivity = weakReference.get();
-            if (courseDetailActivity != null){
-                switch (msg.what){
+            if (courseDetailActivity != null) {
+                switch (msg.what) {
                     case 0x01:
                         String result = (String) msg.obj;
                         courseDetailActivity.handleCourseDigist(result);
@@ -79,24 +79,25 @@ public class CourseDetailActivity extends BaseActivity{
     }
 
     private void handleCourseDigist(String result) {
-        if (!LoadingDialog.isDissMissLoading()){
+        if (!LoadingDialog.isDissMissLoading()) {
             LoadingDialog.dismissLoading();
         }
         try {
-            if (result != null){
+            if (result != null) {
                 JSONObject jsonObject = new JSONObject(result);
                 String code = jsonObject.optString("code");
-                if (code.equalsIgnoreCase("200")){
+                if (code.equalsIgnoreCase("200")) {
                     JSONArray jsonArray = jsonObject.optJSONArray("chapter");
                     Gson gson = new Gson();
-                    chapterBeans = gson.fromJson(jsonArray.toString(), new TypeToken<List<ChapterBean>>() {}.getType());
-                    if (chapterAdapter != null){
+                    chapterBeans = gson.fromJson(jsonArray.toString(), new TypeToken<List<ChapterBean>>() {
+                    }.getType());
+                    if (chapterAdapter != null) {
                         chapterAdapter.setData(chapterBeans);
                         chapterAdapter.notifyDataSetChanged();
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -114,7 +115,7 @@ public class CourseDetailActivity extends BaseActivity{
 
     private void initData() {
         String product_id = homeCourseBean.getProduct_id();
-        if (!UIUtils.isNetworkAvailable(activity)){
+        if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
         }
         LoadingDialog.loading(activity);
@@ -142,6 +143,29 @@ public class CourseDetailActivity extends BaseActivity{
         page_back.setOnClickListener(clickListener);
         sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);
+        TextView sign_up_txt = (TextView) findViewById(R.id.sign_up_txt);
+        switch (homeCourseBean.getCourse_status()) {
+            case 1:
+                sign_up_txt.setText("立即报名");
+                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_E20000));
+                sign_up_btn.setEnabled(true);
+                break;
+            case 2:
+                sign_up_txt.setText("人数已满");
+                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                sign_up_btn.setEnabled(false);
+                break;
+            case 3:
+                sign_up_txt.setText("报名未开始");
+                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                sign_up_btn.setEnabled(false);
+                break;
+            case 4:
+                sign_up_txt.setText("报名结束");
+                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                sign_up_btn.setEnabled(false);
+                break;
+        }
         star1 = (ImageView) findViewById(R.id.star1);
         star2 = (ImageView) findViewById(R.id.star2);
         star3 = (ImageView) findViewById(R.id.star3);
@@ -169,7 +193,7 @@ public class CourseDetailActivity extends BaseActivity{
         intro2.setText(homeCourseBean.getTeacher1().getIntro2());
         intro3.setText(homeCourseBean.getTeacher1().getIntro3());
         chapter_list = (RecyclerView) findViewById(R.id.chapter_list);
-        LinearLayoutManager lm = new LinearLayoutManager(activity){
+        LinearLayoutManager lm = new LinearLayoutManager(activity) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -187,17 +211,17 @@ public class CourseDetailActivity extends BaseActivity{
         TextView hlg_bottom_txt = (TextView) findViewById(R.id.hlg_bottom_txt);
         hlg_bottom_txt.setOnClickListener(clickListener);
         LinearLayout hlg_bottom_layout = (LinearLayout) findViewById(R.id.hlg_bottom_layout);
-        if (isHLG){
+        if (isHLG) {
             hlg_bottom_txt.setVisibility(View.VISIBLE);
             hlg_bottom_layout.setVisibility(View.GONE);
-        }else{
+        } else {
             hlg_bottom_txt.setVisibility(View.GONE);
             hlg_bottom_layout.setVisibility(View.VISIBLE);
         }
     }
 
-    private void initDifficulty(int stars){
-        switch (stars){
+    private void initDifficulty(int stars) {
+        switch (stars) {
             case 1:
                 star5.setVisibility(View.GONE);
                 star4.setVisibility(View.GONE);
@@ -222,7 +246,7 @@ public class CourseDetailActivity extends BaseActivity{
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.page_back:
                     finish();
                     break;
@@ -238,9 +262,17 @@ public class CourseDetailActivity extends BaseActivity{
                     }
                     break;
                 case R.id.hlg_bottom_txt:
-                    Intent intent = new Intent();
-                    intent.setClass(activity, WebActivity.class);
-                    startActivity(intent);
+                    if (!UserManager.getInstance().isLogin()) {
+                        Intent intent = new Intent(activity, LoginTrasitActivity.class);
+                        intent.putExtra("go_to_main", false);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("url", UrlHelper.testUrl(UserManager.getInstance().getUser().getUserId() + "",
+                                homeCourseBean.getGrade() + "", homeCourseBean.getExam_id() + ""));
+                        intent.setClass(activity, WebActivity.class);
+                        startActivity(intent);
+                    }
                     break;
             }
         }

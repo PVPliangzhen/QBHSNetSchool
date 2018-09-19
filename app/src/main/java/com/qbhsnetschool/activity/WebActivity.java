@@ -21,19 +21,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.uitls.StringUtils;
 
 public class WebActivity extends BaseActivity{
 
     private WebView mWebView;
     private String url;
     private String title;
+    private TextView page_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContentView(R.layout.activity_web, false, R.color.status_bar_bg_color, false);
         initIntent();
-        TextView page_title = (TextView) findViewById(R.id.page_title);
+        page_title = (TextView) findViewById(R.id.page_title);
         page_title.setText(title);
         LinearLayout page_back = (LinearLayout) findViewById(R.id.page_back);
         page_back.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +63,6 @@ public class WebActivity extends BaseActivity{
         mWebView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
         mWebView.getSettings().setLoadWithOverviewMode(true);
         syncWebViewCookies();
-        //mWebView.loadUrl("http://192.168.0.127:8080/tools/test?uid=300&exam=24");
-        //mWebView.loadUrl(url);
         mWebView.loadUrl(url);
     }
 
@@ -135,7 +135,6 @@ public class WebActivity extends BaseActivity{
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            System.out.println("----------------------" + url);
         }
 
         @Override
@@ -159,6 +158,13 @@ public class WebActivity extends BaseActivity{
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
+            if (!StringUtils.isEmpty(title)){
+                initTitle(title);
+            }
         }
+    }
+
+    private void initTitle(String title) {
+        page_title.setText(title);
     }
 }
