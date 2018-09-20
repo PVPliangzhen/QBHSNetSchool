@@ -22,6 +22,7 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import org.json.JSONArray;
@@ -95,6 +96,7 @@ public class AddressManagerActivity extends BaseActivity {
                 if (addressBeans != null && addressBeans.size() > 0) {
                     AddressBean addressBean = addressBeans.get(position);
                     Intent intent = new Intent();
+                    SpUtils.getInstance(activity).put("local_address", addressBean.getId());
                     intent.putExtra("address_bean", addressBean);
                     setResult(0x15, intent);
                     finish();

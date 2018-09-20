@@ -165,7 +165,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
+                            public void onResponse(Call call, final Response response) throws IOException {
                                 String result = response.body().string();
                                 try {
                                     JSONObject jsonObject = new JSONObject(result);
@@ -184,6 +184,17 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                         }
                                     });
                                 } catch (JSONException e) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (!LoadingDialog.isDissMissLoading()) {
+                                                LoadingDialog.dismissLoading();
+                                            }
+                                            if (response.code() == 413){
+                                                Toast.makeText(activity, "图片资源过大，请重新尝试", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                     e.printStackTrace();
                                 }
                             }
