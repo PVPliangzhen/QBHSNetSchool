@@ -35,6 +35,7 @@ import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.ConstantUtil;
 import com.qbhsnetschool.uitls.GlideCircleTransform;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.StringUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
@@ -312,6 +313,7 @@ public class ConfirmOrderActivity extends BaseActivity{
         season_img = (ImageView) findViewById(R.id.season_img);
         commit_order_layout = (LinearLayout) findViewById(R.id.commit_order_layout);
         initLocalData();
+        SpUtils.getInstance(activity).put("local_address", 0);
     }
 
     private void initLocalData() {

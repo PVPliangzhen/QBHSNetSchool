@@ -17,6 +17,7 @@ import com.qbhsnetschool.protocol.HttpHelper;
 import com.qbhsnetschool.protocol.StandardCallBack;
 import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.LoadingDialog;
+import com.qbhsnetschool.uitls.SpUtils;
 import com.qbhsnetschool.uitls.UIUtils;
 
 import java.util.HashMap;
@@ -48,10 +49,20 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             final AddressBean addressBean = addressBeans.get(position);
             viewHolder.address_user.setText(addressBean.getName() + "  " + addressBean.getTel());
             viewHolder.address_detail.setText(addressBean.getProvince() + addressBean.getCity() + addressBean.getCounty() + addressBean.getAddress());
-            if (addressBean.isDefault_flag()){
-                viewHolder.default_address.setVisibility(View.GONE);
+            int address_id = SpUtils.getInstance(context).get("local_address", 0);
+            viewHolder.default_address.setVisibility(View.GONE);
+            if (address_id > 0){
+                if (addressBean.getId() == address_id){
+                    viewHolder.default_address.setVisibility(View.VISIBLE);
+                }else{
+                    viewHolder.default_address.setVisibility(View.GONE);
+                }
             }else{
-                viewHolder.default_address.setVisibility(View.GONE);
+                if (addressBean.isDefault_flag()){
+                    viewHolder.default_address.setVisibility(View.VISIBLE);
+                }else{
+                    viewHolder.default_address.setVisibility(View.GONE);
+                }
             }
             viewHolder.address_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
