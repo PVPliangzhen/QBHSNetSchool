@@ -15,7 +15,7 @@ public class AppInterface {
     }
 
     @JavascriptInterface
-    public void back_to_app(String courseId){
+    public void back_to_adapp(String courseId){
         Intent intent = new Intent(context, CourseDetailActivity.class);
         intent.putExtra("product_id", courseId);
         context.startActivity(intent);
