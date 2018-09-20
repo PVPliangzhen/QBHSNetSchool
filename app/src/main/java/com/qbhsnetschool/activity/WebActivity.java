@@ -143,6 +143,7 @@ public class WebActivity extends BaseActivity{
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            //mWebView.loadUrl("javascript:window.jsObj.back_to_app(" + getPara);
         }
     }
 
