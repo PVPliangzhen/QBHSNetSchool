@@ -112,7 +112,6 @@ public final class PictureSelectionConfig implements Parcelable {
         suffixType = PictureFileUtils.POSTFIX;
         sizeMultiplier = 0.5f;
         selectionMedias = new ArrayList<>();
-        
     }
 
     public static PictureSelectionConfig getInstance() {
