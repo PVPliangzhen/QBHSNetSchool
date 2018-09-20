@@ -143,7 +143,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                     multipartBuilder.addFormDataPart("measure", measure + "");
 
                     for (int i = 0; i < selectList.size(); i++) {
-                        multipartBuilder.addFormDataPart("homework" + i, selectList.get(i).getPath(), RequestBody.create(MediaType.parse("image/jpg"), new File(selectList.get(i).getPath())));
+                        multipartBuilder.addFormDataPart("homework" + i, selectList.get(i).getCompressPath(), RequestBody.create(MediaType.parse("image/jpg"), new File(selectList.get(i).getCompressPath())));
                     }
 
                     Request request = new Request.Builder().url(UrlHelper.submitHomework()).post(multipartBuilder.build()).build();
@@ -153,10 +153,15 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                         okHttpClient.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
-                                if (!LoadingDialog.isDissMissLoading()) {
-                                    LoadingDialog.dismissLoading();
-                                }
-                                Toast.makeText(activity, "作业上传失败", Toast.LENGTH_SHORT).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!LoadingDialog.isDissMissLoading()) {
+                                            LoadingDialog.dismissLoading();
+                                        }
+                                        Toast.makeText(activity, "作业上传失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
 
                             @Override
@@ -173,7 +178,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                                 LoadingDialog.dismissLoading();
                                             }
                                             Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
-                                            if (code.equalsIgnoreCase("1900")){
+                                            if (code.equalsIgnoreCase("1900")) {
                                                 onBackPressed();
                                             }
                                         }
@@ -218,6 +223,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                                                 .enableCrop(false)// 是否裁剪
                                                 .compress(true)// 是否压缩
+                                                .cropCompressQuality(10)
                                                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                                                 .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
                                                 .minimumCompressSize(100)// 小于100kb的图片不压缩
@@ -240,6 +246,7 @@ public class SubmitHomeWorkActivity extends BaseActivity {
                                                 .isCamera(false)// 是否显示拍照按钮
                                                 .enableCrop(false)// 是否裁剪
                                                 .compress(true)// 是否压缩
+                                                .cropCompressQuality(10)
                                                 .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
                                                 .minimumCompressSize(100)// 小于100kb的图片不压缩
                                                 .selectionMedia(selectList)

@@ -26,6 +26,7 @@ import com.qbhsnetschool.entity.AddressBean;
 import com.qbhsnetschool.entity.ChargeBean;
 import com.qbhsnetschool.entity.CouponBean;
 import com.qbhsnetschool.entity.CourseBean;
+import com.qbhsnetschool.entity.CourseDetailBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.entity.OrderBean;
 import com.qbhsnetschool.protocol.HttpHelper;
@@ -49,7 +50,7 @@ import java.util.Map;
 
 public class ConfirmOrderActivity extends BaseActivity{
 
-    private HomeCourseBean homeCourseBean;
+    private CourseDetailBean courseDetailBean;
     private ConfirmOrderActivity activity;
     private ConfirmOrderHandler confirmOrderHandler;
     private List<AddressBean> addressBeans;
@@ -79,6 +80,7 @@ public class ConfirmOrderActivity extends BaseActivity{
     private TextView real_price;
     private String productId = "";
     private LinearLayout commit_order_layout;
+    private CourseDetailBean.CourseBean courseBean;
 
     private static class ConfirmOrderHandler extends Handler{
         WeakReference<ConfirmOrderActivity> weakReference;
@@ -255,9 +257,12 @@ public class ConfirmOrderActivity extends BaseActivity{
 
     private void initIntent() {
         Intent intent = getIntent();
-        homeCourseBean = (HomeCourseBean) intent.getSerializableExtra("homeCourseBean");
+        courseDetailBean = (CourseDetailBean) intent.getSerializableExtra("courseDetailBean");
         is_from_order = intent.getBooleanExtra("is_from_order", false);
         orderBean = (OrderBean) intent.getSerializableExtra("order_bean");
+        if (courseDetailBean != null){
+            courseBean = courseDetailBean.getCourse();
+        }
     }
 
     private void initView() {
@@ -311,23 +316,23 @@ public class ConfirmOrderActivity extends BaseActivity{
 
     private void initLocalData() {
         if (!is_from_order) {
-            course_title.setText(homeCourseBean.getTitle1());
-            course_number.setText(ConstantUtil.getSanqiItems().get(homeCourseBean.getItems()));
-            course_date.setText(homeCourseBean.getCourse_date());
-            course_time.setText(homeCourseBean.getCourse_time());
-            course_chapter.setText(homeCourseBean.getChapter_times());
-            teacher_name_txt.setText(homeCourseBean.getTeacher1().getName());
-            original_price.setText("原价" + homeCourseBean.getOriginal_price() + "元");
+            course_title.setText(courseBean.getDetail_title());
+            course_number.setText(ConstantUtil.getSanqiItems().get(courseBean.getItems()));
+            course_date.setText(courseBean.getCourse_date());
+            course_time.setText(courseBean.getCourse_time());
+            course_chapter.setText(courseBean.getChapter_times());
+            teacher_name_txt.setText(courseBean.getTeacher1().getName());
+            original_price.setText("原价" + courseBean.getOriginal_price() + "元");
             original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            current_price.setText("￥" + homeCourseBean.getPrice());
-            Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
+            current_price.setText("￥" + courseBean.getPrice());
+            Glide.with(activity).load(courseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
                     .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
-                    .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head_img);
-            real_price.setText("￥" + homeCourseBean.getPrice());
-            String season = homeCourseBean.getSeason();
+                    .transform(new GlideCircleTransform(activity, courseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head_img);
+            real_price.setText("￥" + courseBean.getPrice());
+            String season = courseBean.getSeason();
             ConstantUtil.handleSeason(activity, season, season_img, true);
-            productId = homeCourseBean.getProduct_id();
+            productId = courseBean.getProduct_id();
             initAddress();
         }else{
             OrderBean.AddressDataBean addressDataBean = orderBean.getAddress_data();

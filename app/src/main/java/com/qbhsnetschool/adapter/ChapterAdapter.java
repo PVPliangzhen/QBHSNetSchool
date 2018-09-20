@@ -10,19 +10,20 @@ import android.widget.TextView;
 
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.entity.ChapterBean;
+import com.qbhsnetschool.entity.CourseDetailBean;
 
 import java.util.List;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHolder>{
 
     private Context context;
-    private List<ChapterBean> chapterBeans;
+    private List<CourseDetailBean.ChapterBean> chapterBeans;
 
     public ChapterAdapter(Context context){
         this.context = context;
     }
 
-    public void setData(List<ChapterBean> chapterBeans){
+    public void setData(List<CourseDetailBean.ChapterBean> chapterBeans){
         this.chapterBeans = chapterBeans;
     }
 
@@ -34,7 +35,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        ChapterBean chapterBean = chapterBeans.get(position);
+        CourseDetailBean.ChapterBean chapterBean = chapterBeans.get(position);
         viewHolder.chapter_title.setText("第" + chapterBean.getMeasure() + "讲");
         viewHolder.chapter_detail.setText(chapterBean.getChapter_name());
         viewHolder.chapter_date.setText(chapterBean.getChapter_date());

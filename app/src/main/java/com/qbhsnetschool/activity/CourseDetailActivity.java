@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qbhsnetschool.R;
 import com.qbhsnetschool.adapter.ChapterAdapter;
 import com.qbhsnetschool.entity.ChapterBean;
+import com.qbhsnetschool.entity.CourseDetailBean;
 import com.qbhsnetschool.entity.HomeCourseBean;
 import com.qbhsnetschool.entity.UserManager;
 import com.qbhsnetschool.protocol.HttpHelper;
@@ -56,6 +57,20 @@ public class CourseDetailActivity extends BaseActivity {
     private List<ChapterBean> chapterBeans;
     private boolean isHLG;
     private TextView course_title;
+    private TextView sign_up_txt;
+    private ImageView teacher_head;
+    private TextView teacher_name;
+    private TextView intro1;
+    private TextView intro2;
+    private TextView intro3;
+    private TextView original_price;
+    private TextView currenr_price;
+    private TextView hlg_bottom_txt;
+    private LinearLayout hlg_bottom_layout;
+    private TextView course_date;
+    private TextView course_time;
+    private TextView chapter_time;
+    private CourseDetailBean courseDetailBean;
 
     private static class CourseDetailHandler extends Handler {
 
@@ -86,16 +101,59 @@ public class CourseDetailActivity extends BaseActivity {
         try {
             if (result != null) {
                 JSONObject jsonObject = new JSONObject(result);
-                String code = jsonObject.optString("code");
-                if (code.equalsIgnoreCase("200")) {
-                    JSONArray jsonArray = jsonObject.optJSONArray("chapter");
-                    Gson gson = new Gson();
-                    chapterBeans = gson.fromJson(jsonArray.toString(), new TypeToken<List<ChapterBean>>() {
-                    }.getType());
-                    if (chapterAdapter != null) {
-                        chapterAdapter.setData(chapterBeans);
+                Gson gson = new Gson();
+                courseDetailBean = gson.fromJson(jsonObject.toString(), CourseDetailBean.class);
+                if (courseDetailBean.getCode().equalsIgnoreCase("200")){
+                    if (chapterAdapter != null){
+                        chapterAdapter.setData(courseDetailBean.getChapter());
                         chapterAdapter.notifyDataSetChanged();
                     }
+                    CourseDetailBean.CourseBean courseBean = courseDetailBean.getCourse();
+                    switch (courseBean.getCourse_status()) {
+                        case 1:
+                            sign_up_txt.setText("立即报名");
+                            sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_E20000));
+                            sign_up_btn.setEnabled(true);
+                            break;
+                        case 2:
+                            sign_up_txt.setText("人数已满");
+                            sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                            sign_up_btn.setEnabled(false);
+                            break;
+                        case 3:
+                            sign_up_txt.setText("报名未开始");
+                            sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                            sign_up_btn.setEnabled(false);
+                            break;
+                        case 4:
+                            sign_up_txt.setText("报名结束");
+                            sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
+                            sign_up_btn.setEnabled(false);
+                            break;
+                    }
+                    initDifficulty(courseBean.getStars());
+                    Glide.with(activity).load(courseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                            .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
+                            .transform(new GlideCircleTransform(activity, courseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head);
+                    teacher_name.setText(courseBean.getTeacher1().getName());
+                    intro1.setText(courseBean.getTeacher1().getIntro1());
+                    intro2.setText(courseBean.getTeacher1().getIntro2());
+                    intro3.setText(courseBean.getTeacher1().getIntro3());
+                    original_price.setText("原价" + courseBean.getOriginal_price() + "元");
+                    original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    currenr_price.setText("￥" + courseBean.getPrice());
+                    if (isHLG) {
+                        hlg_bottom_txt.setVisibility(View.VISIBLE);
+                        hlg_bottom_layout.setVisibility(View.GONE);
+                    } else {
+                        hlg_bottom_txt.setVisibility(View.GONE);
+                        hlg_bottom_layout.setVisibility(View.VISIBLE);
+                    }
+                    course_title = (TextView) findViewById(R.id.course_title);
+                    course_date.setText(courseBean.getCourse_date());
+                    course_time.setText(courseBean.getCourse_time());
+                    chapter_time.setText(courseBean.getChapter_times());
                 }
             }
         } catch (Exception e) {
@@ -144,55 +202,20 @@ public class CourseDetailActivity extends BaseActivity {
         page_back.setOnClickListener(clickListener);
         sign_up_btn = (LinearLayout) findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(clickListener);
-        TextView sign_up_txt = (TextView) findViewById(R.id.sign_up_txt);
-        switch (homeCourseBean.getCourse_status()) {
-            case 1:
-                sign_up_txt.setText("立即报名");
-                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_E20000));
-                sign_up_btn.setEnabled(true);
-                break;
-            case 2:
-                sign_up_txt.setText("人数已满");
-                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
-                sign_up_btn.setEnabled(false);
-                break;
-            case 3:
-                sign_up_txt.setText("报名未开始");
-                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
-                sign_up_btn.setEnabled(false);
-                break;
-            case 4:
-                sign_up_txt.setText("报名结束");
-                sign_up_btn.setBackgroundColor(getResources().getColor(R.color.color_999999));
-                sign_up_btn.setEnabled(false);
-                break;
-        }
+        sign_up_txt = (TextView) findViewById(R.id.sign_up_txt);
         star1 = (ImageView) findViewById(R.id.star1);
         star2 = (ImageView) findViewById(R.id.star2);
         star3 = (ImageView) findViewById(R.id.star3);
         star4 = (ImageView) findViewById(R.id.star4);
         star5 = (ImageView) findViewById(R.id.star5);
-        initDifficulty(homeCourseBean.getStars());
-        TextView course_date = (TextView) findViewById(R.id.course_date);
-        course_date.setText(homeCourseBean.getCourse_date());
-        TextView course_time = (TextView) findViewById(R.id.course_time);
-        course_time.setText(homeCourseBean.getCourse_time());
-        TextView chapter_time = (TextView) findViewById(R.id.chapter_time);
-        chapter_time.setText(homeCourseBean.getChapter_times());
-
-        ImageView teacher_head = (ImageView) findViewById(R.id.teacher_head);
-        Glide.with(activity).load(homeCourseBean.getTeacher1().getApp_head_pic_small()).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-                .placeholder(R.mipmap.avatars).error(R.mipmap.avatars)
-                .transform(new GlideCircleTransform(activity, homeCourseBean.getTeacher1().getApp_head_pic_small())).into(teacher_head);
-        TextView teacher_name = (TextView) findViewById(R.id.teacher_name);
-        teacher_name.setText(homeCourseBean.getTeacher1().getName());
-        TextView intro1 = (TextView) findViewById(R.id.intro1);
-        TextView intro2 = (TextView) findViewById(R.id.intro2);
-        TextView intro3 = (TextView) findViewById(R.id.intro3);
-        intro1.setText(homeCourseBean.getTeacher1().getIntro1());
-        intro2.setText(homeCourseBean.getTeacher1().getIntro2());
-        intro3.setText(homeCourseBean.getTeacher1().getIntro3());
+        course_date = (TextView) findViewById(R.id.course_date);
+        course_time = (TextView) findViewById(R.id.course_time);
+        chapter_time = (TextView) findViewById(R.id.chapter_time);
+        teacher_head = (ImageView) findViewById(R.id.teacher_head);
+        teacher_name = (TextView) findViewById(R.id.teacher_name);
+        intro1 = (TextView) findViewById(R.id.intro1);
+        intro2 = (TextView) findViewById(R.id.intro2);
+        intro3 = (TextView) findViewById(R.id.intro3);
         chapter_list = (RecyclerView) findViewById(R.id.chapter_list);
         LinearLayoutManager lm = new LinearLayoutManager(activity) {
             @Override
@@ -204,22 +227,11 @@ public class CourseDetailActivity extends BaseActivity {
         chapter_list.setLayoutManager(lm);
         chapterAdapter = new ChapterAdapter(activity);
         chapter_list.setAdapter(chapterAdapter);
-        TextView original_price = (TextView) findViewById(R.id.original_price);
-        original_price.setText("原价" + homeCourseBean.getOriginal_price() + "元");
-        original_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        TextView currenr_price = (TextView) findViewById(R.id.current_price);
-        currenr_price.setText("￥" + homeCourseBean.getPrice());
-        TextView hlg_bottom_txt = (TextView) findViewById(R.id.hlg_bottom_txt);
+        original_price = (TextView) findViewById(R.id.original_price);
+        currenr_price = (TextView) findViewById(R.id.current_price);
+        hlg_bottom_txt = (TextView) findViewById(R.id.hlg_bottom_txt);
         hlg_bottom_txt.setOnClickListener(clickListener);
-        LinearLayout hlg_bottom_layout = (LinearLayout) findViewById(R.id.hlg_bottom_layout);
-        if (isHLG) {
-            hlg_bottom_txt.setVisibility(View.VISIBLE);
-            hlg_bottom_layout.setVisibility(View.GONE);
-        } else {
-            hlg_bottom_txt.setVisibility(View.GONE);
-            hlg_bottom_layout.setVisibility(View.VISIBLE);
-        }
-        course_title = (TextView) findViewById(R.id.course_title);
+        hlg_bottom_layout = (LinearLayout) findViewById(R.id.hlg_bottom_layout);
     }
 
     private void initDifficulty(int stars) {
@@ -259,7 +271,7 @@ public class CourseDetailActivity extends BaseActivity {
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(activity, ConfirmOrderActivity.class);
-                        intent.putExtra("homeCourseBean", homeCourseBean);
+                        intent.putExtra("courseDetailBean", courseDetailBean);
                         startActivity(intent);
                     }
                     break;
