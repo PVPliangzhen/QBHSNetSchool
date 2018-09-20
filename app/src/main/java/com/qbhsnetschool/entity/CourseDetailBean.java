@@ -71,6 +71,26 @@ public class CourseDetailBean implements Serializable{
         private String product_id;
         private int course_status;
         private Teacher1Bean teacher1;
+        private int grade;
+
+        public int getGrade() {
+            return grade;
+        }
+
+        public void setGrade(int grade) {
+            this.grade = grade;
+        }
+
+        public int getExam_id() {
+
+            return exam_id;
+        }
+
+        public void setExam_id(int exam_id) {
+            this.exam_id = exam_id;
+        }
+
+        private int exam_id;
 
         public String getCourse_date() {
             return course_date;

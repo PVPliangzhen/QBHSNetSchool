@@ -283,7 +283,7 @@ public class CourseDetailActivity extends BaseActivity {
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("url", UrlHelper.testUrl(UserManager.getInstance().getUser().getUserId() + "",
-                                homeCourseBean.getGrade() + "", homeCourseBean.getExam_id() + ""));
+                                courseDetailBean.getCourse().getGrade() + "", courseDetailBean.getCourse().getExam_id() + ""));
                         intent.setClass(activity, WebActivity.class);
                         startActivity(intent);
                     }
