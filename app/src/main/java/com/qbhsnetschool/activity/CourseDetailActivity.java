@@ -45,7 +45,6 @@ public class CourseDetailActivity extends BaseActivity {
 
     private CourseDetailActivity activity;
     private LinearLayout sign_up_btn;
-    private HomeCourseBean homeCourseBean;
     private ImageView star1;
     private ImageView star2;
     private ImageView star3;
@@ -71,6 +70,7 @@ public class CourseDetailActivity extends BaseActivity {
     private TextView course_time;
     private TextView chapter_time;
     private CourseDetailBean courseDetailBean;
+    private String product_id = "";
 
     private static class CourseDetailHandler extends Handler {
 
@@ -173,7 +173,6 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        String product_id = homeCourseBean.getProduct_id();
         if (!UIUtils.isNetworkAvailable(activity)) {
             Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
         }
@@ -191,7 +190,7 @@ public class CourseDetailActivity extends BaseActivity {
 
     private void initIntent() {
         Intent intent = getIntent();
-        homeCourseBean = (HomeCourseBean) intent.getSerializableExtra("homeCourseBean");
+        product_id = intent.getStringExtra("product_id");
         isHLG = intent.getBooleanExtra("isHLG", false);
     }
 
