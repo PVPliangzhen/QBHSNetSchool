@@ -75,7 +75,7 @@ public final class PictureSelectionConfig implements Parcelable {
         maxSelectNum = 9;
         minSelectNum = 0;
         videoQuality = 1;
-        cropCompressQuality = 50;
+        cropCompressQuality = 90;
         videoMaxSecond = 0;
         videoMinSecond = 0;
         recordVideoSecond = 60;
