@@ -75,6 +75,7 @@ public class RewardProgressActivity extends BaseActivity{
                 yilingqujine.setText("￥" + jsonObject.optString("cash"));
                 yilingquyouhuiquan.setText("￥" + jsonObject.optString("coupon"));
             }
+            Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,7 +135,7 @@ public class RewardProgressActivity extends BaseActivity{
                 case R.id.coupon_img:
                     if (Integer.parseInt(left_times) <= 0){
                         setAnimation(coupon_img, false);
-                        Toast.makeText(activity, "您没有可用的领取次数", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
                         return;
                     }else {
                         setAnimation(coupon_img, true);
@@ -144,7 +145,7 @@ public class RewardProgressActivity extends BaseActivity{
                 case R.id.cash_img:
                     if (Integer.parseInt(left_times) <= 0){
                         setAnimation(cash_img, false);
-                        Toast.makeText(activity, "您没有可用的领取次数", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
                         return;
                     }else {
                         setAnimation(cash_img, true);
@@ -179,7 +180,8 @@ public class RewardProgressActivity extends BaseActivity{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

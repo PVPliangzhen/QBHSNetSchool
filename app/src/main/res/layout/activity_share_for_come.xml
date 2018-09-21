@@ -8,66 +8,77 @@
 
     <include layout="@layout/head_layout"/>
 
-    <Button
-        android:id="@+id/referal_txt1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/color_ffffff"
-        android:text="邀请新学员，新学员可享秋季班500元立减"
-        android:gravity="center"
-        android:textSize="@dimen/dp32"
-        android:textColor="@color/color_333333"
-        android:layout_marginTop="@dimen/dp50"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <Button
+                android:id="@+id/referal_txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@color/color_ffffff"
+                android:text="邀请新学员，新学员可享秋季班500元立减"
+                android:gravity="center"
+                android:textSize="@dimen/dp32"
+                android:textColor="@color/color_333333"
+                android:layout_marginTop="@dimen/dp50"/>
 
-    <Button
-        android:id="@+id/referal_txt2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/color_ffffff"
-        android:text="您可获得100元现金或200元优惠券"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dp20"
-        android:textColor="@color/color_333333"
-        android:textSize="@dimen/dp40"/>
-    
-    <ImageView
-        android:layout_width="@dimen/dp600"
-        android:layout_height="@dimen/dp640"
-        android:layout_marginTop="@dimen/dp60"
-        android:src="@mipmap/boy"/>
-    
-    <Button
-        android:id="@+id/invite_friend"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp70" 
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:background="@mipmap/button_bg"
-        android:textColor="@color/color_ffffff"
-        android:text="马上邀请好友报名"
-        android:gravity="center"/>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp50"
-        android:gravity="center">
+            <Button
+                android:id="@+id/referal_txt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@color/color_ffffff"
+                android:text="您可获得100元现金或200元优惠券"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dp40"/>
 
-        <TextView
-            android:id="@+id/reward_rule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="奖励规则"/>
+            <ImageView
+                android:layout_width="@dimen/dp600"
+                android:layout_height="@dimen/dp640"
+                android:layout_marginTop="@dimen/dp60"
+                android:src="@mipmap/boy"/>
 
-        <TextView
-            android:id="@+id/reward_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="奖励进度"
-            android:layout_marginLeft="@dimen/dp80"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/invite_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp70"
+                android:layout_marginRight="@dimen/dp32"
+                android:layout_marginLeft="@dimen/dp32"
+                android:background="@mipmap/button_bg"
+                android:textColor="@color/color_ffffff"
+                android:text="马上邀请好友报名"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp50"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/dp100">
+
+                <TextView
+                    android:id="@+id/reward_rule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="奖励规则"/>
+
+                <TextView
+                    android:id="@+id/reward_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="奖励进度"
+                    android:layout_marginLeft="@dimen/dp80"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
