@@ -57,7 +57,7 @@ public class JianziAdapter extends RecyclerView.Adapter<JianziAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("homeCourseBean", jianziBean);
+                intent.putExtra("product_id", jianziBean.getProduct_id());
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }

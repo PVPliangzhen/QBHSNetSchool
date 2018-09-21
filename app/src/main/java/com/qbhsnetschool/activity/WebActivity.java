@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qbhsnetschool.R;
+import com.qbhsnetschool.js.AppInterface;
+import com.qbhsnetschool.protocol.UrlHelper;
 import com.qbhsnetschool.uitls.StringUtils;
 
 public class WebActivity extends BaseActivity{
@@ -47,7 +49,7 @@ public class WebActivity extends BaseActivity{
         mWebView = (WebView) findViewById(R.id.webView);
         //mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " " + HttpHelper.getUserAgent(appContext));
         mWebView.getSettings().setJavaScriptEnabled(true);
-        //mWebView.addJavascriptInterface(new appMethod(context), "appMethod");
+        mWebView.addJavascriptInterface(new AppInterface(this), "jsObj");
         mWebView.setWebViewClient(new MyResourceClient());
         mWebView.setWebChromeClient(new MyUIClient());
 //        mWebView.setInitialScale(50);
@@ -85,6 +87,7 @@ public class WebActivity extends BaseActivity{
             }
         }
         cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie(UrlHelper.BaseUrl.BASE_HTTP_URL, "app_client=android");
         //cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "csrftoken=9B6BiaHXZQCspEumh4Pwbd1vyc9rF80i6zm6qIzywvCGgsyZZBUAH6kAylaSit31");
         //cookieManager.setCookie("http://www.hualuogengshuxue.com/courses/wating", "sessionid=dgqwccdidqc576c3jctxk31nthrsakm6");
 
@@ -140,6 +143,7 @@ public class WebActivity extends BaseActivity{
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            //mWebView.loadUrl("javascript:window.jsObj.back_to_app(" + getPara);
         }
     }
 

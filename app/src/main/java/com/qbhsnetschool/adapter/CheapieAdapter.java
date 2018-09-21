@@ -50,7 +50,7 @@ public class CheapieAdapter extends RecyclerView.Adapter<CheapieAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("homeCourseBean", cheapieBean);
+                intent.putExtra("product_id", cheapieBean.getProduct_id());
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }

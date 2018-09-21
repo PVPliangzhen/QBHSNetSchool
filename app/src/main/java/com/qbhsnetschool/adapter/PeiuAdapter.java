@@ -57,7 +57,7 @@ public class PeiuAdapter extends RecyclerView.Adapter<PeiuAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("homeCourseBean", peiuBean);
+                intent.putExtra("product_id", peiuBean.getProduct_id());
                 intent.setClass(context, CourseDetailActivity.class);
                 context.startActivity(intent);
             }
