@@ -75,7 +75,6 @@ public class RewardProgressActivity extends BaseActivity{
                 yilingqujine.setText("￥" + jsonObject.optString("cash"));
                 yilingquyouhuiquan.setText("￥" + jsonObject.optString("coupon"));
             }
-            Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -135,7 +134,7 @@ public class RewardProgressActivity extends BaseActivity{
                 case R.id.coupon_img:
                     if (Integer.parseInt(left_times) <= 0){
                         setAnimation(coupon_img, false);
-                        Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "您没有可用领取次数", Toast.LENGTH_SHORT).show();
                         return;
                     }else {
                         setAnimation(coupon_img, true);
@@ -148,6 +147,7 @@ public class RewardProgressActivity extends BaseActivity{
                         Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
                         return;
                     }else {
+                        Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
                         setAnimation(cash_img, true);
                         lingquJiangli("cash");
                     }
@@ -156,7 +156,7 @@ public class RewardProgressActivity extends BaseActivity{
         }
     };
 
-    private void lingquJiangli(String choice) {
+    private void lingquJiangli(final String choice) {
         if (!UIUtils.isNetworkAvailable(activity)){
             Toast.makeText(activity, R.string.no_network, Toast.LENGTH_SHORT).show();
             return;
@@ -180,8 +180,7 @@ public class RewardProgressActivity extends BaseActivity{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(activity, "领取现金请联系班主任", Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
